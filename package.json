@@ -1,0 +1,31 @@
+{
+	"name": "@seregpie/bron-kerbosch",
+	"version": "1.0.0",
+	"description": "Implementation of the Bron-Kerbosch algorithm to find the maximal cliques in an undirected graph.",
+	"keywords": [
+		"algorithm",
+		"bron-kerbosch",
+		"edge",
+		"graph",
+		"maximal-clique",
+		"method",
+		"node",
+		"technique",
+		"undirected"
+	],
+	"license": "MIT",
+	"author": "Sergej Sintschilin <seregpie@gmail.com>",
+	"files": [],
+	"main": "index.js",
+	"repository": "github:SeregPie/BronKerbosch",
+	"scripts": {
+		"build": "rollup -c",
+		"prepublishOnly": "npm run build",
+		"test": "node test"
+	},
+	"devDependencies": {
+		"@rollup/plugin-buble": "^0.21.1",
+		"rollup": "^1.32.0",
+		"rollup-plugin-terser": "^5.2.0"
+	}
+}
