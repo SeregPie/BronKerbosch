@@ -1,5 +1,7 @@
 # BronKerbosch
 
+`BronKerbosch(edges)`
+
 Implementation of the [Bron-Kerbosch algorithm](https://en.wikipedia.org/wiki/Bron–Kerbosch_algorithm) to find the maximal cliques in an undirected graph. This algorithm variant uses the pivoting and a modification developed by Tomita.
 
 | argument | description |
