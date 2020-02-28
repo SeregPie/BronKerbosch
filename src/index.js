@@ -22,7 +22,7 @@ export default function(edges) {
 	});
 	let cliques = [];
 	Function_prototype_bindRecursive((recur, clique, candidates, excludedCandidates) => {
-		if (candidates.size < 1 && excludedCandidates.size < 1) {
+		if (!candidates.size && !excludedCandidates.size) {
 			cliques.push(Array.from(clique));
 		}
 		let pivotNeighbors = new Set();
