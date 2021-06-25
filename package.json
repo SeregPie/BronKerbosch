@@ -5,8 +5,11 @@
 	"keywords": [],
 	"license": "MIT",
 	"author": "Sergej Sintschilin <seregpie@gmail.com>",
-	"files": [],
+	"files": [
+		"index.d.ts"
+	],
 	"main": "index.js",
+	"types": "index.d.ts",
 	"repository": "github:SeregPie/BronKerbosch",
 	"scripts": {
 		"build": "rollup -c",
