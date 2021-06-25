@@ -2,7 +2,7 @@
 
 `BronKerbosch(edges)`
 
-Implementation of the [Bron-Kerbosch algorithm](https://en.wikipedia.org/wiki/Bron–Kerbosch_algorithm) to find the maximal cliques in an undirected graph. This algorithm variant uses the pivoting and a modification developed by Tomita.
+An implementation of the [Bron-Kerbosch algorithm](https://en.wikipedia.org/wiki/Bron–Kerbosch_algorithm) to find the maximal cliques in an undirected graph.
 
 | argument | description |
 | ---: | :--- |
@@ -15,16 +15,20 @@ Returns the maximal cliques as an array of arrays.
 ### npm
 
 ```shell
-npm install @seregpie/bron-kerbosch
+npm i @seregpie/bron-kerbosch
 ```
 
-### ES module
+---
+
+Import inside an ES module.
 
 ```javascript
 import BronKerbosch from '@seregpie/bron-kerbosch';
 ```
 
-### Node
+*or*
+
+Import inside a CommonJS module.
 
 ```javascript
 let BronKerbosch = require('@seregpie/bron-kerbosch');

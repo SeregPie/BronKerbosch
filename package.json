@@ -1,18 +1,8 @@
 {
 	"name": "@seregpie/bron-kerbosch",
 	"version": "1.0.0",
-	"description": "Implementation of the Bron-Kerbosch algorithm to find the maximal cliques in an undirected graph.",
-	"keywords": [
-		"algorithm",
-		"bron-kerbosch",
-		"edge",
-		"graph",
-		"maximal-clique",
-		"method",
-		"node",
-		"technique",
-		"undirected"
-	],
+	"description": "An implementation of the Bron-Kerbosch algorithm to find the maximal cliques in an undirected graph.",
+	"keywords": [],
 	"license": "MIT",
 	"author": "Sergej Sintschilin <seregpie@gmail.com>",
 	"files": [],
