@@ -1,6 +1,6 @@
 let assert = require('assert').strict;
 
-let BronKerbosch = require('./index');
+let BronKerbosch = require('./');
 
 {
 	let edges = [[6, 4], [4, 3], [4, 5], [5, 2], [5, 1], [1, 2]];
