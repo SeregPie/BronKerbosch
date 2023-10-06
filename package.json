@@ -2,27 +2,29 @@
 	"name": "@seregpie/bron-kerbosch",
 	"version": "1.0.1",
 	"description": "An implementation of the Bron-Kerbosch algorithm to find the maximal cliques in an undirected graph.",
-	"keywords": [],
+	"repository": "github:SeregPie/BronKerbosch",
 	"license": "MIT",
 	"author": "Sergej Sintschilin <seregpie@gmail.com>",
-	"files": [
-		"index.d.ts"
-	],
-	"main": "index.js",
-	"types": "index.d.ts",
-	"repository": "github:SeregPie/BronKerbosch",
+	"type": "module",
 	"scripts": {
-		"build": "rollup -c",
-		"prepublishOnly": "npm run build",
-		"test": "node test"
+		"build": "pkgroll",
+		"test": "bun test",
+		"format": "prettier . --write"
+	},
+	"exports": {
+		"require": "./dist/index.cjs",
+		"import": "./dist/index.mjs",
+		"types": "./dist/index.d.ts"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.14.6",
-		"@babel/preset-env": "^7.14.7",
-		"@rollup/plugin-babel": "^5.3.0",
-		"eslint": "^7.29.0",
-		"eslint-config-seregpie": "^1.0.2",
-		"rollup": "^2.52.2",
-		"rollup-plugin-terser": "^7.0.2"
+		"@rollup/plugin-node-resolve": "^15.2.2",
+		"@rollup/plugin-terser": "^0.4.4",
+		"bun": "^1.0.3",
+		"bun-types": "^1.0.3",
+		"pkgroll": "^2.0.1",
+		"prettier": "^3.0.3",
+		"prettier-plugin-organize-imports": "^3.2.3",
+		"rollup": "^4.0.0",
+		"typescript": "^5.2.2"
 	}
 }

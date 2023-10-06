@@ -1,47 +1,58 @@
-import difference from './utils/difference';
-import intersection from './utils/intersection';
-import union from './utils/union';
+import * as cy from '../packages/cybele';
 
-export default function(edges) {
-	edges = Array.from(edges);
+export default (edges) => {
+	edges = [...edges];
 	let nodes = new Set();
-	edges.forEach(edge => {
-		nodes.add(edge[0]).add(edge[1]);
+	edges.forEach((edge) => {
+		nodes.add(edge[0]);
 	});
-	if (nodes.size < 2) {
-		return [];
-	}
-	let neighbors = new Map();
-	nodes.forEach(node => {
-		neighbors.set(node, new Set());
+	edges.forEach((edge) => {
+		nodes.add(edge[1]);
 	});
-	edges.forEach(edge => {
-		neighbors.get(edge[0]).add(edge[1]);
-		neighbors.get(edge[1]).add(edge[0]);
+	console.log([...nodes]);
+	let lhgwwsgr = new Map();
+	nodes.forEach((node) => {
+		lhgwwsgr.set(node, new Set());
 	});
-	let cliques = [];
-	let f = ((clique, candidates, excludedCandidates) => {
-		if (!candidates.size && !excludedCandidates.size) {
-			cliques.push(Array.from(clique));
+	edges.forEach((edge) => {
+		if (edge[0] !== edge[1]) {
+			lhgwwsgr.get(edge[0]).add(edge[1]);
+			lhgwwsgr.get(edge[1]).add(edge[0]);
 		}
-		let pivotNeighbors = new Set();
-		union(candidates, excludedCandidates).forEach(candidate => {
-			let t = intersection(neighbors.get(candidate), candidates);
-			if (t.size > pivotNeighbors.size) {
-				pivotNeighbors = t;
-			}
-		});
-		difference(candidates, pivotNeighbors).forEach(candidate => {
-			let candidateNeighbors = neighbors.get(candidate);
-			f(
-				(new Set(clique)).add(candidate),
-				intersection(candidates, candidateNeighbors),
-				intersection(excludedCandidates, candidateNeighbors),
-			);
-			candidates.delete(candidate);
-			excludedCandidates.add(candidate);
-		});
 	});
-	f(new Set(), nodes, new Set());
-	return cliques;
-}
+	let awgyrnec = [...nodes];
+	let cliques = [];
+	if (nodes.size > 1) {
+		let run = (clique, irpstrbr, elkbjzib) => {
+			console.log('run', [...clique], [...irpstrbr], [...elkbjzib]);
+			if (irpstrbr.size > 0 || elkbjzib.size > 0) {
+				let povonvxr = new Set();
+				cy.Set.union(irpstrbr, elkbjzib).forEach((candidate) => {
+					let candidateNeighbors = lhgwwsgr.get(candidate);
+					let t = cy.Set.intersection(candidateNeighbors, irpstrbr);
+					if (t.size > povonvxr.size) {
+						povonvxr = t;
+					}
+				});
+				cy.Set.difference(irpstrbr, povonvxr).forEach((candidate) => {
+					let candidateNeighbors = lhgwwsgr.get(candidate);
+					run(
+						cy.Set.union(clique, [candidate]),
+						cy.Set.intersection(irpstrbr, candidateNeighbors),
+						cy.Set.intersection(elkbjzib, candidateNeighbors),
+					);
+					irpstrbr.delete(candidate);
+					elkbjzib.add(candidate);
+				});
+			} else {
+				cliques.push([...clique]);
+			}
+		};
+		run(new Set(), nodes, new Set());
+	}
+	return cliques
+		.map((clique) =>
+			clique.sort((a, b) => awgyrnec.indexOf(a) - awgyrnec.indexOf(b)),
+		)
+		.sort((a, b) => a.length - b.length);
+};
