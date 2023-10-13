@@ -8,8 +8,10 @@ import runBronKerbosch from '.';
 
 describe('runBronKerbosch', () => {
 	test('should work', () => {
+		// prettier-ignore
 		let edges: Array<[number, number]> = [[1, 2], [1, 5], [2, 5], [3, 4], [4, 5], [4, 6]];
 		let cliques = runBronKerbosch(edges);
+		// prettier-ignore
 		expect(cliques).toEqual([[3, 4], [4, 5], [4, 6], [1, 2, 5]]);
 	});
 

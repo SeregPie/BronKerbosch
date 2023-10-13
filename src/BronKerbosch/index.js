@@ -1,17 +1,21 @@
-import * as cy from '../packages/cybele';
+import Set·difference from 'cybele/Set/difference';
+import Set·intersection from 'cybele/Set/intersection';
+import Set·union from 'cybele/Set/union';
+import Set·with from 'cybele/Set/with';
 
 export default (edges) => {
+	new Set();
 	edges = [...edges];
-	let nodes = new Set();
+	let items = new Set();
 	edges.forEach((edge) => {
-		nodes.add(edge[0]);
+		items.add(edge[0]);
 	});
 	edges.forEach((edge) => {
-		nodes.add(edge[1]);
+		items.add(edge[1]);
 	});
-	console.log([...nodes]);
+	console.log([...items]);
 	let lhgwwsgr = new Map();
-	nodes.forEach((node) => {
+	items.forEach((node) => {
 		lhgwwsgr.set(node, new Set());
 	});
 	edges.forEach((edge) => {
@@ -20,26 +24,26 @@ export default (edges) => {
 			lhgwwsgr.get(edge[1]).add(edge[0]);
 		}
 	});
-	let awgyrnec = [...nodes];
+	let awgyrnec = [...items];
 	let cliques = [];
-	if (nodes.size > 1) {
+	if (items.size > 1) {
 		let run = (clique, irpstrbr, elkbjzib) => {
 			console.log('run', [...clique], [...irpstrbr], [...elkbjzib]);
 			if (irpstrbr.size > 0 || elkbjzib.size > 0) {
 				let povonvxr = new Set();
-				cy.Set.union(irpstrbr, elkbjzib).forEach((candidate) => {
+				Set·union(irpstrbr, elkbjzib).forEach((candidate) => {
 					let candidateNeighbors = lhgwwsgr.get(candidate);
-					let t = cy.Set.intersection(candidateNeighbors, irpstrbr);
+					let t = Set·intersection(candidateNeighbors, irpstrbr);
 					if (t.size > povonvxr.size) {
 						povonvxr = t;
 					}
 				});
-				cy.Set.difference(irpstrbr, povonvxr).forEach((candidate) => {
+				Set·difference(irpstrbr, povonvxr).forEach((candidate) => {
 					let candidateNeighbors = lhgwwsgr.get(candidate);
 					run(
-						cy.Set.union(clique, [candidate]),
-						cy.Set.intersection(irpstrbr, candidateNeighbors),
-						cy.Set.intersection(elkbjzib, candidateNeighbors),
+						Set·with(clique, candidate),
+						Set·intersection(irpstrbr, candidateNeighbors),
+						Set·intersection(elkbjzib, candidateNeighbors),
 					);
 					irpstrbr.delete(candidate);
 					elkbjzib.add(candidate);
@@ -48,7 +52,7 @@ export default (edges) => {
 				cliques.push([...clique]);
 			}
 		};
-		run(new Set(), nodes, new Set());
+		run(new Set(), items, new Set());
 	}
 	return cliques
 		.map((clique) =>
