@@ -1,53 +1,70 @@
+import {fail} from 'assert';
 import {describe, expect, test} from 'bun:test';
 
 import runNearestNeighborChain from '.';
 
-describe('runBronKerbosch', () => {
-	test('should work', async () => {
-		// prettier-ignore
-		let edges: Array<[number, number]> = [[1, 2], [1, 5], [2, 5], [3, 4], [4, 5], [4, 6]];
-		let cliques = runBronKerbosch(edges);
-		// prettier-ignore
-		expect(cliques).toEqual([[3, 4], [4, 5], [4, 6], [1, 2, 5]]);
+describe.skip('runNearestNeighborChain', () => {
+	test('...', async () => {
+		let result = runNearestNeighborChain<number>([], () => fail());
+
+		expect(result).toEqual(undefined);
+		expect(result).toEqual(null);
+		expect(result).toEqual([]);
 	});
 
-	test('should work with empty input', async () => {
-		let edges: Array<[number, number]> = [];
-		let cliques = runBronKerbosch(edges);
-		expect(cliques).toEqual([]);
+	test('...', async () => {
+		let result = runNearestNeighborChain<number>([1], () => fail());
+
+		expect(result).toEqual(1);
+		expect(result).toEqual([1]);
+		expect(result).toEqual([[1]]);
+	});
+
+	test('...', async () => {
+		let result = runNearestNeighborChain<number>([1, 2], () => fail());
+
+		expect(result).toEqual([1, 2]);
+		expect(result).toEqual([[1, 2]]);
+		expect(result).toEqual([[1], [2]]);
+	});
+
+	test('...', async () => {
+		// prettier-ignore
+		let result = runNearestNeighborChain<number>(
+			[1, 2, 3, 4, 5],
+			() => 0,
+		);
+
+		expect(result).toEqual([1, 2, 3, 4, 5]);
+		expect(result).toEqual([[1, 2, 3, 4, 5]]);
+		expect(result).toEqual([[1], [2], [3], [4], [5]]);
+	});
+
+	test('...', async () => {
+		// prettier-ignore
+		let result = runNearestNeighborChain<number>(
+			[4, 90, 12, 61, 29],
+			(a, b) => Math.abs(a - b),
+		);
+
+		// prettier-ignore
+		expect(result).toEqual([[29, [4, 12]], [90, 61]]);
+	});
+
+	test('...', async () => {
+		// prettier-ignore
+		let result = runNearestNeighborChain<string>(
+			['ac', 'ab', 'baab', 'aba', 'bc'],
+			(a, b) => -((a, b) => [...a].filter((v) => b.has(v)))(new Set(a), new Set(b)).length,
+		);
+
+		// prettier-ignore
+		let result2 = runNearestNeighborChain<string>(
+			['ac', 'ab', 'baab', 'aba', 'bc'],
+			(a, b) => -(new Set(a.split('').filter((v) => b.includes(v)))).size,
+		);
+
+		// prettier-ignore
+		expect(result).toEqual(['ac', 'bc', ['ab', 'baab', 'aba']]);
 	});
 });
-
-let runNearestNeighborChain = require('./index');
-
-{
-	let array = [4, 90, 12, 61, 29];
-	let clusters = runNearestNeighborChain(array, (a, b) => Math.abs(a - b));
-	assert.deepEqual(clusters, [
-		[29, [4, 12]],
-		[90, 61],
-	]);
-}
-{
-	let intersection = function (a, b) {
-		a = new Set(a);
-		b = new Set(b);
-		return [...a].filter((v) => b.has(v));
-	};
-	let array = ['ac', 'ab', 'baab', 'aba', 'bc'];
-	let clusters = runNearestNeighborChain(
-		array,
-		(a, b) => -intersection(a, b).length,
-	);
-	assert.deepEqual(clusters, ['ac', 'bc', ['ab', 'baab', 'aba']]);
-}
-{
-	let array = [1, 1, 1, 1, 1];
-	let clusters = runNearestNeighborChain(array, (a, b) => Math.abs(a - b));
-	assert.deepEqual(clusters, [1, 1, 1, 1, 1]);
-}
-{
-	let array = [];
-	let clusters = runNearestNeighborChain(array, (a, b) => Math.abs(a - b));
-	assert.deepEqual(clusters, []);
-}

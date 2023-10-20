@@ -1,263 +1,142 @@
+import {fail} from 'assert';
 import {describe, expect, test} from 'bun:test';
 
-import runKMeans from '.';
+import runKMeans, {KMeansStats} from '.';
 
 describe('runKMeans', () => {
 	test('...', async () => {
-		let vectors = [
-			[1, 4],
-			[6, 2],
-			[0, 4],
-			[1, 3],
-			[5, 1],
-			[4, 0],
-		];
-		let clusters = KMeans(vectors, 2);
-		clusters.sort((a, b) => vectors.indexOf(a[0]) - vectors.indexOf(b[0]));
-		assert.deepEqual(clusters, [
-			[
-				[1, 4],
-				[0, 4],
-				[1, 3],
-			],
-			[
-				[6, 2],
-				[5, 1],
-				[4, 0],
-			],
-		]);
+		for (let items of [[], [1], [1, 2, 3]]) {
+			for (let centers of [0, []]) {
+				let stats!: KMeansStats;
+				// prettier-ignore
+				let result = runKMeans<number>(items, centers, () => fail(), () => fail(), {
+					stats: (r) => (stats = r),
+				});
 
-		// prettier-ignore
-		let result = runBronKerbosch([[1, 2], [1, 5], [2, 5], [3, 4], [4, 5], [4, 6]]);
-
-		// prettier-ignore
-		expect(result).toEqual([[3, 4], [4, 5], [4, 6], [1, 2, 5]]);
+				expect(result).toEqual([]);
+				expect(stats).toEqual({
+					centers: [],
+					iterations: 0,
+				});
+			}
+		}
 	});
 
 	test('...', async () => {
-		let result = runBronKerbosch([]);
+		let stats!: KMeansStats;
+		// prettier-ignore
+		let result = runKMeans<number>([], [1, 2, 3], () => fail(), () => fail(), {
+			stats: (r) => (stats = r),
+		});
+
+		expect(result).toEqual([[], [], []]);
+		expect(stats).toEqual({
+			centers: [1, 2, 3],
+			iterations: 0,
+		});
+	});
+
+	test('...', async () => {
+		let stats!: KMeansStats;
+		// prettier-ignore
+		let result = runKMeans<number>([], 3, () => fail(), () => fail(), {
+			stats: (r) => (stats = r),
+		});
 
 		expect(result).toEqual([]);
+		expect(stats).toEqual({
+			centers: [],
+			iterations: 0,
+		});
 	});
-});
 
-Array.from({length: 10}, () => {
-	let vectors = [
-		[1, 4],
-		[6, 2],
-		[0, 4],
-		[1, 3],
-		[5, 1],
-		[4, 0],
-	];
-	let clusters = runKMeans(vectors, 2);
-	clusters.sort((a, b) => vectors.indexOf(a[0]) - vectors.indexOf(b[0]));
-	assert.deepEqual(clusters, [
-		[
-			[1, 4],
-			[0, 4],
-			[1, 3],
-		],
-		[
-			[6, 2],
-			[5, 1],
-			[4, 0],
-		],
-	]);
-});
-{
-	let vectors = [
-		[1, 4],
-		[6, 2],
-		[0, 4],
-		[1, 3],
-		[5, 1],
-		[4, 0],
-	];
-	let clusters = runKMeans(vectors, [
-		[0, 7],
-		[7, 0],
-	]);
-	assert.deepEqual(clusters, [
-		[
-			[1, 4],
-			[0, 4],
-			[1, 3],
-		],
-		[
-			[6, 2],
-			[5, 1],
-			[4, 0],
-		],
-	]);
-}
-{
-	let vectorSize = 3;
-	let vectorsCount = 1000;
-	let clustersCount = 12;
-	let vectors = Array.from({length: vectorsCount}, () =>
-		Array.from({length: vectorSize}, () => Math.random()),
-	);
-	let clusters = runKMeans(vectors, clustersCount);
-	assert.equal(clusters.length, clustersCount);
-	assert.equal(clusters.flat().length, vectorsCount);
-}
-assert.deepEqual(runKMeans([], 3), [[], [], []]);
-assert.deepEqual(runKMeans([[1], [2], [3]], 0), []);
-{
-	let vectors = [[1], [2], [3]];
-	assert.deepEqual(runKMeans(vectors, 1), [vectors]);
-}
-Array.from({length: 10}, () => {
-	assert.deepEqual(runKMeans([[1]], 2), [[[1]], []]);
-});
-Array.from({length: 10}, () => {
-	let Athlete = class {
-		constructor(name, height, weight) {
-			this.name = name;
-			this.height = height;
-			this.weight = weight;
-		}
-		toJSON() {
-			return this.name;
-		}
-	};
-	let athletes = [
-		new Athlete('A', 185, 72),
-		new Athlete('B', 183, 84),
-		new Athlete('C', 168, 60),
-		new Athlete('D', 179, 68),
-		new Athlete('E', 182, 72),
-		new Athlete('F', 188, 77),
-		new Athlete('G', 180, 71),
-		new Athlete('H', 180, 70),
-		new Athlete('I', 170, 56),
-		new Athlete('J', 180, 88),
-		new Athlete('K', 180, 67),
-		new Athlete('L', 177, 76),
-	];
-	let clusteredAthletes = runKMeans(athletes, 2, {
-		map: (athlete) => [athlete.weight / athlete.height],
-	});
-	clusteredAthletes.sort(
-		(a, b) => athletes.indexOf(a[0]) - athletes.indexOf(b[0]),
-	);
-	assert.deepEqual(JSON.parse(JSON.stringify(clusteredAthletes)), [
-		['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K'],
-		['B', 'J', 'L'],
-	]);
-});
-{
-	let Athlete = class {
-		constructor(name, height, weight) {
-			this.name = name;
-			this.height = height;
-			this.weight = weight;
-		}
-		toJSON() {
-			return this.name;
-		}
-	};
-	let athletes = [
-		new Athlete('A', 185, 72),
-		new Athlete('B', 183, 84),
-		new Athlete('C', 168, 60),
-		new Athlete('D', 179, 68),
-		new Athlete('E', 182, 72),
-		new Athlete('F', 188, 77),
-		new Athlete('G', 180, 71),
-		new Athlete('H', 180, 70),
-		new Athlete('I', 170, 56),
-		new Athlete('J', 180, 88),
-		new Athlete('K', 180, 67),
-		new Athlete('L', 177, 76),
-	];
-	let clusteredAthletes = runKMeans(athletes, [athletes[0], athletes[1]], {
-		map: (athlete) => [athlete.weight / athlete.height],
-	});
-	assert.deepEqual(JSON.parse(JSON.stringify(clusteredAthletes)), [
-		['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K'],
-		['B', 'J', 'L'],
-	]);
-}
+	test('...', async () => {
+		for (let centers of [1, [NaN], 3, [NaN, NaN, NaN]]) {
+			let stats!: KMeansStats;
+			// prettier-ignore
+			let result = runKMeans<number>([1], centers, () => fail(), () => fail(), {
+				stats: (r) => (stats = r),
+			});
 
-/*
-let assert = require('assert').strict;
-
-let KMeans = require('./index');
-
-Array.from({length: 10}, () => {
-	let vectors = [[1, 4], [6, 2], [0, 4], [1, 3], [5, 1], [4, 0]];
-	let clusters = KMeans(vectors, 2);
-	clusters.sort((a, b) => vectors.indexOf(a[0]) - vectors.indexOf(b[0]));
-	assert.deepEqual(clusters, [[[1, 4], [0, 4], [1, 3]], [[6, 2], [5, 1], [4, 0]]]);
-});
-{
-	let vectors = [[1, 4], [6, 2], [0, 4], [1, 3], [5, 1], [4, 0]];
-	let clusters = KMeans(vectors, [[0, 7], [7, 0]]);
-	assert.deepEqual(clusters, [[[1, 4], [0, 4], [1, 3]], [[6, 2], [5, 1], [4, 0]]]);
-}
-{
-	let vectorSize = 3;
-	let vectorsCount = 1000;
-	let clustersCount = 12;
-	let vectors = Array.from({length: vectorsCount}, () => Array.from(({length: vectorSize}), () => Math.random()));
-	let clusters = KMeans(vectors, clustersCount);
-	assert.equal(clusters.length, clustersCount);
-	assert.equal(clusters.flat().length, vectorsCount);
-}
-assert.deepEqual(KMeans([], 3), [[], [], []]);
-assert.deepEqual(KMeans([[1], [2], [3]], 0), []);
-{
-	let vectors = [[1], [2], [3]];
-	assert.deepEqual(KMeans(vectors, 1), [vectors]);
-}
-Array.from({length: 10}, () => {
-	assert.deepEqual(KMeans([[1]], 2), [[[1]], []]);
-});
-Array.from({length: 10}, () => {
-	let Athlete = class {
-		constructor(name, height, weight) {
-			this.name = name;
-			this.height = height;
-			this.weight = weight;
+			expect(result).toEqual([[1]]);
+			expect(stats).toEqual({
+				centers: [1],
+				iterations: 0,
+			});
 		}
-		toJSON() {
-			return this.name;
-		}
-	};
-	let athletes = [
-		new Athlete('A', 185, 72), new Athlete('B', 183, 84), new Athlete('C', 168, 60),
-		new Athlete('D', 179, 68), new Athlete('E', 182, 72), new Athlete('F', 188, 77),
-		new Athlete('G', 180, 71), new Athlete('H', 180, 70), new Athlete('I', 170, 56),
-		new Athlete('J', 180, 88), new Athlete('K', 180, 67), new Athlete('L', 177, 76),
-	];
-	let clusteredAthletes = KMeans(athletes, 2, {
-		map: athlete => [athlete.weight / athlete.height],
 	});
-	clusteredAthletes.sort((a, b) => athletes.indexOf(a[0]) - athletes.indexOf(b[0]));
-	assert.deepEqual(JSON.parse(JSON.stringify(clusteredAthletes)), [['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K'], ['B', 'J', 'L']]);
-});
-{
-	let Athlete = class {
-		constructor(name, height, weight) {
-			this.name = name;
-			this.height = height;
-			this.weight = weight;
+
+	test('...', async () => {
+		let centerFn = (...ns: number[]) => ns.reduce((r, n) => r + n) / ns.length;
+		for (let centers of [1, [NaN]]) {
+			let stats!: KMeansStats;
+			// prettier-ignore
+			let result = runKMeans<number>([1, 2, 3], centers, () => fail(), centerFn, {
+				stats: (r) => (stats = r),
+			});
+
+			expect(result).toEqual([[1, 2, 3]]);
+			expect(stats).toEqual({
+				centers: [2],
+				iterations: 0, // ?
+			});
 		}
-		toJSON() {
-			return this.name;
-		}
-	};
-	let athletes = [
-		new Athlete('A', 185, 72), new Athlete('B', 183, 84), new Athlete('C', 168, 60),
-		new Athlete('D', 179, 68), new Athlete('E', 182, 72), new Athlete('F', 188, 77),
-		new Athlete('G', 180, 71), new Athlete('H', 180, 70), new Athlete('I', 170, 56),
-		new Athlete('J', 180, 88), new Athlete('K', 180, 67), new Athlete('L', 177, 76),
-	];
-	let clusteredAthletes = KMeans(athletes, [athletes[0], athletes[1]], {
-		map: athlete => [athlete.weight / athlete.height],
 	});
-	assert.deepEqual(JSON.parse(JSON.stringify(clusteredAthletes)), [['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K'], ['B', 'J', 'L']]);
-}
-*/
+
+	test('...', async () => {
+		let distanceFn = (a: number, b: number) => Math.abs(a - b);
+		let centerFn = (...ns: number[]) => ns.reduce((r, n) => r + n) / ns.length;
+		let stats!: KMeansStats;
+		// prettier-ignore
+		let result = runKMeans<number>([1, 1], 3, distanceFn, centerFn, {
+			stats: (r) => (stats = r),
+		});
+
+		expect(result).toEqual([[1, 1]]);
+		expect(stats).toEqual({
+			centers: [1],
+			iterations: 0, // ?
+		});
+	});
+
+	test('...', async () => {
+		let stats!: KMeansStats;
+		// prettier-ignore
+		let result = runKMeans<number>([1, 2, 3], 3, () => fail(), () => fail(), {
+			stats: (r) => (stats = r),
+		});
+
+		expect(result).toEqual([[1], [2], [3]]);
+		expect(stats).toEqual({
+			centers: [1, 2, 3],
+			iterations: 0, // ?
+		});
+	});
+
+	test.skip('...', async () => {
+		type Vec = {x: number; y: number};
+		let Vec = (x: number, y: number): Vec => ({x, y});
+		for (let centers of [2, [Vec(0, 7), Vec(7, 0)]]) {
+			let stats!: KMeansStats;
+			let result = runKMeans<Vec>(
+				// prettier-ignore
+				[Vec(1, 4), Vec(6, 2), Vec(0, 4), Vec(1, 3), Vec(5, 1), Vec(4, 0)],
+				centers,
+				(a, b) => Math.hypot(a.x - b.x, a.y - b.y),
+				// prettier-ignore
+				(...vs) => Vec(
+					vs.reduce((r, v) => r + v.x, 0) / vs.length,
+					vs.reduce((r, v) => r + v.y, 0) / vs.length,
+				),
+				{stats: (r) => (stats = r)},
+			);
+
+			// prettier-ignore
+			expect(result).toEqual([[Vec(1, 4), Vec(0, 4), Vec(1, 3)], [Vec(6, 2), Vec(5, 1), Vec(4, 0)]]); // todo 3, 2, 2
+			expect(stats).toEqual({
+				centers: [NaN, NaN, NaN],
+				iterations: NaN,
+			});
+		}
+	});
+});
