@@ -1,2 +1,2 @@
 // prettier-ignore
-export default function runBronKerbosch<T>(edges: Iterable<Readonly<[T, T]>>): Array<Array<T>>;
+export default function runBronKerbosch<T>(graph: Iterable<Readonly<[T, T]>>): Array<Array<T>>;

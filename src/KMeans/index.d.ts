@@ -1,12 +1,6 @@
-export interface KMeansStats<T = any> {
-	centers: Array<T>;
+export type KMeansOptions = Partial<{
 	iterations: number;
-}
-
-export type KMeansOptions<T = any> = Partial<{
-	maxIterations: number; // todo: convergenz
 	random: {(): number};
-	stats: {(r: KMeansStats<T>): void};
 }>;
 
 export default function runKMeans<T>(
@@ -14,5 +8,5 @@ export default function runKMeans<T>(
 	centers: number | Iterable<T>,
 	calcDistance: {(a: T, b: T): number},
 	calcCenter: {(...items: T[]): T},
-	options?: KMeansOptions<T>,
+	options?: KMeansOptions,
 ): Array<Array<T>>;

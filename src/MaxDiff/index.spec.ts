@@ -4,7 +4,7 @@ import runMaxDiff from '.';
 
 // todo: rename instance
 
-describe.skip('runBronKerbosch', () => {
+describe.skip('runMaxDiff', () => {
 	test('...', async () => {
 		let instance = runMaxDiff([]);
 
@@ -12,10 +12,6 @@ describe.skip('runBronKerbosch', () => {
 		expect(instance.progress).toBe(1);
 		expect(instance.result).toEqual([]);
 		expect(instance.getCandidates(4)).toEqual([]);
-		expect(instance.getUnorderedPairs()).toEqual([]);
-		expect(instance.getUnorderedGroups()).toEqual([]);
-		expect(instance.getOrderedPairs()).toEqual([]);
-		expect(instance.getOrderedGroups()).toEqual([]);
 	});
 
 	test('...', async () => {
@@ -25,10 +21,6 @@ describe.skip('runBronKerbosch', () => {
 		expect(instance.progress).toBe(1);
 		expect(instance.result).toEqual(['a']);
 		expect(instance.getCandidates(4)).toEqual([]);
-		expect(instance.getUnorderedPairs()).toEqual([]);
-		expect(instance.getUnorderedGroups()).toEqual([]);
-		expect(instance.getOrderedPairs()).toEqual([]);
-		expect(instance.getOrderedGroups()).toEqual([]);
 		expect(instance.getItemsBefore('a')).toEqual([]);
 		expect(instance.getItemsAfter('a')).toEqual([]);
 	});
@@ -40,10 +32,6 @@ describe.skip('runBronKerbosch', () => {
 		expect(instance.progress).toBe(0);
 		expect(instance.result).toBeUndefined();
 		expect(instance.getCandidates(4)).toEqual(['a', 'b']);
-		expect(instance.getUnorderedPairs()).toEqual([['a', 'b']]);
-		expect(instance.getUnorderedGroups()).toEqual([['a', 'b']]);
-		expect(instance.getOrderedPairs()).toEqual([]);
-		expect(instance.getOrderedGroups()).toEqual([]);
 		expect(instance.getItemsBefore('a')).toEqual([]);
 		expect(instance.getItemsAfter('a')).toEqual([]);
 		expect(instance.getItemsBefore('b')).toEqual([]);
@@ -55,10 +43,6 @@ describe.skip('runBronKerbosch', () => {
 		expect(instance.progress).toBe(1);
 		expect(instance.result).toEqual(['b', 'a']);
 		expect(instance.getCandidates(4)).toEqual([]);
-		expect(instance.getUnorderedPairs()).toEqual([]);
-		expect(instance.getUnorderedGroups()).toEqual([]);
-		expect(instance.getOrderedPairs()).toEqual([['b', 'a']]);
-		expect(instance.getOrderedGroups()).toEqual([['b', 'a']]);
 		expect(instance.getItemsBefore('a')).toEqual(['b']);
 		expect(instance.getItemsAfter('a')).toEqual([]);
 		expect(instance.getItemsBefore('b')).toEqual([]);
@@ -72,11 +56,6 @@ describe.skip('runBronKerbosch', () => {
 		expect(instance.progress).toBe(0);
 		expect(instance.result).toBeUndefined();
 		expect(instance.getCandidates(4)).toEqual(['a', 'b', 'c']);
-		// prettier-ignore
-		expect(instance.getUnorderedPairs()).toEqual([['a', 'b'], ['a', 'c'], ['b', 'c']]);
-		expect(instance.getUnorderedGroups()).toEqual([['a', 'b', 'c']]);
-		expect(instance.getOrderedPairs()).toEqual([]);
-		expect(instance.getOrderedGroups()).toEqual([]);
 		expect(instance.getItemsBefore('a')).toEqual([]);
 		expect(instance.getItemsAfter('a')).toEqual([]);
 		expect(instance.getItemsBefore('b')).toEqual([]);
@@ -91,12 +70,6 @@ describe.skip('runBronKerbosch', () => {
 		expect(instance.progress).toBe(1/3);
 		expect(instance.result).toBeUndefined();
 		expect(instance.getCandidates(4)).toEqual(['a', 'b', 'c']);
-		// prettier-ignore
-		expect(instance.getUnorderedPairs()).toEqual([['a', 'b'], ['b', 'c']]);
-		// prettier-ignore
-		expect(instance.getUnorderedGroups()).toEqual([['a', 'b'], ['b', 'c']]);
-		expect(instance.getOrderedPairs()).toEqual([['c', 'a']]);
-		expect(instance.getOrderedGroups()).toEqual([['c', 'a']]);
 		expect(instance.getItemsBefore('a')).toEqual(['c']);
 		expect(instance.getItemsAfter('a')).toEqual([]);
 		expect(instance.getItemsBefore('b')).toEqual([]);
@@ -111,12 +84,6 @@ describe.skip('runBronKerbosch', () => {
 		expect(instance.progress).toBe(2/3);
 		expect(instance.result).toBeUndefined();
 		expect(instance.getCandidates(4)).toEqual(['a', 'b']);
-		expect(instance.getUnorderedPairs()).toEqual([['a', 'b']]);
-		expect(instance.getUnorderedGroups()).toEqual([['a', 'b']]);
-		// prettier-ignore
-		expect(instance.getOrderedPairs()).toEqual([['c', 'a'], ['c', 'b']]);
-		// prettier-ignore
-		expect(instance.getOrderedGroups()).toEqual([['c', 'a'], ['c', 'b']]);
 		expect(instance.getItemsBefore('a')).toEqual(['c']);
 		expect(instance.getItemsAfter('a')).toEqual([]);
 		expect(instance.getItemsBefore('b')).toEqual(['c']);
@@ -130,12 +97,7 @@ describe.skip('runBronKerbosch', () => {
 		expect(instance.progress).toBe(1);
 		expect(instance.result).toEqual(['c', 'b', 'a']);
 		expect(instance.getCandidates(4)).toEqual([]);
-		expect(instance.getUnorderedPairs()).toEqual([]);
-		expect(instance.getUnorderedGroups()).toEqual([]);
-		// prettier-ignore
-		expect(instance.getOrderedPairs()).toEqual([['b', 'a'], ['c', 'a'], ['c', 'b']]); // order?
-		expect(instance.getOrderedGroups()).toEqual([['c', 'b', 'a']]);
-		expect(instance.getItemsBefore('a')).toEqual(['b', 'c']); // order?
+		expect(instance.getItemsBefore('a')).toEqual(['b', 'c']);
 		expect(instance.getItemsAfter('a')).toEqual([]);
 		expect(instance.getItemsBefore('b')).toEqual(['c']);
 		expect(instance.getItemsAfter('b')).toEqual(['a']);

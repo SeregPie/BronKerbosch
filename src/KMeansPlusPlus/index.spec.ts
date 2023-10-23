@@ -3,7 +3,7 @@ import {describe, expect, test} from 'bun:test';
 
 import runKMeansPlusPlus from '.';
 
-describe('runKMeans', () => {
+describe('runKMeansPlusPlus', () => {
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeansPlusPlus<number>([], 0, () => fail(), () => fail());

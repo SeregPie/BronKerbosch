@@ -1,4 +1,4 @@
-// todo: rename Control, Controller, Manager, Wizard
+// todo: rename Control, Controller, Manager, Wizard, Runner
 export interface MaxDiffController<T> {
 	get progress(): number;
 
@@ -6,8 +6,10 @@ export interface MaxDiffController<T> {
 
 	get result(): undefined | Array<T>;
 
+	// get/pick/find
 	getCandidates(limit?: number): Array<T>;
 
+	/*
 	getOrderedPairs(): Array<[T, T]>;
 
 	getUnorderedPairs(): Array<[T, T]>;
@@ -15,6 +17,7 @@ export interface MaxDiffController<T> {
 	getOrderedGroups(): Array<Array<T>>;
 
 	getUnorderedGroups(): Array<Array<T>>;
+	*/
 
 	getItemsBefore(item: T): Array<T>;
 

@@ -1,7 +1,6 @@
-export type KMeansPlusPlusOptions = Partial<{
-	maxIterations: number; // todo: convergenz
-	random: {(): number};
-}>;
+import {KMeansOptions} from '../KMeans';
+
+export type KMeansPlusPlusOptions = KMeansOptions;
 
 export default function runKMeansPlusPlus<T>(
 	items: Iterable<T>,
