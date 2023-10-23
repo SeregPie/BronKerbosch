@@ -6,7 +6,7 @@ export interface MaxDiffController<T> {
 
 	get result(): undefined | Array<T>;
 
-	// get/pick/find
+	// get/pick/find/select
 	getCandidates(limit?: number): Array<T>;
 
 	/*
