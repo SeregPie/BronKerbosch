@@ -1,11 +1,10 @@
-import {fail} from 'assert';
 import {describe, expect, test} from 'bun:test';
 
 import runNearestNeighborChain from '.';
 
 describe.skip('runNearestNeighborChain', () => {
 	test('...', async () => {
-		let result = runNearestNeighborChain<number>([], () => fail());
+		let result = runNearestNeighborChain<number>([], () => 0);
 
 		expect(result).toEqual(undefined);
 		expect(result).toEqual(null);
@@ -13,7 +12,7 @@ describe.skip('runNearestNeighborChain', () => {
 	});
 
 	test('...', async () => {
-		let result = runNearestNeighborChain<number>([1], () => fail());
+		let result = runNearestNeighborChain<number>([1], () => 0);
 
 		expect(result).toEqual(1);
 		expect(result).toEqual([1]);
@@ -21,7 +20,7 @@ describe.skip('runNearestNeighborChain', () => {
 	});
 
 	test('...', async () => {
-		let result = runNearestNeighborChain<number>([1, 2], () => fail());
+		let result = runNearestNeighborChain<number>([1, 2], () => 0);
 
 		expect(result).toEqual([1, 2]);
 		expect(result).toEqual([[1, 2]]);
@@ -30,9 +29,8 @@ describe.skip('runNearestNeighborChain', () => {
 
 	test('...', async () => {
 		// prettier-ignore
-		let result = runNearestNeighborChain<number>(
-			[1, 2, 3, 4, 5],
-			() => 0,
+		let result = runNearestNeighborChain<number>([1, 2, 3, 4, 5],
+			(a, b) => Math.abs(a - b),
 		);
 
 		expect(result).toEqual([1, 2, 3, 4, 5]);
@@ -42,11 +40,11 @@ describe.skip('runNearestNeighborChain', () => {
 
 	test('...', async () => {
 		// prettier-ignore
-		let result = runNearestNeighborChain<number>(
-			[4, 90, 12, 61, 29],
+		let result = runNearestNeighborChain<number>([4, 90, 12, 61, 29],
 			(a, b) => Math.abs(a - b),
 		);
 
+		// todo: order
 		// prettier-ignore
 		expect(result).toEqual([[29, [4, 12]], [90, 61]]);
 	});
@@ -64,7 +62,9 @@ describe.skip('runNearestNeighborChain', () => {
 			(a, b) => -(new Set(a.split('').filter((v) => b.includes(v)))).size,
 		);
 
+		// todo: order
 		// prettier-ignore
 		expect(result).toEqual(['ac', 'bc', ['ab', 'baab', 'aba']]);
+		expect(result).toEqual([['ac'], ['bc'], [['ab'], ['baab'], ['aba']]]);
 	});
 });
