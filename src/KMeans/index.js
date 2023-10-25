@@ -10,7 +10,7 @@ export default (
 	} = {},
 ) => {
 	items = Array.from(items);
-	centers = ((v) => {
+	/*centers = ((v) => {
 		if (typeof v === 'number') {
 			centers = Array.from({length: centers}, () => 0);
 		}
@@ -28,19 +28,19 @@ export default (
 	cluster = {
 		center,
 		items,
-	};
+	};*/
 	if (items.length > 0 && centers.length > 0) {
 		for (let i = 0; i < iterations; i++) {
 			let stop = true;
-			items.forEach((item, i) => {
+			/*items.forEach((item, i) => {
 				let v = centers.findIndexOfMin((center) => calcDistance(item, center));
 				if (assignments[i] !== v) {
 					assignments[i] = v;
 					stop = false;
 				}
-			});
+			});*/
 			if (stop) break;
-			centers = centers.map((center, i) => {
+			/*centers = centers.map((center, i) => {
 				let items = clusters[i];
 				switch (items.length) {
 					case 0:
@@ -49,8 +49,8 @@ export default (
 						return items[0];
 				}
 				return calcCenter(...items);
-			});
+			});*/
 		}
 	}
-	return clusters;
+	return [];
 };

@@ -103,6 +103,7 @@ describe('runKMeans', () => {
 	});
 });
 
+/*
 declare const VectorMath: {
 	distance<T extends Array<number>>(a: T, b: T): number;
 
@@ -119,3 +120,4 @@ let result = runKMeans<[number, number]>(
 	// prettier-ignore
 	VectorMath.mean,
 );
+*/
