@@ -1,3 +1,9 @@
+import {jefhwnhp} from '../JustMyLuck';
+
+function Number_is(v) {
+	return typeof v === 'number';
+}
+
 export default (
 	items,
 	centers,
@@ -10,7 +16,15 @@ export default (
 	} = {},
 ) => {
 	items = Array.from(items);
-	/*centers = ((v) => {
+	console.log('pre', 'centers', centers);
+	if (Number_is(centers)) {
+		centers = jefhwnhp(items, centers);
+	} else {
+		centers = Array.from(centers);
+	}
+	console.log('post', 'centers', centers);
+	/*
+	centers = ((v) => {
 		if (typeof v === 'number') {
 			centers = Array.from({length: centers}, () => 0);
 		}
@@ -28,7 +42,8 @@ export default (
 	cluster = {
 		center,
 		items,
-	};*/
+	};
+	*/
 	if (items.length > 0 && centers.length > 0) {
 		for (let i = 0; i < iterations; i++) {
 			let stop = true;

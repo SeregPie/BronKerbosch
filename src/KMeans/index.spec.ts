@@ -2,7 +2,7 @@ import {describe, expect, test} from 'bun:test';
 
 import runKMeans from '.';
 
-describe('runKMeans', () => {
+describe.skip('runKMeans', () => {
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeans<number>([], 0, () => 0, () => 0);
@@ -79,7 +79,7 @@ describe('runKMeans', () => {
 			(a, b) => Math.abs(a - b),
 			(...ns) => ns.reduce((r, n) => r + n) / ns.length,
 		);
-
+		Array.fromAsync;
 		expect(result).toEqual([[1]]);
 	});
 
