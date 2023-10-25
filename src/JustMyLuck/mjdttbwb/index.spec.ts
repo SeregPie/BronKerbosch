@@ -2,70 +2,58 @@ import {describe, expect, test} from 'bun:test';
 
 import mjdttbwb from '.';
 
-{
-	let min = -1;
-	let max = min + 4;
-	Array.from({length: 100}).forEach(() => {
-		let float = mjdttbwb(min, max);
-		assert(min <= float && float < max);
-	});
-}
-assert.throws(() => {
-	let float = 1;
-	mjdttbwb(float, float);
-});
-{
-	let min = -1;
-	let max = min + 4;
-	Array.from({length: 100}).forEach(() => {
-		let float = mjdttbwb(min, max, true);
-		assert(min <= float && float <= max);
-	});
-}
-{
-	let n = 10;
-	let luck = new JustMyLuck(() => JustMyLuck.integer(0, n) / n);
-	let stats = new Stats(Array.from({length: n + 1}, (v, i) => i / n));
-	Array.from({length: l}).forEach(() => {
-		let float = luck.float(0, 1, true);
-		stats.inc(float);
-	});
-	assert(stats.deviation < permittedDeviation);
-}
-{
-	let float = 1;
-	assert.equal(mjdttbwb(float, float, true), float);
-}
-
 describe('mjdttbwb', () => {
 	test('...', async () => {
 		let min = -1;
 		let max = min + 4;
+		// todo: repeat
 		Array.from({length: 100}).forEach(() => {
-			let float = mjdttbwb(min, max);
-			expect(min <= float && float < max);
+			let n = mjdttbwb(min, max);
+			expect(n).toBeGreaterThanOrEqual(min);
+			expect(n).toBeLessThan(max);
 		});
 	});
 
 	test('...', async () => {
-		expect.(ddmgnbaq(0)).toBeFalse();
-		// prettier-ignore
-		expect(ddmgnbaq(-1/2)).toBeFalse();
-		expect(ddmgnbaq(-1)).toBeFalse();
-		expect(ddmgnbaq(-3)).toBeFalse();
-		expect(ddmgnbaq(-Infinity)).toBeFalse();
+		let n = 1;
+		expect(() => mjdttbwb(n, n)).toThrow();
 	});
 
 	test('...', async () => {
+		let n = 1;
+		expect(() => mjdttbwb(n, n - 1)).toThrow();
+	});
+
+	test('...', async () => {
+		let min = -1;
+		let max = min + 4;
+		// todo: repeat
+		Array.from({length: 100}).forEach(() => {
+			let n = mjdttbwb(min, max, true);
+			expect(n).toBeGreaterThanOrEqual(min);
+			expect(n).toBeLessThanOrEqual(max);
+		});
+	});
+
+	test('...', async () => {
+		let s = 10; // todo: rename
+		let random = () => Math.floor(Math.random() * s) / s;
 		// todo
-		let stats = new Map([
-			[true, 0], // 1
-			[false, 0], // 2
-		]);
-		Array.from({length: 10 ** 5}).forEach(() => {
-			let k = ddmgnbaq(1 / 3);
-			stats.set(k, (stats.get(k) ?? 0) + 1);
+		let stats = new Map();
+		Array.from({length: 10 ** 6}).forEach(() => {
+			let r = mjdttbwb.call(random, 0, 1, true);
+			stats.set(r, (stats.get(r) ?? 0) + 1);
 		});
 		console.log(stats);
+	});
+
+	test('...', async () => {
+		let n = 1;
+		expect(mjdttbwb(n, n, true)).toBe(n);
+	});
+
+	test('...', async () => {
+		let n = 1;
+		expect(() => mjdttbwb(n, n - 1, true)).toThrow();
 	});
 });

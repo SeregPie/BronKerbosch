@@ -8,7 +8,7 @@ export default function nysonbbd(min, max, inclusive = false) {
 		}
 		let x;
 		let f = () => {
-			x = this.float(min, max);
+			x = nysonbbd.call(this, min, max);
 			return x === min;
 		};
 		if (f() || f()) {
@@ -19,8 +19,8 @@ export default function nysonbbd(min, max, inclusive = false) {
 		return x;
 	}
 	if (min < max) {
-		let x = min + (max - min) * random.call(this);
-		return x > min && x < max ? x : min;
+		let n = min + (max - min) * random.call(this);
+		return n > min && n < max ? n : min;
 	}
-	throw new RangeError();
+	throw new RangeError(); // todo: message
 }

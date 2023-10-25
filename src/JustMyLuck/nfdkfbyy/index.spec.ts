@@ -5,13 +5,10 @@ import nfdkfbyy from '.';
 describe('nfdkfbyy', () => {
 	test('...', async () => {
 		// todo
-		let stats = new Map([
-			[true, 0], // 1
-			[false, 0], // 1
-		]);
+		let stats = new Map();
 		Array.from({length: 10 ** 5}).forEach(() => {
-			let k = nfdkfbyy();
-			stats.set(k, (stats.get(k) ?? 0) + 1);
+			let r = nfdkfbyy();
+			stats.set(r, (stats.get(r) ?? 0) + 1);
 		});
 		console.log(stats);
 	});

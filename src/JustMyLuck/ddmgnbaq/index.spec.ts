@@ -20,13 +20,10 @@ describe('ddmgnbaq', () => {
 
 	test('...', async () => {
 		// todo
-		let stats = new Map([
-			[true, 0], // 1
-			[false, 0], // 2
-		]);
+		let stats = new Map();
 		Array.from({length: 10 ** 5}).forEach(() => {
-			let k = ddmgnbaq(1 / 3);
-			stats.set(k, (stats.get(k) ?? 0) + 1);
+			let r = ddmgnbaq(1 / 3);
+			stats.set(r, (stats.get(r) ?? 0) + 1);
 		});
 		console.log(stats);
 	});
