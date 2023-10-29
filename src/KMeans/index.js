@@ -14,13 +14,11 @@ export default (
 	} = {},
 ) => {
 	items = Array.from(items);
-	console.log('pre', 'centers', centers);
 	if (Number_is(centers)) {
 		centers = items.slice(0, centers);
 	} else {
 		centers = Array.from(centers);
 	}
-	console.log('post', 'centers', centers);
 	/*
 	centers = ((v) => {
 		if (typeof v === 'number') {
@@ -46,16 +44,11 @@ export default (
 		for (let i = 0; i < iterations; i++) {
 			let stop = true;
 			items.forEach((item, i) => {
-				let wzogtszz = 0;
-				let distance = calcDistance(item, centers[wzogtszz]);
-				for (let i = 1; i < centers.length; i++) {
-					let t = calcDistance(item, centers[i]);
-					if (distance > t) {
-						distance = t;
-						wzogtszz = i;
-					}
-				}
-				console.log(distance, item, centers[wzogtszz]);
+				// prettier-ignore
+				let center = (centers
+					.map((center, i) => [calcDistance(item, center), center, i])
+					.reduce((prev, curr) =>  curr[0] < prev[0] ? curr : prev)
+				)[1];
 				/*
 				let v = centers.findIndexOfMin((center) => calcDistance(item, center));
 				if (assignments[i] !== v) {
