@@ -2,7 +2,7 @@ import {describe, expect, test} from 'bun:test';
 
 import runKMeans from '.';
 
-describe.skip('runKMeans', () => {
+describe('runKMeans', () => {
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeans<number>([], 0, () => 0, () => 0);
