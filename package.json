@@ -8,7 +8,7 @@
 	"type": "module",
 	"scripts": {
 		"build": "pkgroll",
-		"test": "bun test",
+		"test": "bun test --watch",
 		"format": "prettier . --write"
 	},
 	"exports": {

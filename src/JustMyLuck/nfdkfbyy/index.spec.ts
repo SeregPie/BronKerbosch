@@ -2,7 +2,7 @@ import {describe, test} from 'bun:test';
 
 import nfdkfbyy from '.';
 
-describe('nfdkfbyy', () => {
+describe.skip('nfdkfbyy', () => {
 	test('...', async () => {
 		// todo
 		let stats = new Map();

@@ -4,7 +4,7 @@ import runMaxDiff from '.';
 
 // todo: rename instance
 
-describe.skip('runMaxDiff', () => {
+describe('runMaxDiff', () => {
 	test('...', async () => {
 		let instance = runMaxDiff([]);
 

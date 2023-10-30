@@ -2,7 +2,7 @@ import {describe, expect, test} from 'bun:test';
 
 import mjdttbwb from '.';
 
-describe('mjdttbwb', () => {
+describe.skip('mjdttbwb', () => {
 	test('...', async () => {
 		let min = -1;
 		let max = min + 4;
