@@ -12,7 +12,7 @@ export default (graph) => {
 			items.add(edge[i]);
 		});
 	}
-	let mwidyjze = [...items];
+
 	// todo: rename
 	let zfiwqqsk = new Map();
 	items.forEach((item) => {
@@ -55,8 +55,10 @@ export default (graph) => {
 				result.push([...currItems]);
 			}
 		};
-		run(new Set(), items, new Set());
+		run(new Set(), new Set(items), new Set());
 	}
+	// todo: rename
+	let mwidyjze = [...items];
 	// prettier-ignore
 	return (result
 		.map((v) => v.sort((a, b) => mwidyjze.indexOf(a) - mwidyjze.indexOf(b)))
