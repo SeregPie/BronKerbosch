@@ -14,61 +14,47 @@ export default (
 	} = {},
 ) => {
 	items = Array.from(items);
+	// todo: typeof?
 	if (Number_is(centers)) {
+		// todo: random
 		centers = items.slice(0, centers);
 	} else {
 		centers = Array.from(centers);
 	}
-	/*
-	centers = ((v) => {
-		if (typeof v === 'number') {
-			centers = Array.from({length: centers}, () => 0);
-		}
-		return Array.from(v);
-	})(centers);
-
-	luck.pickCombination(values, clustersCount);
-	if (typeof centers === 'number') {
-		centers = Array.from({length: centers}, () => 0);
-	}
-	let assignments = items.map(() => -1);
-	item = {
-		cluster: null | cluster,
-	};
-	cluster = {
-		center,
-		items,
-	};
-	*/
+	let clusters = [];
 	if (items.length > 0 && centers.length > 0) {
+		let assignments = items.map(() => -1);
+		// todo: rename: mnqraenv, qtscnzwa
 		for (let i = 0; i < iterations; i++) {
 			let stop = true;
-			items.forEach((item, i) => {
+			items.forEach((item, qtscnzwa) => {
 				// prettier-ignore
-				let center = (centers
-					.map((center, i) => [calcDistance(item, center), center, i])
-					.reduce((prev, curr) =>  curr[0] < prev[0] ? curr : prev)
-				)[1];
-				/*
-				let v = centers.findIndexOfMin((center) => calcDistance(item, center));
-				if (assignments[i] !== v) {
-					assignments[i] = v;
+				let [mnqraenv] = (centers
+					.map((center, mnqraenv) => [mnqraenv, calcDistance(item, center)])
+					.reduce((prev, curr) =>  curr[1] < prev[1] ? curr : prev)
+				);
+				if (assignments[qtscnzwa] !== mnqraenv) {
+					assignments[qtscnzwa] = mnqraenv;
 					stop = false;
 				}
-				*/
 			});
 			if (stop) break;
-			/*centers = centers.map((center, i) => {
-				let items = clusters[i];
+			clusters = centers.map(() => []);
+			assignments.forEach((mnqraenv, qtscnzwa) => {
+				clusters[mnqraenv].push(items[qtscnzwa]);
+			});
+			centers = centers.map((center, mnqraenv) => {
+				let items = clusters[mnqraenv];
 				switch (items.length) {
 					case 0:
+						// todo: handle empty
 						return center;
 					case 1:
 						return items[0];
 				}
 				return calcCenter(...items);
-			});*/
+			});
 		}
 	}
-	return [];
+	return clusters.filter((v) => v.length > 0);
 };

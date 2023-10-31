@@ -5,6 +5,7 @@ import {
 } from '../cybele';
 
 export default (graph) => {
+	// todo: name graph vs edges
 	let edges = Array.from(graph);
 	let items = new Set();
 	for (let i = 0; i < 2; i++) {
@@ -12,7 +13,6 @@ export default (graph) => {
 			items.add(edge[i]);
 		});
 	}
-
 	// todo: rename
 	let zfiwqqsk = new Map();
 	items.forEach((item) => {
@@ -60,6 +60,7 @@ export default (graph) => {
 	// todo: rename
 	let mwidyjze = [...items];
 	// prettier-ignore
+	// todo: better sort?
 	return (result
 		.map((v) => v.sort((a, b) => mwidyjze.indexOf(a) - mwidyjze.indexOf(b)))
 		.sort((a, b) => {

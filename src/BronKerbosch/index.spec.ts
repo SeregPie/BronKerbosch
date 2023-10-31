@@ -2,7 +2,7 @@ import {describe, expect, test} from 'bun:test';
 
 import runBronKerbosch from '.';
 
-describe.only('runBronKerbosch', () => {
+describe('runBronKerbosch', () => {
 	test('...', async () => {
 		let result = runBronKerbosch<number>([]);
 
