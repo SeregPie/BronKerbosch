@@ -34,10 +34,12 @@ export default (items) => {
 				_result = [..._items].sort(_ptvehwne);
 			}
 		};
+		let _memUnorderedPairs;
 		let getUnorderedPairs = () => {
 			// prettier-ignore
 			return _pairs.filter(([item, otherItem]) => _ptvehwne(item, otherItem) == null);
 		};
+		let _memUnorderedGroups;
 		let getUnorderedGroups = () => runBronKerbosch(getUnorderedPairs());
 		let getItemsBefore = (item) => {
 			return _items.filter((otherItem) => _ptvehwne(item, otherItem) > 0);
