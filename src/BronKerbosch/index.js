@@ -1,9 +1,12 @@
-import difference from './.ponies/Set.prototype.difference';
-import intersection from './.ponies/Set.prototype.intersection';
-import union from './.ponies/Set.prototype.union';
+import difference from '../cybele/Set.prototype.difference';
+import intersection from '../cybele/Set.prototype.intersection';
+import union from '../cybele/Set.prototype.union';
 
 export default (graph) => {
-	graph = Array.from(graph);
+	{
+		// prettier-ignore
+		graph = ((x) => Array.isArray(x) ? x : Array.from(x))(graph);
+	}
 	let items = new Set();
 	{
 		for (let i = 0; i < 2; i++) {
@@ -19,15 +22,15 @@ export default (graph) => {
 		items.forEach((item) => {
 			mapItem2Item.set(item, new Set());
 		});
-		graph.forEach(([item0, item1]) => {
-			if (item0 !== item1 /* todo: needed? */) {
-				mapItem2Item.get(item0).add(item1);
-				mapItem2Item.get(item1).add(item0);
+		graph.forEach((edge) => {
+			if (edge[0] !== edge[1] /* todo: needed? */) {
+				mapItem2Item.get(edge[0]).add(edge[1]);
+				mapItem2Item.get(edge[1]).add(edge[0]);
 			}
 		});
 	}
 	let result = [];
-	let run = (currItems, nextItems, prevItems) => {
+	let recur = (currItems, nextItems, prevItems) => {
 		if (nextItems.size > 0 || prevItems.size > 0) {
 			// todo: rename
 			let povonvxr = new Set();
@@ -40,7 +43,7 @@ export default (graph) => {
 			});
 			difference(nextItems, povonvxr).forEach((item) => {
 				let itemNeighbors = mapItem2Item.get(item);
-				run(
+				recur(
 					// prettier-ignore
 					(new Set(currItems)).add(item),
 					intersection(nextItems, itemNeighbors),
@@ -53,7 +56,7 @@ export default (graph) => {
 			result.push([...currItems]);
 		}
 	};
-	run(new Set(), new Set(items), new Set());
+	recur(new Set(), new Set(items), new Set());
 	{
 		let compare = (a, b) => items.indexOf(a) - items.indexOf(b);
 		((v) => {

@@ -1,7 +1,3 @@
-function Number_is(v) {
-	return typeof v === 'number';
-}
-
 export default (
 	items,
 	centers,
@@ -13,48 +9,60 @@ export default (
 		random = Math.random,
 	} = {},
 ) => {
-	items = Array.from(items);
-	// todo: typeof?
-	if (Number_is(centers)) {
-		// todo: random
-		centers = items.slice(0, centers);
-	} else {
-		centers = Array.from(centers);
+	{
+		// prettier-ignore
+		items = ((x) => Array.isArray(x) ? x : Array.from(x))(items);
+		centers = ((x) => {
+			switch (typeof x) {
+				case 'number': {
+					if (x > 0) {
+						let r = [...items];
+						for (let i = r.length; i > x; i--) {
+							r.splice(random() * i, 1);
+						}
+						return r;
+					}
+					return [];
+				}
+			}
+			return Array.isArray(x) ? x : Array.from(x);
+		})(centers);
 	}
 	let clusters = [];
 	if (items.length > 0 && centers.length > 0) {
 		let assignments = items.map(() => -1);
-		// todo: rename: mnqraenv, qtscnzwa
 		for (let i = 0; i < iterations; i++) {
 			let stop = true;
-			items.forEach((item, qtscnzwa) => {
+			items.forEach((item, itemIndex) => {
 				// prettier-ignore
-				let [mnqraenv] = (centers
-					.map((center, mnqraenv) => [mnqraenv, calcDistance(item, center)])
-					.reduce((prev, curr) =>  curr[1] < prev[1] ? curr : prev)
+				let [clusterIndex] = (centers
+					.map((center, i) => [i, calcDistance(center, item)])
+					.reduce((r, v) =>  v[1] < r[1] ? v : r)
 				);
-				if (assignments[qtscnzwa] !== mnqraenv) {
-					assignments[qtscnzwa] = mnqraenv;
+				if (assignments[itemIndex] !== clusterIndex) {
+					assignments[itemIndex] = clusterIndex;
 					stop = false;
 				}
 			});
 			if (stop) break;
 			clusters = centers.map(() => []);
-			assignments.forEach((mnqraenv, qtscnzwa) => {
-				clusters[mnqraenv].push(items[qtscnzwa]);
+			assignments.forEach((clusterIndex, itemIndex) => {
+				clusters[clusterIndex].push(items[itemIndex]);
 			});
-			centers = centers.map((center, mnqraenv) => {
-				let items = clusters[mnqraenv];
-				switch (items.length) {
+			centers = clusters.map((cluster, i) => {
+				switch (cluster.length) {
 					case 0:
-						// todo: handle empty
-						return center;
+						return centers[i];
 					case 1:
-						return items[0];
+						return cluster[0];
 				}
-				return calcCenter(...items);
+				return calcCenter(...cluster);
 			});
 		}
+		clusters = clusters.filter((cluster) => cluster.length > 0);
 	}
-	return clusters.filter((v) => v.length > 0);
+	return ((v) =>
+		v.filter((v) => v.length > 0).sort((a, b) => b.length - a.length))(
+		clusters,
+	);
 };

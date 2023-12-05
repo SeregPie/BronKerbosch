@@ -73,17 +73,16 @@ describe('runKMeans', () => {
 		expect(result).toEqual([[1]]);
 	});
 
-	test.skip('...', async () => {
+	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeans<number>([1], [1, 2, 3],
 			(a, b) => Math.abs(a - b),
 			(...ns) => ns.reduce((r, n) => r + n) / ns.length,
 		);
-		Array.fromAsync;
 		expect(result).toEqual([[1]]);
 	});
 
-	test.skip('...', async () => {
+	test('...', async () => {
 		type Vector = {x: number; y: number};
 		let Vector = (x: number, y: number): Vector => ({x, y});
 		for (let centers of [2, [Vector(0, 7), Vector(7, 0)]]) {
