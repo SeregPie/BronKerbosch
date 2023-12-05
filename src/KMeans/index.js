@@ -28,6 +28,7 @@ export default (
 			return Array.isArray(x) ? x : Array.from(x);
 		})(centers);
 	}
+	// todo
 	let clusters = [];
 	if (items.length > 0 && centers.length > 0) {
 		let assignments = items.map(() => -1);
@@ -61,8 +62,26 @@ export default (
 		}
 		clusters = clusters.filter((cluster) => cluster.length > 0);
 	}
-	return ((v) =>
-		v.filter((v) => v.length > 0).sort((a, b) => b.length - a.length))(
-		clusters,
-	);
+	let result = clusters;
+	{
+		let compare = (a, b) => items.indexOf(a) - items.indexOf(b);
+		((v) => {
+			v.forEach((v) => {
+				v.sort((a, b) => compare(a, b));
+			});
+			v.sort((a, b) => {
+				let n = a.length;
+				{
+					let c = b.length - n;
+					if (c) return c;
+				}
+				for (let i = 0; i < n; i++) {
+					let c = compare(a[i], b[i]);
+					if (c) return c;
+				}
+				return 0;
+			});
+		})(result);
+	}
+	return result;
 };

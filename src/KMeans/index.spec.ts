@@ -1,8 +1,9 @@
 import {describe, expect, test} from 'bun:test';
 
-import runKMeans from '.';
+import runKMeans from './';
 
 describe('runKMeans', () => {
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeans<number>([], 0, () => 0, () => 0);
@@ -10,6 +11,7 @@ describe('runKMeans', () => {
 		expect(result).toEqual([]);
 	});
 
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeans<number>([], [], () => 0, () => 0);
@@ -17,6 +19,7 @@ describe('runKMeans', () => {
 		expect(result).toEqual([]);
 	});
 
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeans<number>([], 3, () => 0, () => 0);
@@ -24,6 +27,7 @@ describe('runKMeans', () => {
 		expect(result).toEqual([]);
 	});
 
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeans<number>([], [1, 2, 3], () => 0, () => 0);
@@ -31,6 +35,7 @@ describe('runKMeans', () => {
 		expect(result).toEqual([]);
 	});
 
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeans<number>([1, 2, 3], 0, () => 0, () => 0);
@@ -38,6 +43,7 @@ describe('runKMeans', () => {
 		expect(result).toEqual([]);
 	});
 
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeans<number>([1, 2, 3], [], () => 0, () => 0);
@@ -45,6 +51,7 @@ describe('runKMeans', () => {
 		expect(result).toEqual([]);
 	});
 
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeans<number>([1, 2, 3], 1, () => 0, () => 0);
@@ -52,6 +59,7 @@ describe('runKMeans', () => {
 		expect(result).toEqual([[1, 2, 3]]);
 	});
 
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeans<number>([1, 2, 3], [1], () => 0, () => 0);
@@ -59,6 +67,7 @@ describe('runKMeans', () => {
 		expect(result).toEqual([[1, 2, 3]]);
 	});
 
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeans<number>([1], 3, () => 0, () => 0);
@@ -66,6 +75,7 @@ describe('runKMeans', () => {
 		expect(result).toEqual([[1]]);
 	});
 
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeans<number>([1], [1, 2, 3], () => 0, () => 0);
@@ -73,6 +83,7 @@ describe('runKMeans', () => {
 		expect(result).toEqual([[1]]);
 	});
 
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeans<number>([1], [1, 2, 3],
@@ -82,6 +93,7 @@ describe('runKMeans', () => {
 		expect(result).toEqual([[1]]);
 	});
 
+	// todo: description
 	test('...', async () => {
 		type Vector = {x: number; y: number};
 		let Vector = (x: number, y: number): Vector => ({x, y});

@@ -22,10 +22,10 @@ export default (graph) => {
 		items.forEach((item) => {
 			mapItem2Item.set(item, new Set());
 		});
-		graph.forEach((edge) => {
-			if (edge[0] !== edge[1] /* todo: needed? */) {
-				mapItem2Item.get(edge[0]).add(edge[1]);
-				mapItem2Item.get(edge[1]).add(edge[0]);
+		graph.forEach(([node0, node1]) => {
+			if (node0 !== node1 /* todo: needed? */) {
+				mapItem2Item.get(node0).add(node1);
+				mapItem2Item.get(node1).add(node0);
 			}
 		});
 	}

@@ -1,10 +1,10 @@
 // todo: rename Control, Controller, Manager, Wizard, Runner
 export interface MaxDiffController<T> {
+	readonly result?: Array<T>;
+
 	get progress(): number;
 
 	get complete(): boolean;
-
-	get result(): undefined | Array<T>;
 
 	// get/pick/find/select
 	getCandidates(limit?: number): Array<T>;
@@ -36,4 +36,7 @@ export interface MaxDiffController<T> {
 	clone(): MaxDiffController<T>;
 }
 
-export default function runMaxDiff<T>(items: Iterable<T>): MaxDiffController<T>;
+export default function runMaxDiff<T>(
+	//
+	items: Iterable<T>,
+): MaxDiffController<T>;

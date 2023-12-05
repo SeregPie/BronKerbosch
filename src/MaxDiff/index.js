@@ -4,13 +4,13 @@ export default (items) => {
 	let _items = [...new Set(items)];
 	let _pairs = [];
 	{
-		for (let i1 = 0; i1 < _items.length - 1; i1++) {
-			for (let i2 = i1 + 1; i2 < _items.length; i2++) {
-				_pairs.push(_items[i1], _items[i2]);
+		for (let i0 = 0, ii0 = _items.length - 1; i0 < ii0; i0++) {
+			for (let i1 = i0 + 1, ii1 = ii0 + 1; i1 < ii1; i1++) {
+				_pairs.push(_items[i0], _items[i1]);
 			}
 		}
 	}
-	let run = (_comparisons, _progress, _result) => {
+	let init = (_comparisons, _progress, _result) => {
 		// todo: rename
 		let _ptvehwne = (a, b) => {
 			a = _items.indexOf(a);
@@ -126,7 +126,7 @@ export default (items) => {
 			orderFirst,
 			orderLast,
 			clone() {
-				return run(
+				return init(
 					_comparisons.map((v) => v.map((v) => v)),
 					_progress,
 					_result,
@@ -148,7 +148,7 @@ export default (items) => {
 			_result = [..._items];
 		}
 	}
-	return run(
+	return init(
 		//
 		_comparisons,
 		_progress,

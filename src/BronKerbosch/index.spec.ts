@@ -10,14 +10,12 @@ describe('runBronKerbosch', () => {
 		expect(result).toEqual([]);
 	});
 
-	test.skip('...', async () => {
-		let result = runBronKerbosch([
-			[1, 1],
-			[2, 2],
-			[1, 2],
-		]);
+	// todo: description
+	test('...', async () => {
+		// prettier-ignore
+		let result = runBronKerbosch([[1, 1], [1, 2], [2, 2]]);
 
-		expect(result).toEqual([]);
+		expect(result).toEqual([[1, 2]]);
 	});
 
 	// todo: description

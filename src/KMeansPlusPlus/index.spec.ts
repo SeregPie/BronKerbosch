@@ -1,8 +1,9 @@
 import {describe, expect, test} from 'bun:test';
 
-import runKMeansPlusPlus from '.';
+import runKMeansPlusPlus from './';
 
 describe('runKMeansPlusPlus', () => {
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeansPlusPlus<number>([], 0, () => 0, () => 0);
@@ -10,6 +11,7 @@ describe('runKMeansPlusPlus', () => {
 		expect(result).toEqual([]);
 	});
 
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeansPlusPlus<number>([], 3, () => 0, () => 0);
@@ -17,6 +19,7 @@ describe('runKMeansPlusPlus', () => {
 		expect(result).toEqual([]);
 	});
 
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeansPlusPlus<number>([1, 2, 3], 0, () => 0, () => 0);
@@ -24,6 +27,7 @@ describe('runKMeansPlusPlus', () => {
 		expect(result).toEqual([]);
 	});
 
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeansPlusPlus<number>([1, 2, 3], 1, () => 0, () => 0);
@@ -31,6 +35,7 @@ describe('runKMeansPlusPlus', () => {
 		expect(result).toEqual([[1, 2, 3]]);
 	});
 
+	// todo: description
 	test('...', async () => {
 		// prettier-ignore
 		let result = runKMeansPlusPlus<number>([1], 3, () => 0, () => 0);
@@ -38,7 +43,8 @@ describe('runKMeansPlusPlus', () => {
 		expect(result).toEqual([[1]]);
 	});
 
-	test.skip('...', async () => {
+	// todo: description
+	test('...', async () => {
 		// todo: other example with odd items
 
 		// prettier-ignore
