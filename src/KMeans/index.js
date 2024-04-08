@@ -11,7 +11,7 @@ export default (
 ) => {
 	{
 		// prettier-ignore
-		items = ((x) => Array.isArray(x) ? x : Array.from(x))(items);
+		items = ((v) => Array.isArray(v) ? v : Array.from(v))(items);
 		centers = ((x) => {
 			switch (typeof x) {
 				case 'number': {
@@ -38,7 +38,7 @@ export default (
 				// prettier-ignore
 				let [clusterIndex] = (centers
 					.map((center, i) => [i, calcDistance(center, item)])
-					.reduce((r, v) =>  v[1] < r[1] ? v : r)
+					.reduce((a, b) =>  a[1] > b[1] ? a : b)
 				);
 				if (assignments[itemIndex] !== clusterIndex) {
 					assignments[itemIndex] = clusterIndex;

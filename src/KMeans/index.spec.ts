@@ -2,7 +2,7 @@ import {describe, expect, test} from 'bun:test';
 
 import runKMeans from './';
 
-describe('runKMeans', () => {
+describe.only('runKMeans', () => {
 	// todo: description
 	test('...', async () => {
 		// prettier-ignore

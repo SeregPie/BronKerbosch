@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-		"baseUrl": ".",
 		"module": "ES2022",
 		"moduleResolution": "Node",
 		"strict": true,

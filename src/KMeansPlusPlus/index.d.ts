@@ -2,10 +2,14 @@ import {KMeansOptions} from '../KMeans';
 
 export type KMeansPlusPlusOptions = KMeansOptions;
 
-export default function runKMeansPlusPlus<T>(
-	items: Iterable<T>,
-	centers: number,
-	calcDistance: {(a: T, b: T): number},
-	calcCenter: {(...items: Array<T>): T},
-	options?: KMeansPlusPlusOptions,
-): Array<Array<T>>;
+declare const runKMeansPlusPlus: {
+	<T>(
+		items: Iterable<T>,
+		centers: number | Iterable<T>,
+		calcDistance: {(a: NoInfer<T>, b: NoInfer<T>): number},
+		calcCenter: {(...vs: NoInfer<T>[]): NoInfer<T>},
+		options?: KMeansPlusPlusOptions,
+	): Array<Array<T>>;
+};
+
+export default runKMeansPlusPlus;

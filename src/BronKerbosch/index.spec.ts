@@ -1,30 +1,27 @@
 import {describe, expect, test} from 'bun:test';
 
-import runBronKerbosch from './';
+import runBronKerbosch from '.';
 
 describe('runBronKerbosch', () => {
-	// todo: description
-	test('...', async () => {
+	// prettier-ignore
+	test('should return empty result for empty input', async () => {
 		let result = runBronKerbosch([]);
 
 		expect(result).toEqual([]);
 	});
 
-	// todo: description
-	test('...', async () => {
-		// prettier-ignore
+	// prettier-ignore
+	test('should ignore loops', async () => {
 		let result = runBronKerbosch([[1, 1], [1, 2], [2, 2]]);
 
 		expect(result).toEqual([[1, 2]]);
 	});
 
-	// todo: description
-	test('...', async () => {
+	test('should work properly', async () => {
+		// prettier-ignore
 		{
-			// prettier-ignore
 			let result = runBronKerbosch([[1, 4], [2, 3], [2, 5], [3, 5], [4, 5], [4, 6]]);
 
-			// prettier-ignore
 			expect(result).toEqual([[2, 3, 5], [1, 4], [4, 5], [4, 6]]);
 		}
 		{

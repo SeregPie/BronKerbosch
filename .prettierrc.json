@@ -1,4 +1,6 @@
 {
+	"plugins": ["prettier-plugin-organize-imports"],
+
 	"bracketSpacing": false,
 	"singleQuote": true,
 	"useTabs": true,
@@ -10,7 +12,5 @@
 				"useTabs": false
 			}
 		}
-	],
-
-	"plugins": ["prettier-plugin-organize-imports"]
+	]
 }
