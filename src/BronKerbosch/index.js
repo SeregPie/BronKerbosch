@@ -31,27 +31,29 @@ export default (graph) => {
 		return nodes;
 	})();
 	let result = [];
+	// https://www.dcs.gla.ac.uk/~pat/jchoco/clique/enumeration/tex/report.pdf
+	// https://www.sciencedirect.com/science/article/pii/S0304397515010130
+	// prettier-ignore
 	let recur = (currNodes, nextNodes, prevNodes) => {
 		if (nextNodes.size > 0 || prevNodes.size > 0) {
-			// todo: rename
-			let povonvxr = new Set();
-			nextNodes.union(nextNodes).forEach((item) => {
-				let t = item.adjacents.intersection(nextNodes);
-				if (t.size > povonvxr.size) {
-					povonvxr = t;
+			let pivotNodes = new Set();
+			nextNodes.union(prevNodes).forEach((node) => {
+				let t = nextNodes.intersection(node.adjacents);
+				if (t.size > pivotNodes.size) {
+					pivotNodes = t;
 				}
 			});
-			nextNodes.difference(povonvxr).forEach((item) => {
+			nextNodes.difference(pivotNodes).forEach((node) => {
 				recur(
-					// prettier-ignore
-					(new Set(currNodes)).add(item),
-					nextNodes.intersection(item.adjacents),
-					prevNodes.intersection(item.adjacents),
+					(new Set(currNodes)).add(node),
+					nextNodes.intersection(node.adjacents),
+					prevNodes.intersection(node.adjacents),
 				);
-				nextNodes.delete(item);
-				prevNodes.add(item);
+				nextNodes.delete(node);
+				prevNodes.add(node);
 			});
-		} else if (currNodes.size > 0 /* todo: needed? */) {
+		} else
+		if (currNodes.size > 0) {
 			result.push([...currNodes]);
 		}
 	};
