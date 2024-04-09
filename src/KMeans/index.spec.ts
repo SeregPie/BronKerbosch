@@ -1,86 +1,46 @@
 import {describe, expect, test} from 'bun:test';
 
-import runKMeans from './';
+import runKMeans from '.';
 
-describe.only('runKMeans', () => {
+let itemsExample = (l: number) => Array.from({length: l}, (_, i) => i);
+let centersExamples = (l: number) => [l, itemsExample(l)] as const;
+
+describe('runKMeans', () => {
 	// todo: description
-	test('...', async () => {
-		// prettier-ignore
-		let result = runKMeans<number>([], 0, () => 0, () => 0);
+	test('should return empty result for empty input', async () => {
+		for await (let [items, centers] of (async function* () {
+			for (let centers of centersExamples(0)) {
+				yield [itemsExample(0), centers] as const;
+			}
+			for (let centers of centersExamples(3)) {
+				yield [itemsExample(0), centers] as const;
+			}
+			for (let centers of centersExamples(0)) {
+				yield [itemsExample(3), centers] as const;
+			}
+		})()) {
+			// prettier-ignore
+			let result = runKMeans(items, centers, () => 0, () => 0);
 
-		expect(result).toEqual([]);
+			expect(result).toEqual([]);
+		}
 	});
 
 	// todo: description
-	test('...', async () => {
-		// prettier-ignore
-		let result = runKMeans<number>([], [], () => 0, () => 0);
+	test('should return single result for single input', async () => {
+		for await (let [items, centers] of (async function* () {
+			for (let centers of centersExamples(1)) {
+				yield [itemsExample(3), centers] as const;
+			}
+			for (let centers of centersExamples(3)) {
+				yield [itemsExample(1), centers] as const;
+			}
+		})()) {
+			// prettier-ignore
+			let result = runKMeans(items, centers, () => 0, () => 0);
 
-		expect(result).toEqual([]);
-	});
-
-	// todo: description
-	test('...', async () => {
-		// prettier-ignore
-		let result = runKMeans<number>([], 3, () => 0, () => 0);
-
-		expect(result).toEqual([]);
-	});
-
-	// todo: description
-	test('...', async () => {
-		// prettier-ignore
-		let result = runKMeans<number>([], [1, 2, 3], () => 0, () => 0);
-
-		expect(result).toEqual([]);
-	});
-
-	// todo: description
-	test('...', async () => {
-		// prettier-ignore
-		let result = runKMeans<number>([1, 2, 3], 0, () => 0, () => 0);
-
-		expect(result).toEqual([]);
-	});
-
-	// todo: description
-	test('...', async () => {
-		// prettier-ignore
-		let result = runKMeans<number>([1, 2, 3], [], () => 0, () => 0);
-
-		expect(result).toEqual([]);
-	});
-
-	// todo: description
-	test('...', async () => {
-		// prettier-ignore
-		let result = runKMeans<number>([1, 2, 3], 1, () => 0, () => 0);
-
-		expect(result).toEqual([[1, 2, 3]]);
-	});
-
-	// todo: description
-	test('...', async () => {
-		// prettier-ignore
-		let result = runKMeans<number>([1, 2, 3], [1], () => 0, () => 0);
-
-		expect(result).toEqual([[1, 2, 3]]);
-	});
-
-	// todo: description
-	test('...', async () => {
-		// prettier-ignore
-		let result = runKMeans<number>([1], 3, () => 0, () => 0);
-
-		expect(result).toEqual([[1]]);
-	});
-
-	// todo: description
-	test('...', async () => {
-		// prettier-ignore
-		let result = runKMeans<number>([1], [1, 2, 3], () => 0, () => 0);
-
-		expect(result).toEqual([[1]]);
+			expect(result).toEqual([items]);
+		}
 	});
 
 	// todo: description

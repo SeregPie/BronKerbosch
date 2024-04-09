@@ -1,4 +1,3 @@
-// todo: rename Control, Controller, Manager, Wizard, Runner
 export interface MaxDiffController<T> {
 	readonly result?: Array<T>;
 
@@ -23,7 +22,7 @@ export interface MaxDiffController<T> {
 
 	getItemsAfter(item: T): Array<T>;
 
-	order(...items: Array<T>): void;
+	order(...items: T[]): void;
 
 	orderBefore(item: T, otherItems: Iterable<T>): void;
 
@@ -36,7 +35,8 @@ export interface MaxDiffController<T> {
 	clone(): MaxDiffController<T>;
 }
 
-export default function runMaxDiff<T>(
-	//
-	items: Iterable<T>,
-): MaxDiffController<T>;
+declare const runMaxDiff: {
+	<T>(items: Iterable<T>): MaxDiffController<T>;
+};
+
+export default runMaxDiff;
