@@ -30,20 +30,19 @@ export default (graph) => {
 		});
 		return nodes;
 	})();
+	graph = nodes;
 	let result = [];
-	// https://www.dcs.gla.ac.uk/~pat/jchoco/clique/enumeration/tex/report.pdf
-	// https://www.sciencedirect.com/science/article/pii/S0304397515010130
 	// prettier-ignore
 	let recur = (currNodes, nextNodes, prevNodes) => {
 		if (nextNodes.size > 0 || prevNodes.size > 0) {
-			let pivotNodes = new Set();
+			let pivotNodes = nextNodes;
 			nextNodes.union(prevNodes).forEach((node) => {
-				let t = nextNodes.intersection(node.adjacents);
-				if (t.size > pivotNodes.size) {
+				let t = nextNodes.difference(node.adjacents);
+				if (t.size < pivotNodes.size) {
 					pivotNodes = t;
 				}
 			});
-			nextNodes.difference(pivotNodes).forEach((node) => {
+			pivotNodes.forEach((node) => {
 				recur(
 					(new Set(currNodes)).add(node),
 					nextNodes.intersection(node.adjacents),
@@ -57,23 +56,29 @@ export default (graph) => {
 			result.push([...currNodes]);
 		}
 	};
-	recur(new Set(), new Set(nodes), new Set());
+	// prettier-ignore
+	recur(new Set(), new Set(graph), new Set());
+	// prettier-ignore
 	return ((v) => {
-		v.forEach((v) => {
-			v.sort((a, b) => a.index - b.index);
-		});
-		v.sort((a, b) => {
-			let n = a.length;
-			{
-				let c = b.length - n;
-				if (c) return c;
-			}
-			for (let i = 0; i < n; i++) {
-				let c = a[i].index - b[i].index;
-				if (c) return c;
-			}
-			return 0;
-		});
+		{
+			v.forEach((v) => {
+				v.sort((a, b) => a.index - b.index);
+			});
+			v.sort((a, b) => {
+				{
+					let c = b.length - a.length;
+					if (c) return c;
+				}
+				for (let i = 0, ii = Math.min(a.length, b.length); i < ii; i++) {
+					let c = a[i].index - b[i].index;
+					if (c) return c;
+				}
+				return 0;
+			});
+		}
 		return v.map((v) => v.map((v) => v.value));
 	})(result);
 };
+
+// https://www.dcs.gla.ac.uk/~pat/jchoco/clique/enumeration/tex/report.pdf
+// https://www.sciencedirect.com/science/article/pii/S0304397515010130
