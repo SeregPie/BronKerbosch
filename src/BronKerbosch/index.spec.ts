@@ -19,6 +19,12 @@ describe('runBronKerbosch', () => {
 		expect(result).toEqual([[1, 2]]);
 	});
 
+	test('...', async () => {
+		let result = runBronKerbosch([[1, 1]]);
+
+		expect(result).toEqual([]);
+	});
+
 	// todo: description
 	test('should work properly', async () => {
 		// prettier-ignore

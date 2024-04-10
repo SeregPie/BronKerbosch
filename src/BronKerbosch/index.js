@@ -52,7 +52,7 @@ export default (graph) => {
 				prevNodes.add(node);
 			});
 		} else
-		if (currNodes.size > 0) {
+		if (currNodes.size > 1) {
 			result.push([...currNodes]);
 		}
 	};
