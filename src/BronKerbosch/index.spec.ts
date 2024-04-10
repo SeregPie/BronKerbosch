@@ -4,7 +4,8 @@ import runBronKerbosch from '.';
 
 // prettier-ignore
 describe('runBronKerbosch', () => {
-	test('should work properly', async () => {
+	// todo: description
+	test(`should work properly`, async () => {
 		{
 			let result = runBronKerbosch([[1, 4], [2, 3], [2, 5], [3, 5], [4, 5], [4, 6]]);
 
@@ -22,22 +23,21 @@ describe('runBronKerbosch', () => {
 		}
 	});
 
-	test('should return empty result for empty graph', async () => {
+	test(`should return empty result for empty graph`, async () => {
 		let result = runBronKerbosch([]);
 
 		expect(result).toEqual([]);
 	});
 
-	test('should ignore loops', async () => {
-		{
-			let result = runBronKerbosch([[1, 1]]);
+	test(`should ignore loops`, async () => {
+		let result = runBronKerbosch([[1, 1], [2, 2]]);
 
-			expect(result).toEqual([]);
-		}
-		{
-			let result = runBronKerbosch([[1, 1], [1, 2], [2, 2]]);
+		expect(result).toEqual([]);
+	});
 
-			expect(result).toEqual([[1, 2]]);
-		}
+	test(`should ignore duplicates`, async () => {
+		let result = runBronKerbosch([[1, 2], [2, 1]]);
+
+		expect(result).toEqual([[1, 2]]);
 	});
 });

@@ -28,6 +28,15 @@ export default (
 			return Array.isArray(x) ? x : Array.from(x);
 		})(centers);
 	}
+	let clusters2 = centers.map((center) => ({
+		center,
+		items: new Set(),
+	}));
+	let items2 = items.map((value, index) => ({
+		value,
+		index,
+		cluster: null,
+	}));
 	// todo
 	let clusters = [];
 	if (items.length > 0 && centers.length > 0) {

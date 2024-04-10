@@ -6,7 +6,6 @@ let itemsExample = (l: number) => Array.from({length: l}, (_, i) => i);
 let centersExamples = (l: number) => [l, itemsExample(l)] as const;
 
 describe('runKMeans', () => {
-	// todo: description
 	test('should return empty result for empty items or centers', async () => {
 		for await (let [items, centers] of (async function* () {
 			for (let centers of centersExamples(0)) {
@@ -24,6 +23,15 @@ describe('runKMeans', () => {
 
 			expect(result).toEqual([]);
 		}
+	});
+
+	test('should return empty result for zero iterations', async () => {
+		// prettier-ignore
+		let result = runKMeans([1, 2, 3], 3, () => 0, () => 0, {
+			iterations: 0,
+		});
+
+		expect(result).toEqual([]);
 	});
 
 	// todo: description

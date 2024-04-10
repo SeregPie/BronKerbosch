@@ -79,6 +79,3 @@ export default (graph) => {
 		return v.map((v) => v.map((v) => v.value));
 	})(result);
 };
-
-// https://www.dcs.gla.ac.uk/~pat/jchoco/clique/enumeration/tex/report.pdf
-// https://www.sciencedirect.com/science/article/pii/S0304397515010130
