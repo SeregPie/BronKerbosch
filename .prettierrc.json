@@ -1,0 +1,17 @@
+{
+	"plugins": ["prettier-plugin-organize-imports"],
+
+	"bracketSpacing": false,
+	"printWidth": 240,
+	"singleQuote": true,
+	"useTabs": true,
+
+	"overrides": [
+		{
+			"files": "*.md",
+			"options": {
+				"useTabs": false
+			}
+		}
+	]
+}

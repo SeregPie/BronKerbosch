@@ -1,17 +1,26 @@
-import {babel} from '@rollup/plugin-babel';
-import {terser} from 'rollup-plugin-terser';
-
-import {main} from './package.json';
+import rollupPluginNodeResolve from '@rollup/plugin-node-resolve';
+import rollupPluginTerser from '@rollup/plugin-terser';
 
 export default {
-	input: 'src/index.js',
+	input: './src/index.js',
 	plugins: [
-		babel({babelHelpers: 'bundled'}),
-		terser(),
+		//
+		rollupPluginNodeResolve(),
+		rollupPluginTerser(),
 	],
-	output: {
-		file: main,
-		format: 'umd',
-		name: 'BronKerbosch',
-	},
+	output: [
+		{
+			file: './dist/index.mjs',
+			format: 'es',
+		},
+		{
+			file: './dist/index.cjs',
+			format: 'cjs',
+		},
+		{
+			file: './dist/index.umd.js',
+			format: 'umd',
+			name: 'runBronKerbosch',
+		},
+	],
 };
