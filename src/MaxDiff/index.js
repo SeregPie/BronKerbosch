@@ -100,10 +100,31 @@ export default (items) => {
 		};
 		let orderFirst = (item) => orderBefore(item, _items);
 		let orderLast = (item) => orderAfter(item, _items);
-		return {
-			get progress() {
-				return _progress;
+
+		ttt((a, b) => {
+			a({progress: b(() => progress)});
+			a({getCandidates})
+
+		})
+		Object.defineProperties(o, {
+			progress: {
+				get: () => progress,
 			},
+			complete: {
+				get: () => result !== undefined,
+			},
+			result: {
+				get: () => result,
+			},
+			...v({getCandidates}),
+			getCandidates: {
+				configurable: true,
+				value: getCandidates,
+			}
+		});
+		return {
+			progress:{get:()=>progress},
+			get progress() {return _progress},
 			get complete() {
 				return _result !== undefined;
 			},
