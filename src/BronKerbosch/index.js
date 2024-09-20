@@ -1,23 +1,26 @@
 export default (graph) => {
 	{
 		graph = [...graph].map(([a, b]) => [a, b]);
-		graph = ((edges) => {
+		graph = ((v) => {
 			// todo
 			let nodes = new Set();
-			for (let i = 0; i < 2; i++) edges.forEach((v) => nodes.add(v[i]));
+			for (let i = 0; i < 2; i++) v.forEach((v) => nodes.add(v[i]));
 			nodes = [...nodes];
 			nodes = nodes.map((value, index) => ({
-				_value: value,
-				_index: index,
-				_adjacents: new Set(),
+				value,
+				index,
+				adjacents: new Set(),
 			}));
 			let nodesByValue = new Map();
-			nodes.forEach((v) => nodesByValue.set(v._value, v));
-			edges = edges.map((v) => v.map((v) => nodesByValue.get(v))).filter(([a, b]) => a !== b);
-			edges.forEach(([a, b]) => {
-				a._adjacents.add(b);
-				b._adjacents.add(a);
+			nodes.forEach((node) => {
+				nodesByValue.set(node.value, node);
 			});
+			v.map((v) => v.map((v) => nodesByValue.get(v)))
+				.filter((edge) => edge[0] !== edge[1])
+				.forEach((edge) => {
+					edge[0].adjacents.add(edge[1]);
+					edge[1].adjacents.add(edge[0]);
+				});
 			return nodes;
 		})(graph);
 		/*graph = ((ljymojmt) => {
@@ -28,23 +31,35 @@ export default (graph) => {
 				return [...result];
 			})();
 			qgpccoli = qgpccoli.map((value, index) => ({
-				_value: value,
-				_index: index,
-				_adjacents: new Set(),
+				value: value,
+				index: index,
+				adjacents: new Set(),
 			}));
 			let elmirnha = (() => {
 				let nodesByValue = new Map();
-				nodes3.forEach((v) => nodesByValue.set(v._value, v));
+				nodes3.forEach((v) => nodesByValue.set(v.value, v));
 				return ljymojmt.map((v) => v.map((v) => nodesByValue.get(v))).filter(([a, b]) => a !== b);
 			})();
 
 			elmirnha.forEach(([a, b]) => {
-				a._adjacents.add(b);
-				b._adjacents.add(a);
+				a.adjacents.add(b);
+				b.adjacents.add(a);
 			});
 			return nodes;
 		})(graph);*/
 	}
+	let sortResult = (v) => {
+		v.forEach((v) => {
+			v.sort((a, b) => a.index - b.index);
+		});
+		v.sort((a, b) => {
+			for (let i = 0, ii = Math.min(a.length, b.length); i < ii; i++) {
+				let c = a[i].index - b[i].index;
+				if (c) return c;
+			}
+			return a.length - b.length;
+		});
+	};
 	// prettier-ignore
 	let run = () => {
 		let result = [];
@@ -52,7 +67,7 @@ export default (graph) => {
 			if (nextItems.size > 0 || prevItems.size > 0) {
 				let pivotItems = nextItems;
 				nextItems.union(prevItems).forEach((item) => {
-					let t = nextItems.difference(item._adjacents);
+					let t = nextItems.difference(item.adjacents);
 					if (t.size < pivotItems.size) {
 						pivotItems = t;
 					}
@@ -60,8 +75,8 @@ export default (graph) => {
 				pivotItems.forEach((item) => {
 					recur(
 						(new Set(currItems)).add(item),
-						nextItems.intersection(item._adjacents),
-						prevItems.intersection(item._adjacents),
+						nextItems.intersection(item.adjacents),
+						prevItems.intersection(item.adjacents),
 					);
 					nextItems.delete(item);
 					prevItems.add(item);
@@ -72,21 +87,8 @@ export default (graph) => {
 			}
 		};
 		recur(new Set(), new Set(graph), new Set());
+		sortResult(result);
 		return result;
 	};
-	return ((v) => {
-		{
-			v.forEach((v) => {
-				v.sort((a, b) => a._index - b._index);
-			});
-			v.sort((a, b) => {
-				for (let i = 0, ii = Math.min(a.length, b.length); i < ii; i++) {
-					let c = a[i]._index - b[i]._index;
-					if (c) return c;
-				}
-				return a.length - b.length;
-			});
-		}
-		return v.map((v) => v.map((v) => v._value));
-	})(run());
+	return ((v) => v.map((v) => v.map((v) => v.value)))(run());
 };

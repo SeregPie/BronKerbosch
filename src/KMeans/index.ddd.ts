@@ -24,10 +24,10 @@ describe.skip('runKMeans', () => {
 
 	// prettier-ignore
 	test('should return no clusters if no items nor centers are provided', () => {
-		for (let [items, centers] of <Iterable<[Array<number>, number | Array<number>]>>[
+		for (const [items, centers] of <Iterable<[Array<number>, number | Array<number>]>>[
 			[[], 0], [[], []], [[], 3], [[], [1, 2, 3]], [[1, 2, 3], 0], [[1, 2, 3], []]
 		]) {
-			let result = runKMeans(items, centers, () => 0, (v) => v);
+			const result = runKMeans(items, centers, () => 0, (v) => v);
 
 			expect(result).toEqual([]);
 		}

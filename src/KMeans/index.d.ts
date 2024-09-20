@@ -5,13 +5,11 @@ declare const runKMeans: {
 		centers: number | Iterable<T>,
 		calcDistance: {(a: NoInfer<T>, b: NoInfer<T>): number},
 		calcCenter: {(...vs: NoInfer<T>[]): NoInfer<T>},
-		options?: KMeansOptions,
+		options?: Partial<{
+			iterations: number;
+			random: {(): number};
+		}>,
 	): Array<Array<T>>;
 };
 
 export default runKMeans;
-
-export type KMeansOptions = Partial<{
-	iterations: number;
-	random: {(): number};
-}>;

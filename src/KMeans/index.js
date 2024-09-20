@@ -16,19 +16,31 @@ export default (items, centers, calcDistance, calcCenter, {iterations = 1024, ra
 			return [...centers];
 		})();
 		items = items.map((value, index) => ({
-			_value: value,
-			_index: index,
+			value,
+			index,
 		}));
 		centers = centers.map((value) => ({
-			_value: value,
+			value,
 		}));
 		// todo: needed?
 		// prettier-ignore
-		calcCenter = ((calc) => (...vs) => calc(...vs.map((v) => v._value)))(calcCenter);
+		calcCenter = ((calc) => (...vs) => calc(...vs.map((v) => v.value)))(calcCenter);
 		// todo: needed?
 		// prettier-ignore
-		calcDistance = ((calc) => (a, b) => calc(a._value, b._value))(calcDistance);
+		calcDistance = ((calc) => (a, b) => calc(a.value, b.value))(calcDistance);
 	}
+	let sortResult = (v) => {
+		v.forEach((v) => {
+			v.sort((a, b) => a.index - b.index);
+		});
+		v.sort((a, b) => {
+			for (let i = 0, ii = Math.min(a.length, b.length); i < ii; i++) {
+				let c = a[i].index - b[i].index;
+				if (c) return c;
+			}
+			return a.length - b.length;
+		});
+	};
 	let run = () => {
 		let result = [];
 		let iteration = 0;
@@ -40,21 +52,20 @@ export default (items, centers, calcDistance, calcCenter, {iterations = 1024, ra
 				items.forEach((item) => {
 					// prettier-ignore
 					let [center, distance] = (centers
-						.map((center) => {
-							let distance = calcDistance(center, item);
-							return [center, distance, Math.abs(distance)];
-						})
+						.map((center) => [center, calcDistance(center, item)])
+						.map(([center, distance]) => [center, distance, Math.abs(distance)])
 						.reduce((r, v) => (v[2] < r[2] ? v : r))
 					);
-					if (item._center !== center) converged = false;
-					item._center = center;
-					item._distance = distance;
+					if (item.center !== center) converged = false;
+					item.center = center;
+					item.distance = distance;
 				});
 				result = [];
-				Map.groupBy(items, (item) => item._center).forEach((items, center) => {
-					center._value = calcCenter(...items);
+				Map.groupBy(items, (item) => item.center).forEach((items, center) => {
+					center.value = calcCenter(...items);
 					result.push(items);
 				});
+				sortResult(result);
 				iteration++;
 				if (converged) break;
 			}
@@ -62,21 +73,7 @@ export default (items, centers, calcDistance, calcCenter, {iterations = 1024, ra
 		iterations = iteration;
 		return result;
 	};
-	return ((v) => {
-		{
-			v.forEach((v) => {
-				v.sort((a, b) => a._index - b._index);
-			});
-			v.sort((a, b) => {
-				for (let i = 0, ii = Math.min(a.length, b.length); i < ii; i++) {
-					let c = a[i]._index - b[i]._index;
-					if (c) return c;
-				}
-				return a.length - b.length;
-			});
-		}
-		return v.map((v) => v.map((v) => v._value));
-	})(run());
+	return ((v) => v.map((v) => v.map((v) => v.value)))(run());
 };
 
 function ggg(n) {
