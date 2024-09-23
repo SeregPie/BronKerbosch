@@ -4,6 +4,12 @@ export default (items, centers, calcDistance, calcCenter, {iterations = 1024, ra
 		centers = (() => {
 			if (typeof centers === 'number') {
 				return ((k) => {
+					if (k <= 0) {
+						return [];
+					}
+					if (k >= items.length) {
+						return items;
+					}
 					if (k > 0) {
 						if (k < items.length) {
 							return items.slice(0, k);
@@ -60,14 +66,22 @@ export default (items, centers, calcDistance, calcCenter, {iterations = 1024, ra
 					item.center = center;
 					item.distance = distance;
 				});
+				iteration++;
+				if (converged) break;
+				let tptgathc = Map.groupBy(items, (item) => item.center);
 				result = [];
-				Map.groupBy(items, (item) => item.center).forEach((items, center) => {
-					center.value = calcCenter(...items);
+				tptgathc.forEach((items) => {
 					result.push(items);
 				});
 				sortResult(result);
-				iteration++;
-				if (converged) break;
+				centers.forEach(center, (center) => {
+					let items = tptgathc.get(center);
+					if (items) {
+						center.value = calcCenter(...items);
+					} else {
+						// todo
+					}
+				});
 			}
 		}
 		iterations = iteration;
