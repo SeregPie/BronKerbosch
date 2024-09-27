@@ -4,12 +4,6 @@ export default (items, centers, calcDistance, calcCenter, {iterations = 1024, ra
 		centers = (() => {
 			if (typeof centers === 'number') {
 				return ((k) => {
-					if (k <= 0) {
-						return [];
-					}
-					if (k >= items.length) {
-						return items;
-					}
 					if (k > 0) {
 						if (k < items.length) {
 							return items.slice(0, k);
@@ -28,12 +22,10 @@ export default (items, centers, calcDistance, calcCenter, {iterations = 1024, ra
 		centers = centers.map((value) => ({
 			value,
 		}));
-		// todo: needed?
 		// prettier-ignore
-		calcCenter = ((calc) => (...vs) => calc(...vs.map((v) => v.value)))(calcCenter);
-		// todo: needed?
+		calcCenter = ((f) => (...vs) => f(...vs.map((v) => v.value)))(calcCenter);
 		// prettier-ignore
-		calcDistance = ((calc) => (a, b) => calc(a.value, b.value))(calcDistance);
+		calcDistance = ((f) => (a, b) => f(a.value, b.value))(calcDistance);
 	}
 	let sortResult = (v) => {
 		v.forEach((v) => {
@@ -56,12 +48,12 @@ export default (items, centers, calcDistance, calcCenter, {iterations = 1024, ra
 			while (iteration < iterations) {
 				converged = true;
 				items.forEach((item) => {
-					// prettier-ignore
-					let [center, distance] = (centers
-						.map((center) => [center, calcDistance(center, item)])
-						.map(([center, distance]) => [center, distance, Math.abs(distance)])
-						.reduce((r, v) => (v[2] < r[2] ? v : r))
-					);
+					let [center, distance] = centers
+						.map((center) => {
+							let distance = calcDistance(center, item);
+							return [center, distance, Math.abs(distance)];
+						})
+						.reduce((r, v) => (v[2] < r[2] ? v : r));
 					if (item.center !== center) converged = false;
 					item.center = center;
 					item.distance = distance;

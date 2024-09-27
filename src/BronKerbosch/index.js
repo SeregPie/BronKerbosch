@@ -3,9 +3,15 @@ export default (graph) => {
 		graph = [...graph].map(([a, b]) => [a, b]);
 		graph = ((v) => {
 			// todo
-			let nodes = new Set();
-			for (let i = 0; i < 2; i++) v.forEach((v) => nodes.add(v[i]));
-			nodes = [...nodes];
+			let nodes = (() => {
+				let result = new Set();
+				for (let i = 0; i < 2; i++) {
+					v.forEach((v) => {
+						result.add(v[i]);
+					});
+				}
+				return [...result];
+			})();
 			nodes = nodes.map((value, index) => ({
 				value,
 				index,
@@ -60,7 +66,6 @@ export default (graph) => {
 			return a.length - b.length;
 		});
 	};
-	// prettier-ignore
 	let run = () => {
 		let result = [];
 		let recur = (currItems, nextItems, prevItems) => {
@@ -74,15 +79,15 @@ export default (graph) => {
 				});
 				pivotItems.forEach((item) => {
 					recur(
-						(new Set(currItems)).add(item),
+						//
+						new Set(currItems).add(item),
 						nextItems.intersection(item.adjacents),
 						prevItems.intersection(item.adjacents),
 					);
 					nextItems.delete(item);
 					prevItems.add(item);
 				});
-			} else
-			if (currItems.size > 1) {
+			} else if (currItems.size > 1) {
 				result.push([...currItems]);
 			}
 		};
