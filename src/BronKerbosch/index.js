@@ -1,6 +1,8 @@
 export default (graph) => {
 	{
 		graph = [...graph].map(([a, b]) => [a, b]);
+	}
+	{
 		graph = ((v) => {
 			// todo
 			let nodes = (() => {
@@ -54,18 +56,6 @@ export default (graph) => {
 			return nodes;
 		})(graph);*/
 	}
-	let sortResult = (v) => {
-		v.forEach((v) => {
-			v.sort((a, b) => a.index - b.index);
-		});
-		v.sort((a, b) => {
-			for (let i = 0, ii = Math.min(a.length, b.length); i < ii; i++) {
-				let c = a[i].index - b[i].index;
-				if (c) return c;
-			}
-			return a.length - b.length;
-		});
-	};
 	let run = () => {
 		let result = [];
 		let recur = (currItems, nextItems, prevItems) => {
@@ -92,8 +82,21 @@ export default (graph) => {
 			}
 		};
 		recur(new Set(), new Set(graph), new Set());
-		sortResult(result);
 		return result;
 	};
-	return ((v) => v.map((v) => v.map((v) => v.value)))(run());
+	return ((v) => {
+		{
+			v.forEach((v) => {
+				v.sort((a, b) => a.index - b.index);
+			});
+			v.sort((a, b) => {
+				for (let i = 0, ii = Math.min(a.length, b.length); i < ii; i++) {
+					let c = a[i].index - b[i].index;
+					if (c) return c;
+				}
+				return a.length - b.length;
+			});
+		}
+		return v.map((v) => v.map((v) => v.value));
+	})(run());
 };

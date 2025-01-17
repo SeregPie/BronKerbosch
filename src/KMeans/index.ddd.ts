@@ -12,7 +12,7 @@ describe.skip('runKMeans', () => {
 	// prettier-ignore
 	test.skip('should work in a common scenario', () => {
 		// todo: more examples
-		let result = runKMeans<Vector2>(
+		const result = runKMeans<Vector2>(
 			[[1, 4], [6, 2], [0, 4], [1, 3], [5, 1], [4, 0]],
 			[[0, 7], [7, 0]],
 			VectorMath.distance,
@@ -35,10 +35,10 @@ describe.skip('runKMeans', () => {
 
 	// prettier-ignore
 	test('should return no clusters for zero iterations', () => {
-		for (let [items, centers] of <Iterable<[Array<number>, number | Array<number>]>>[
+		for (const [items, centers] of <Iterable<[Array<number>, number | Array<number>]>>[
 			[[1, 2, 3], 3], [[1, 2, 3], [1, 2, 3]]
 		]) {
-			let result = runKMeans(items, centers, () => 0, (v) => v, {
+			const result = runKMeans(items, centers, () => 0, (v) => v, {
 				iterations: 0,
 			});
 
@@ -48,10 +48,10 @@ describe.skip('runKMeans', () => {
 
 	// prettier-ignore
 	test('should return all items as single cluster if only one item or center is provided', () => {
-		for (let [items, centers] of <Iterable<[Array<number>, number | Array<number>]>>[
+		for (const [items, centers] of <Iterable<[Array<number>, number | Array<number>]>>[
 			[[1, 2, 3], 1], [[1, 2, 3], [1]], [[1], 3], [[1], [1, 2, 3]]
 		]) {
-			let result = runKMeans(items, centers, () => 0, (v) => v);
+			const result = runKMeans(items, centers, () => 0, (v) => v);
 
 			expect(result).toEqual([items]);
 		}

@@ -1,5 +1,8 @@
 declare const runMaxDiff: {
-	<T>(items: Iterable<T>): MaxDiffController<T>;
+	<const T>(
+		//
+		items: Iterable<T>,
+	): MaxDiffController<T>;
 };
 
 export default runMaxDiff;
@@ -9,7 +12,7 @@ export interface MaxDiffController<T> {
 	get items(): Iterable<T>;
 	get progress(): number;
 	get complete(): boolean;
-	readonly result?: Array<T>; // todo: getter? Iterable?
+	get result(): undefined | Array<T>; // todo: getter? Iterable?
 	selectCandidates(limit?: number): Array<T>;
 	//getOrderedPairs(): Array<[T, T]>;
 	//getNonOrderedPairs(): Array<[T, T]>;

@@ -1,4 +1,15 @@
-export default (items, centers, calcDistance, calcCenter, {iterations = 1024, random = Math.random} = {}) => {
+export default (
+	items,
+	centers,
+	calcDistance,
+	calcCenter,
+	{
+		//
+		iterations = 1024,
+		tolerance = Number.EPSILON,
+		random = Math.random,
+	} = {},
+) => {
 	{
 		items = [...items];
 		centers = (() => {
@@ -15,6 +26,8 @@ export default (items, centers, calcDistance, calcCenter, {iterations = 1024, ra
 			}
 			return [...centers];
 		})();
+	}
+	{
 		items = items.map((value, index) => ({
 			value,
 			index,
@@ -22,64 +35,93 @@ export default (items, centers, calcDistance, calcCenter, {iterations = 1024, ra
 		centers = centers.map((value) => ({
 			value,
 		}));
-		// prettier-ignore
-		calcCenter = ((f) => (...vs) => f(...vs.map((v) => v.value)))(calcCenter);
-		// prettier-ignore
-		calcDistance = ((f) => (a, b) => f(a.value, b.value))(calcDistance);
+		calcCenter = ((fn) => {
+			return (...vs) => fn(...vs.map((v) => v.value));
+		})(calcCenter);
+		calcDistance = ((fn) => {
+			return (a, b) => fn(a.value, b.value);
+		})(calcDistance);
 	}
-	let sortResult = (v) => {
-		v.forEach((v) => {
-			v.sort((a, b) => a.index - b.index);
-		});
-		v.sort((a, b) => {
-			for (let i = 0, ii = Math.min(a.length, b.length); i < ii; i++) {
-				let c = a[i].index - b[i].index;
-				if (c) return c;
-			}
-			return a.length - b.length;
-		});
-	};
+	let report = () => {};
 	let run = () => {
-		let result = [];
+		report({
+			centers: centers.map((v) => v.value),
+		});
 		let iteration = 0;
-		let converged = true;
-		if (items.length > 0 && centers.length > 0) {
-			converged = false;
-			while (iteration < iterations) {
-				converged = true;
-				items.forEach((item) => {
-					let [center, distance] = centers
-						.map((center) => {
-							let distance = calcDistance(center, item);
-							return [center, distance, Math.abs(distance)];
-						})
-						.reduce((r, v) => (v[2] < r[2] ? v : r));
-					if (item.center !== center) converged = false;
-					item.center = center;
-					item.distance = distance;
-				});
-				iteration++;
-				if (converged) break;
+		let converged = !(items.length > 0 && centers.length > 0);
+		let fmzuhktp = items.length > 0 && centers.length > 0;
+		while (fmzuhktp && iteration < iterations) {
+			fmzuhktp = false;
+			items.forEach((item) => {
+				let [center, distance] = centers
+					.map((center) => {
+						let distance = calcDistance(center, item);
+						return [center, distance, Math.abs(distance)];
+					})
+					.reduce((r, v) => (v[2] < r[2] ? v : r));
+				if (item.center !== center) {
+					fmzuhktp = true;
+				}
+				item.center = center;
+				item.distance = distance;
+			});
+			if (fmzuhktp) {
+				fmzuhktp = false;
 				let tptgathc = Map.groupBy(items, (item) => item.center);
-				result = [];
-				tptgathc.forEach((items) => {
-					result.push(items);
-				});
-				sortResult(result);
 				centers.forEach(center, (center) => {
 					let items = tptgathc.get(center);
 					if (items) {
-						center.value = calcCenter(...items);
+						let value = calcCenter(...items);
+						if (calcDistance(center, {value}) > tolerance) {
+							fmzuhktp = true;
+						}
+						center.value = value;
 					} else {
 						// todo
 					}
+					center.items = items;
 				});
 			}
+			report({
+				iteration,
+				centers: centers.map((center) => ({
+					value: center.value,
+					items: center.items.map((item) => ({
+						value: item.value,
+						distance: item.distance,
+					})),
+				})),
+			});
+			iteration++;
 		}
 		iterations = iteration;
+		report({
+			iterations,
+			converged,
+		});
+		let result = [];
+		centers.forEach(center, ({items}) => {
+			if (items) {
+				result.push(items);
+			}
+		});
 		return result;
 	};
-	return ((v) => v.map((v) => v.map((v) => v.value)))(run());
+	return ((v) => {
+		{
+			v.forEach((v) => {
+				v.sort((a, b) => a.index - b.index);
+			});
+			v.sort((a, b) => {
+				for (let i = 0, ii = Math.min(a.length, b.length); i < ii; i++) {
+					let c = a[i].index - b[i].index;
+					if (c) return c;
+				}
+				return a.length - b.length;
+			});
+		}
+		return v.map((v) => v.map((v) => v.value));
+	})(run());
 };
 
 function ggg(n) {

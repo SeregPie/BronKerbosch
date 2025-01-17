@@ -1,4 +1,4 @@
-declare module VectorMath {
+declare namespace VectorMath {
 	// todo: rename
 	type pbhwbnit = {
 		<D, V = Vector<D>>(a: Readonly<V>, b: Readonly<V>): V;
