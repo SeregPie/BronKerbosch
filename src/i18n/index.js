@@ -8,6 +8,7 @@ export function createInstance({
 	let flatTranslations = translations;
 	let instance = {
 		locale,
+		supportedLocales,
 		extras,
 		t: (id, values) => {
 			const fn = flatTranslations[id];
