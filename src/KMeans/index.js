@@ -29,12 +29,12 @@ export default (items, centers, calcDistance, calcCenter, {
     centers = centers.map((value) => ({
       _value: value,
     }));
-    calcCenter = ((fn) => {
-      return (...vs) => fn(...vs.map((v) => v._value));
-    })(calcCenter);
-    calcDistance = ((fn) => {
-      return (a, b) => fn(a._value, b._value);
-    })(calcDistance);
+    calcCenter = ((f) =>
+      (...vs) => f(...vs.map((v) => v._value))
+    )(calcCenter);
+    calcDistance = ((f) =>
+      (a, b) => f(a._value, b._value)
+    )(calcDistance);
   }
   let report = () => { };
   let run = () => {

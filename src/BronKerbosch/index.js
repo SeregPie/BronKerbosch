@@ -1,90 +1,65 @@
 export default (graph) => {
   {
-    graph = [...graph].map(([a, b]) => [a, b]);
+    graph = [...graph].map(([a, b]) => ([a, b]));
   }
   {
     graph = ((v) => {
       let nodes = (() => {
-        let result = new Set();
+        let unique = new Set();
         for (let i = 0; i < 2; i++) {
           v.forEach((v) => {
-            result.add(v[i]);
+            unique.add(v[i]);
           });
         }
-        return [...result].map((value, index) => ({
-          _value: value,
-          _index: index,
-          _adjacents: new Set(),
-        }));
-      })();
+        return [...unique];
+      })().map((value, index) => ({
+        _value: value,
+        _index: index,
+        _adjacents: new Set(),
+      }));
       let nodesByValue = new Map();
       nodes.forEach((node) => {
         nodesByValue.set(node._value, node);
       });
-      (v
+      let edges = (v
         .map((v) => v.map((v) => nodesByValue.get(v)))
-        .filter((edge) => edge[0] !== edge[1])
-        .forEach((edge) => {
-          edge[0]._adjacents.add(edge[1]);
-          edge[1]._adjacents.add(edge[0]);
-        })
+        .filter(([a, b]) => a !== b)
       );
-      return nodes;
-    })(graph);
-    /*graph = ((ljymojmt) => {
-      // todo
-      let qgpccoli = (() => {
-        let result = new Set();
-        for (let i = 0; i < 2; i++) ljymojmt.forEach((v) => result.add(v[i]));
-        return [...result];
-      })();
-      qgpccoli = qgpccoli.map((value, index) => ({
-        value: value,
-        index: index,
-        adjacents: new Set(),
-      }));
-      let elmirnha = (() => {
-        let nodesByValue = new Map();
-        nodes3.forEach((v) => nodesByValue.set(v.value, v));
-        return ljymojmt.map((v) => v.map((v) => nodesByValue.get(v))).filter(([a, b]) => a !== b);
-      })();
-
-      elmirnha.forEach(([a, b]) => {
-        a.adjacents.add(b);
-        b.adjacents.add(a);
+      edges.forEach(([a, b]) => {
+        a._adjacents.add(b);
+        b._adjacents.add(a);
       });
-      return nodes;
-    })(graph);*/
+      return nodes.filter((node) => node._adjacents.size > 0);
+    })(graph);
   }
   let run = () => {
-    let result = [];
-    // todo: rename currItems, nextItems, prevItems, pivotItems
-    let recur = (currItems, nextItems, prevItems) => {
-      // todo: format else if
-      if (nextItems.size > 0 || prevItems.size > 0) {
-        let pivotItems = nextItems;
-        nextItems.union(prevItems).forEach((item) => {
-          let t = nextItems.difference(item._adjacents);
-          if (t.size < pivotItems.size) {
-            pivotItems = t;
+    let cliques = [];
+    let recur = (clique, p, x) => {
+      if (p.size > 0 || x.size > 0) {
+        let u = p;
+        p.union(x).forEach((node) => {
+          let t = p.difference(node._adjacents);
+          if (t.size < u.size) {
+            u = t;
           }
         });
-        pivotItems.forEach((item) => {
+        u.forEach((node) => {
           recur(
-            //
-            new Set(currItems).add(item),
-            nextItems.intersection(item._adjacents),
-            prevItems.intersection(item._adjacents),
+            [...clique, node],
+            p.intersection(node._adjacents),
+            x.intersection(node._adjacents),
           );
-          nextItems.delete(item);
-          prevItems.add(item);
+          p.delete(node);
+          x.add(node);
         });
-      } else if (currItems.size > 1) {
-        result.push([...currItems]);
+      } else {
+        cliques.push(clique);
       }
     };
-    recur(new Set(), new Set(graph), new Set());
-    return result;
+    if (graph.length > 0) {
+      recur([], new Set(graph), new Set());
+    }
+    return cliques;
   };
   return ((v) => {
     {
