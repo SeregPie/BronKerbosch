@@ -7,7 +7,7 @@
   "author": "Sergej Sintschilin <seregpie@gmail.com>",
   "type": "module",
   "scripts": {
-    "test": "bun test --watch"
+    "build": "bun run build.ts"
   },
   "devDependencies": {
     "@types/bun": "^1.2.17",

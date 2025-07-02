@@ -2,15 +2,15 @@ import runBronKerbosch from "../BronKerbosch";
 
 // todo
 function pairs(that) {
-  let result = [];
-  let i0 = -1,
-    ii0 = that.length - 2;
-  for (let i1 = i0 + 1, ii1 = ii0 + 1; i1 < ii1; i1++) {
-    for (let i2 = i1 + 1, ii2 = ii1 + 1; i2 < ii2; i2++) {
-      result.push([that[i1], that[i2]]);
-    }
-  }
-  return result;
+	let result = [];
+	let i0 = -1,
+		ii0 = that.length - 2;
+	for (let i1 = i0 + 1, ii1 = ii0 + 1; i1 < ii1; i1++) {
+		for (let i2 = i1 + 1, ii2 = ii1 + 1; i2 < ii2; i2++) {
+			result.push([that[i1], that[i2]]);
+		}
+	}
+	return result;
 }
 
 // https://stackoverflow.com/questions/21667149/how-to-define-private-constructors-in-javascript
@@ -170,82 +170,82 @@ class Rnikhvvu {
 		return that;
 	}
 
-	[Symbol.toStringTag] = 'MaxDiffController';
+	[Symbol.toStringTag] = "MaxDiffController";
 }
 */
 
 export default (items) => {
-  {
-    items = [...new Set(items)];
-  }
-  let comparisons = items.map(() => items.map(() => {}));
-  {
-    items.forEach((_, i) => {
-      comparisons[i][i] = 0;
-    });
-  }
-  let result;
-  let bzuhhmfy = ((n) => (n * (n - 1)) / 2)(items.length);
-  if (bzuhhmfy === 0) {
-    result = [...items];
-  }
+	{
+		items = [...new Set(items)];
+	}
+	let comparisons = items.map(() => items.map(() => {}));
+	{
+		items.forEach((_, i) => {
+			comparisons[i][i] = 0;
+		});
+	}
+	let result;
+	let bzuhhmfy = ((n) => (n * (n - 1)) / 2)(items.length);
+	if (bzuhhmfy === 0) {
+		result = [...items];
+	}
 
-  let jsxpozhp = (iijnsabf, bzuhhmfy, comparisons) => {
-    let compare = (item, otherItem) => {
-      let a = items.indexOf(item);
-      let b = items.indexOf(otherItem);
-      if (a >= 0 && b >= 0) {
-        return comparisons[a][b];
-      }
-    };
-    let getOrderedPairs =
-      //
-      () => pairs(items).filter(([item, otherItem]) => compare(item, otherItem) != null);
-    let getNonOrderedPairs =
-      //
-      () => pairs(items).filter(([item, otherItem]) => compare(item, otherItem) == null);
-    let getOrderedGroups = () => runBronKerbosch(getOrderedPairs());
-    let getNonOrderedGroups = () => runBronKerbosch(getNonOrderedPairs());
-    let selectCandidates = (limit = 4) => {
-      let groups = getNonOrderedGroups();
-      if (groups.length > 0) {
-        // todo: format
-        let [items] = groups.map((items) => [items, Math.abs(items.length - limit)]).reduce((r, v) => (v[1] < r[1] ? v : r));
-        items.splice(limit);
-        return items;
-      }
-      return [];
-    };
-    let efxtsjmv = (fn) => (item) => items.filter((otherItem) => fn(compare(item, otherItem)));
-    let getItemsBefore = efxtsjmv((c) => c > 0);
-    let getItemsAfter = efxtsjmv((c) => c < 0);
-    let orderBefore = (item, otherItems) => {
-      [...otherItems].forEach((otherItem) => order(item, otherItem));
-    };
-    let orderAfter = (item, otherItems) => {
-      [...otherItems].forEach((otherItem) => order(otherItem, item));
-    };
-    let orderFirst = (item) => orderBefore(item, items);
-    let orderLast_ = (item) => orderAfter_(item, items);
-    // prettier-ignore
-    let clone = () => jsxpozhp(
+	let jsxpozhp = (iijnsabf, bzuhhmfy, comparisons) => {
+		let compare = (item, otherItem) => {
+			let a = items.indexOf(item);
+			let b = items.indexOf(otherItem);
+			if (a >= 0 && b >= 0) {
+				return comparisons[a][b];
+			}
+		};
+		let getOrderedPairs =
+			//
+			() => pairs(items).filter(([item, otherItem]) => compare(item, otherItem) != null);
+		let getNonOrderedPairs =
+			//
+			() => pairs(items).filter(([item, otherItem]) => compare(item, otherItem) == null);
+		let getOrderedGroups = () => runBronKerbosch(getOrderedPairs());
+		let getNonOrderedGroups = () => runBronKerbosch(getNonOrderedPairs());
+		let selectCandidates = (limit = 4) => {
+			let groups = getNonOrderedGroups();
+			if (groups.length > 0) {
+				// todo: format
+				let [items] = groups.map((items) => [items, Math.abs(items.length - limit)]).reduce((r, v) => (v[1] < r[1] ? v : r));
+				items.splice(limit);
+				return items;
+			}
+			return [];
+		};
+		let efxtsjmv = (fn) => (item) => items.filter((otherItem) => fn(compare(item, otherItem)));
+		let getItemsBefore = efxtsjmv((c) => c > 0);
+		let getItemsAfter = efxtsjmv((c) => c < 0);
+		let orderBefore = (item, otherItems) => {
+			[...otherItems].forEach((otherItem) => order(item, otherItem));
+		};
+		let orderAfter = (item, otherItems) => {
+			[...otherItems].forEach((otherItem) => order(otherItem, item));
+		};
+		let orderFirst = (item) => orderBefore(item, items);
+		let orderLast_ = (item) => orderAfter_(item, items);
+		// prettier-ignore
+		let clone = () => jsxpozhp(
 			iijnsabf,
 			bzuhhmfy,
 			comparisons.map((v) => v.map((v) => v)),
 		);
-    return {
-      get items() {
-        return items.values();
-      },
-      selectCandidates,
-      getItemsBefore,
-      getItemsAfter,
-      order,
-      orderBefore,
-      orderAfter,
-      orderFirst,
-      orderLast,
-      clone,
-    };
-  };
+		return {
+			get items() {
+				return items.values();
+			},
+			selectCandidates,
+			getItemsBefore,
+			getItemsAfter,
+			order,
+			orderBefore,
+			orderAfter,
+			orderFirst,
+			orderLast,
+			clone,
+		};
+	};
 };
