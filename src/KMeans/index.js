@@ -1,15 +1,9 @@
-export default (
-  items,
-  centers,
-  calcDistance,
-  calcCenter,
-  {
-    //
-    iterations = 1024,
-    tolerance = Number.EPSILON,
-    random = Math.random,
-  } = {},
-) => {
+export default (items, centers, calcDistance, calcCenter, {
+  //
+  iterations = 1024,
+  tolerance = Number.EPSILON,
+  random = Math.random,
+} = {}) => {
   {
     items = [...items];
     centers = (() => {
@@ -29,20 +23,20 @@ export default (
   }
   {
     items = items.map((value, index) => ({
-      value,
-      index,
+      _value: value,
+      _index: index,
     }));
     centers = centers.map((value) => ({
-      value,
+      _value: value,
     }));
     calcCenter = ((fn) => {
-      return (...vs) => fn(...vs.map((v) => v.value));
+      return (...vs) => fn(...vs.map((v) => v._value));
     })(calcCenter);
     calcDistance = ((fn) => {
-      return (a, b) => fn(a.value, b.value);
+      return (a, b) => fn(a._value, b._value);
     })(calcDistance);
   }
-  let report = () => {};
+  let report = () => { };
   let run = () => {
     report({
       centers: centers.map((v) => v.value),
@@ -53,17 +47,18 @@ export default (
     while (fmzuhktp && iteration < iterations) {
       fmzuhktp = false;
       items.forEach((item) => {
-        let [center, distance] = centers
+        let [center, distance] = (centers
           .map((center) => {
             let distance = calcDistance(center, item);
             return [center, distance, Math.abs(distance)];
           })
-          .reduce((r, v) => (v[2] < r[2] ? v : r));
-        if (item.center !== center) {
+          .reduce((r, v) => (v[2] < r[2] ? v : r))
+        );
+        if (item._center !== center) {
           fmzuhktp = true;
         }
-        item.center = center;
-        item.distance = distance;
+        item._center = center;
+        item._distance = distance;
       });
       if (fmzuhktp) {
         fmzuhktp = false;
@@ -72,7 +67,7 @@ export default (
           let items = tptgathc.get(center);
           if (items) {
             let value = calcCenter(...items);
-            if (calcDistance(center, {value}) > tolerance) {
+            if (calcDistance(center, { value }) > tolerance) {
               fmzuhktp = true;
             }
             center.value = value;
@@ -100,7 +95,7 @@ export default (
       converged,
     });
     let result = [];
-    centers.forEach(center, ({items}) => {
+    centers.forEach(center, ({ items }) => {
       if (items) {
         result.push(items);
       }
@@ -110,17 +105,17 @@ export default (
   return ((v) => {
     {
       v.forEach((v) => {
-        v.sort((a, b) => a.index - b.index);
+        v.sort((a, b) => a._index - b._index);
       });
       v.sort((a, b) => {
         for (let i = 0, ii = Math.min(a.length, b.length); i < ii; i++) {
-          let c = a[i].index - b[i].index;
+          let c = a[i]._index - b[i]._index;
           if (c) return c;
         }
         return a.length - b.length;
       });
     }
-    return v.map((v) => v.map((v) => v.value));
+    return v.map((v) => v.map((v) => v._value));
   })(run());
 };
 
@@ -134,13 +129,14 @@ function ggg(n) {
     // todo: format
     let ws = ljymojmt.map((i) => {
       let item = items[i];
-      return qgpccoli
+      return (qgpccoli
         .map((i) => {
           let center = items[i];
           let distance = calculateDistance(center, item);
           return Math.abs(distance);
         })
-        .reduce((r, v) => Math.min(r, v));
+        .reduce((r, v) => Math.min(r, v))
+      );
     });
     let wMax = ws.reduce((r, v) => Math.max(r, v));
     // todo: format

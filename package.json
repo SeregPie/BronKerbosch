@@ -7,14 +7,11 @@
   "author": "Sergej Sintschilin <seregpie@gmail.com>",
   "type": "module",
   "scripts": {
-    "test": "bun test --watch",
-    "format": "prettier . --write"
+    "test": "bun test --watch"
   },
   "devDependencies": {
     "bun": "^1.2.17",
     "bun-types": "^1.2.17",
-    "prettier": "^3.6.2",
-    "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "^5.8.3"
   }
 }

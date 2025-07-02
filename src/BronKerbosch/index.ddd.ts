@@ -1,12 +1,11 @@
-import {describe, expect, test} from "bun:test";
+import { describe, expect, it } from "bun:test";
 
 import runBronKerbosch from ".";
 
 // todo: better descriptions
 
-// prettier-ignore
 describe.skip('runBronKerbosch', () => {
-	test('should work in a common scenario', () => {
+	it('should work in a common scenario', () => {
 		// todo?
 		{
 			const result = runBronKerbosch([[1, 4], [2, 3], [2, 5], [3, 5], [4, 5], [4, 6]]);
@@ -25,21 +24,21 @@ describe.skip('runBronKerbosch', () => {
 		}
 	});
 
-	test('should return empty result for empty graph', () => {
+	it('should return empty result for empty graph', () => {
 		const result = runBronKerbosch([]);
 
 		expect(result).toEqual([]);
 	});
 
 	// prettier-ignore
-	test('should ignore loops', () => {
+	it('should ignore loops', () => {
 		const result = runBronKerbosch([[1, 1], [2, 2]]);
 
 		expect(result).toEqual([]);
 	});
 
 	// prettier-ignore
-	test('should ignore duplicates', () => {
+	it('should ignore duplicates', () => {
 		const result = runBronKerbosch([[1, 2], [2, 1]]);
 
 		expect(result).toEqual([[1, 2]]);

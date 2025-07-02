@@ -1,8 +1,3 @@
-declare const runBronKerbosch: {
-  <const T>(
-    //
-    graph: Iterable<Readonly<[T, T]>>,
-  ): Array<Array<T>>;
-};
-
-export default runBronKerbosch;
+export default function runBronKerbosch<const T>(
+  graph: Iterable<Readonly<[T, T]>>,
+): Array<Array<T>>;
