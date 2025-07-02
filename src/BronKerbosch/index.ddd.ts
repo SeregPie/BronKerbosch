@@ -1,6 +1,6 @@
-import {describe, expect, test} from 'bun:test';
+import {describe, expect, test} from "bun:test";
 
-import runBronKerbosch from '.';
+import runBronKerbosch from ".";
 
 // todo: better descriptions
 

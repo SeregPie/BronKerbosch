@@ -11,7 +11,7 @@ npm i @seregpie/bron-kerbosch
 ---
 
 ```ts
-import runBronKerbosch from '@seregpie/bron-kerbosch';
+import runBronKerbosch from "@seregpie/bron-kerbosch";
 ```
 
 ---
@@ -20,11 +20,17 @@ import runBronKerbosch from '@seregpie/bron-kerbosch';
 <script src="https://unpkg.com/@seregpie/bron-kerbosch"></script>
 ```
 
-
 ## Usage
 
 ```ts
-const edges = [[6, 4], [4, 3], [4, 5], [5, 2], [5, 1], [1, 2]];
+const edges = [
+  [6, 4],
+  [4, 3],
+  [4, 5],
+  [5, 2],
+  [5, 1],
+  [1, 2],
+];
 const cliques = runBronKerbosch(edges);
 // => [[4, 6], [4, 3], [4, 5], [2, 5, 1]]
 ```

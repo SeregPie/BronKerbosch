@@ -15,33 +15,33 @@ const _max = Math.max;
 const _sum = (...ns) => ns.reduce((r, n) => r + n, 0);
 
 const _mean = (...ns) => {
-	let r = 0;
-	let l = ns.length;
-	let s = 0;
-	ns.forEach((n) => {
-		let t = s + n;
-		if (t > Number.MIN_SAFE_INTEGER && t < Number.MAX_SAFE_INTEGER) {
-			s = t;
-		} else {
-			r += s / l;
-			s = n;
-		}
-	});
-	r += s / l;
-	return r;
+  let r = 0;
+  let l = ns.length;
+  let s = 0;
+  ns.forEach((n) => {
+    let t = s + n;
+    if (t > Number.MIN_SAFE_INTEGER && t < Number.MAX_SAFE_INTEGER) {
+      s = t;
+    } else {
+      r += s / l;
+      s = n;
+    }
+  });
+  r += s / l;
+  return r;
 };
 
 const _median = (...ns) => {
-	let l = ns.length;
-	if (l > 0) {
-		ns.sort();
-		if (l % 2) {
-			return ns[(l - 1) / 2];
-		}
-		let i = l / 2;
-		return _mean(ns[i - 1], ns[i]);
-	}
-	return 0;
+  let l = ns.length;
+  if (l > 0) {
+    ns.sort();
+    if (l % 2) {
+      return ns[(l - 1) / 2];
+    }
+    let i = l / 2;
+    return _mean(ns[i - 1], ns[i]);
+  }
+  return 0;
 };
 
 const _clamp = (n, min, max) => Math.min(Math.max(n, min), max);
@@ -97,9 +97,9 @@ export {calcEuclideanLength as length};
 
 // todo: rename?
 export const withLength = (v, l) => {
-	// todo
-	let oldLength = length(v);
-	return oldLength ? mulScalar(v, l / oldLength) : v.slice();
+  // todo
+  let oldLength = length(v);
+  return oldLength ? mulScalar(v, l / oldLength) : v.slice();
 };
 
 export const normalize = (n) => withLength(n, 1);
@@ -142,7 +142,7 @@ export const dot = (a, b) => a.reduce((r, a, i) => r + a * b[i], 0);
 //
 
 export const angle = (...args) => {
-	return Math.acos(CosineSimilarity(...args));
+  return Math.acos(CosineSimilarity(...args));
 };
 
 //
@@ -156,7 +156,7 @@ export const calcManhattanLength = (v) => _sum(...abs(v));
 export const calcManhattanDistance = (a, b) => calcManhattanLength(sub(a, b));
 
 export const calcAngularDistance = (vector, otherVector) => {
-	return angle(...args) / Math.PI;
+  return angle(...args) / Math.PI;
 };
 
 export const calcAngularSimilarity = (...args) => 1 - calcAngularDistance(...args);
@@ -164,61 +164,61 @@ export const calcAngularSimilarity = (...args) => 1 - calcAngularDistance(...arg
 export const calcCosineDistance = (...args) => 1 - calcCosineSimilarity(...args);
 
 export const calcCosineSimilarity = (vector, otherVector) => {
-	let denominator = length(vector) * length(otherVector);
-	if (denominator) {
-		let numerator = dot(vector, otherVector);
-		let n = _clamp(numerator / denominator, -1, 1);
-		return Number_isAlmostEqual(1, n) ? 1 : n;
-	}
-	return 0;
+  let denominator = length(vector) * length(otherVector);
+  if (denominator) {
+    let numerator = dot(vector, otherVector);
+    let n = _clamp(numerator / denominator, -1, 1);
+    return Number_isAlmostEqual(1, n) ? 1 : n;
+  }
+  return 0;
 };
 
 export const calcCovariance = (a, b) => _mean(...mul(a, b)) - _mean(...a) * _mean(...b);
 
 export const calcDirectionalDistance = (a, b) => {
-	let aL = length(a);
-	let bL = length(b);
-	return _abs(aL - bL) + _min(aL, bL) * angle(a, b);
+  let aL = length(a);
+  let bL = length(b);
+  return _abs(aL - bL) + _min(aL, bL) * angle(a, b);
 };
 
 export const calcDirectionalMean = (...ns) => {
-	let n = mean(...ns.map((n) => normalize(n)));
-	let nL = _mean(...ns.map((n) => length(n)));
-	return withLength(n, nL);
+  let n = mean(...ns.map((n) => normalize(n)));
+  let nL = _mean(...ns.map((n) => length(n)));
+  return withLength(n, nL);
 };
 
 export const calcPearsonCorrelationCoefficient = (vector, otherVector) => {
-	let denominator = Math_standardDeviation(...vector) * Math_standardDeviation(...otherVector);
-	if (denominator) {
-		let numerator = calcCovariance(vector, otherVector);
-		let n = _clamp(numerator / denominator, -1, 1);
-		return Number_isAlmostEqual(1, n) ? 1 : n;
-	}
-	return 0;
+  let denominator = Math_standardDeviation(...vector) * Math_standardDeviation(...otherVector);
+  if (denominator) {
+    let numerator = calcCovariance(vector, otherVector);
+    let n = _clamp(numerator / denominator, -1, 1);
+    return Number_isAlmostEqual(1, n) ? 1 : n;
+  }
+  return 0;
 };
 
 export default {
-	add,
-	sub,
-	mul,
-	div,
+  add,
+  sub,
+  mul,
+  div,
 
-	addScalar,
-	subScalar,
-	mulScalar,
-	divScalar,
+  addScalar,
+  subScalar,
+  mulScalar,
+  divScalar,
 
-	abs,
-	min,
-	max,
-	sum,
-	mean,
-	median,
+  abs,
+  min,
+  max,
+  sum,
+  mean,
+  median,
 
-	clamp,
-	scale,
-	clampScalar,
-	scaleScalar,
-	clampLength,
-	scaleLength,
+  clamp,
+  scale,
+  clampScalar,
+  scaleScalar,
+  clampLength,
+  scaleLength,
 };

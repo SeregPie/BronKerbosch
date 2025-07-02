@@ -1,20 +1,20 @@
 {
-	"name": "@seregpie/bron-kerbosch",
-	"version": "1.0.1",
-	"description": "An implementation of the Bron-Kerbosch algorithm to find the maximal cliques in an undirected graph.",
-	"repository": "github:SeregPie/BronKerbosch",
-	"license": "MIT",
-	"author": "Sergej Sintschilin <seregpie@gmail.com>",
-	"type": "module",
-	"scripts": {
-		"test": "bun test --watch",
-		"format": "prettier . --write"
-	},
-	"devDependencies": {
-		"bun": "^1.1.44",
-		"bun-types": "^1.1.44",
-		"prettier": "^3.4.2",
-		"prettier-plugin-organize-imports": "^4.1.0",
-		"typescript": "^5.7.3"
-	}
+  "name": "@seregpie/bron-kerbosch",
+  "version": "1.0.1",
+  "description": "An implementation of the Bron-Kerbosch algorithm to find the maximal cliques in an undirected graph.",
+  "repository": "github:SeregPie/BronKerbosch",
+  "license": "MIT",
+  "author": "Sergej Sintschilin <seregpie@gmail.com>",
+  "type": "module",
+  "scripts": {
+    "test": "bun test --watch",
+    "format": "prettier . --write"
+  },
+  "devDependencies": {
+    "bun": "^1.2.17",
+    "bun-types": "^1.2.17",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "typescript": "^5.8.3"
+  }
 }

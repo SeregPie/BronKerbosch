@@ -1,3 +1,3 @@
-export default function(a, b) {
-	return Math.abs(a - b) <= Number.EPSILON;
+export default function (a, b) {
+  return Math.abs(a - b) <= Number.EPSILON;
 }
