@@ -4,4 +4,4 @@ const result = await Bun.build({
   minify: true,
 });
 
-export { };
+export {};

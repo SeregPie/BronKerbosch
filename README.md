@@ -23,14 +23,7 @@ import runBronKerbosch from "@seregpie/bron-kerbosch";
 ## Usage
 
 ```ts
-const edges = [
-  [6, 4],
-  [4, 3],
-  [4, 5],
-  [5, 2],
-  [5, 1],
-  [1, 2],
-];
-const cliques = runBronKerbosch(edges);
-// => [[4, 6], [4, 3], [4, 5], [2, 5, 1]]
+const graph = [[1, 4], [2, 3], [2, 5], [3, 5], [4, 5], [4, 6]];
+const cliques = runBronKerbosch(graph);
+// => [[1, 4], [2, 3, 5], [4, 5], [4, 6]]
 ```

@@ -10,8 +10,7 @@
     "test": "bun test --watch"
   },
   "devDependencies": {
-    "bun": "^1.2.17",
-    "bun-types": "^1.2.17",
+    "@types/bun": "^1.2.17",
     "typescript": "^5.8.3"
   }
 }
