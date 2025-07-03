@@ -3,7 +3,7 @@ import {describe, expect, it} from "bun:test";
 import runBronKerbosch from ".";
 
 describe("runBronKerbosch", () => {
-	it("should work in a common scenario", () => {
+	it("should work in a common scenario", async () => {
 		{
 			const result = runBronKerbosch([[1, 2], [1, 3], [2, 3]]);
 
@@ -31,13 +31,13 @@ describe("runBronKerbosch", () => {
 		}
 	});
 
-	it("should return empty result for empty graph", () => {
+	it("should return empty result for empty graph", async () => {
 		const result = runBronKerbosch([]);
 
 		expect(result).toEqual([]);
 	});
 
-	it("should ignore loops", () => {
+	it("should ignore loops", async () => {
 		{
 			const result = runBronKerbosch([[1, 1], [2, 2]]);
 
@@ -50,7 +50,7 @@ describe("runBronKerbosch", () => {
 		}
 	});
 
-	it("should ignore duplicates", () => {
+	it("should ignore duplicates", async () => {
 		{
 			const result = runBronKerbosch([[1, 2], [2, 1]]);
 

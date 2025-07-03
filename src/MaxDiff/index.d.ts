@@ -1,11 +1,6 @@
-declare const runMaxDiff: {
-  <const T>(
-    //
-    items: Iterable<T>,
-  ): MaxDiffController<T>;
-};
-
-export default runMaxDiff;
+export default function runMaxDiff<const T>(
+  items: Iterable<T>,
+): MaxDiffController<T>;
 
 // todo: rename Runner?
 export interface MaxDiffController<T> {

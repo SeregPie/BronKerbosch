@@ -1,21 +1,21 @@
-import {describe, expect, test} from "bun:test";
+import {describe, expect, it} from "bun:test";
 
 import runMaxDiff from ".";
 
 describe.skip("runMaxDiff", () => {
-  test("...", async () => {
-    let controller = runMaxDiff([]);
+  it("...", async () => {
+    const controller = runMaxDiff([]);
 
-    expect(controller.complete).toBe(true);
+    expect(controller.complete).toBeTrue();
     expect(controller.progress).toBe(1);
     expect(controller.result).toEqual([]);
     expect(controller.selectCandidates()).toEqual([]);
   });
 
-  test("...", async () => {
-    let controller = runMaxDiff(["a"]);
+  it("...", async () => {
+    const controller = runMaxDiff(["a"]);
 
-    expect(controller.complete).toBe(true);
+    expect(controller.complete).toBeTrue();
     expect(controller.progress).toBe(1);
     expect(controller.result).toEqual(["a"]);
     expect(controller.selectCandidates()).toEqual([]);
@@ -23,10 +23,10 @@ describe.skip("runMaxDiff", () => {
     expect(controller.getItemsAfter("a")).toEqual([]);
   });
 
-  test("...", async () => {
-    let controller = runMaxDiff(["a", "b"]);
+  it("...", async () => {
+    const controller = runMaxDiff(["a", "b"]);
 
-    expect(controller.complete).toBe(false);
+    expect(controller.complete).toBeFalse();
     expect(controller.progress).toBe(0);
     expect(controller.result).toBeUndefined();
     expect(controller.selectCandidates()).toEqual(["a", "b"]);
@@ -37,7 +37,7 @@ describe.skip("runMaxDiff", () => {
 
     controller.order("b", "a");
 
-    expect(controller.complete).toBe(true);
+    expect(controller.complete).toBeTrue();
     expect(controller.progress).toBe(1);
     expect(controller.result).toEqual(["b", "a"]);
     expect(controller.selectCandidates()).toEqual([]);
@@ -47,10 +47,10 @@ describe.skip("runMaxDiff", () => {
     expect(controller.getItemsAfter("b")).toEqual(["a"]);
   });
 
-  test("...", async () => {
-    let controller = runMaxDiff(["a", "b", "c"]);
+  it("...", async () => {
+    const controller = runMaxDiff(["a", "b", "c"]);
 
-    expect(controller.complete).toBe(false);
+    expect(controller.complete).toBeFalse();
     expect(controller.progress).toBe(0);
     expect(controller.result).toBeUndefined();
     expect(controller.selectCandidates()).toEqual(["a", "b", "c"]);
@@ -63,9 +63,8 @@ describe.skip("runMaxDiff", () => {
 
     controller.order("c", "a");
 
-    expect(controller.complete).toBe(false);
-    // prettier-ignore
-    expect(controller.progress).toBe(1/3);
+    expect(controller.complete).toBeFalse();
+    expect(controller.progress).toBe(1 / 3);
     expect(controller.result).toBeUndefined();
     expect(controller.selectCandidates()).toEqual(["a", "b"]);
     expect(controller.getItemsBefore("a")).toEqual(["c"]);
@@ -77,9 +76,8 @@ describe.skip("runMaxDiff", () => {
 
     controller.order("b", "a");
 
-    expect(controller.complete).toBe(false);
-    // prettier-ignore
-    expect(controller.progress).toBe(2/3);
+    expect(controller.complete).toBeFalse();
+    expect(controller.progress).toBe(2 / 3);
     expect(controller.result).toBeUndefined();
     expect(controller.selectCandidates()).toEqual(["b", "c"]);
     expect(controller.getItemsBefore("a")).toEqual(["b", "c"]);
@@ -91,7 +89,7 @@ describe.skip("runMaxDiff", () => {
 
     controller.order("c", "b");
 
-    expect(controller.complete).toBe(true);
+    expect(controller.complete).toBeTrue();
     expect(controller.progress).toBe(1);
     expect(controller.result).toEqual(["c", "b", "a"]);
     expect(controller.selectCandidates()).toEqual([]);
