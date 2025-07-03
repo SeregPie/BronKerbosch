@@ -5,6 +5,12 @@
   "repository": "github:SeregPie/BronKerbosch",
   "license": "MIT",
   "author": "Sergej Sintschilin <seregpie@gmail.com>",
+  "exports": {
+    "require": "./index.cjs",
+    "unpkg": "./index.iife.js",
+    "types": "./index.d.ts",
+    "default": "./index.js"
+  },
   "type": "module",
   "scripts": {
     "build": "bun run build.ts"
