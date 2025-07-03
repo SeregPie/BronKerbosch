@@ -1,8 +1,54 @@
+import {build, file, fileURLToPath, Glob, write} from "bun";
+import {rm} from "node:fs/promises";
+import {join, isAbsolute} from "node:path";
+
+
+
+
+
+
+const ycptqdie = "./src";
+const uvcrcwan = "./dist";
+
+const wjkjqafk = "LICENSE";
+const iwgzovjo = ".";
+const mxzawjtx = ".";
+
+
+const ybbeeapp = "package.json";
+
+const bcreruss = "xen.entry";
+
+const taltlpyk = import.meta.dir;
+
+await rm(join(taltlpyk, uvcrcwan), {recursive: true, force: true});
+
+{
+  const alrfibev = file(join(taltlpyk, iwgzovjo, wjkjqafk));
+  if (await alrfibev.exists()) {
+    await write(join(taltlpyk, uvcrcwan, mxzawjtx, wjkjqafk), alrfibev);
+  }
+}
+
+{
+  const lpkzhzbf = new Glob(`**/${bcreruss}.{json,ts,js,mjs,cjs}`);
+  for await (const vmhivggg of lpkzhzbf.scan(join(taltlpyk, ycptqdie))) {
+    console.log(vmhivggg); // => "index.ts"
+  }
+
+}
+
+
+/*
 const result = await Bun.build({
   entrypoints: ["./src/BronKerbosch/index.js"],
   outdir: "./dist",
   minify: true,
 });
+
+
+
+
 
 {
   const file = Bun.file("./src/BronKerbosch/index.d.ts");
@@ -25,6 +71,6 @@ const result = await Bun.build({
   await Bun.write("./dist/package.json", JSON.stringify(json, null, 2));
 }
 
-
+*/
 
 export {};
