@@ -1,76 +1,56 @@
-import {build, file, fileURLToPath, Glob, write} from "bun";
+
+
+import {build, file, write} from "bun";
 import {rm} from "node:fs/promises";
-import {join, isAbsolute} from "node:path";
-
-
-
-
-
-
-const ycptqdie = "./src";
-const uvcrcwan = "./dist";
-
-const wjkjqafk = "LICENSE";
-const iwgzovjo = ".";
-const mxzawjtx = ".";
-
-
-const ybbeeapp = "package.json";
-
-const bcreruss = "xen.entry";
+import {join} from "node:path";
 
 const taltlpyk = import.meta.dir;
 
-await rm(join(taltlpyk, uvcrcwan), {recursive: true, force: true});
+await rm(join(taltlpyk, "./dist"), {recursive: true, force: true});
 
 {
-  const alrfibev = file(join(taltlpyk, iwgzovjo, wjkjqafk));
+  const alrfibev = file(join(taltlpyk, "./LICENSE"));
   if (await alrfibev.exists()) {
-    await write(join(taltlpyk, uvcrcwan, mxzawjtx, wjkjqafk), alrfibev);
+    await write(join(taltlpyk, "./dist/LICENSE"), alrfibev);
   }
 }
-
 {
-  const lpkzhzbf = new Glob(`**/${bcreruss}.{json,ts,js,mjs,cjs}`);
-  for await (const vmhivggg of lpkzhzbf.scan(join(taltlpyk, ycptqdie))) {
-    console.log(vmhivggg); // => "index.ts"
+  const alrfibev = file(join(taltlpyk, "./README.md"));
+  if (await alrfibev.exists()) {
+    await write(join(taltlpyk, "./dist/README.md"), alrfibev);
   }
-
 }
-
-
-/*
-const result = await Bun.build({
-  entrypoints: ["./src/BronKerbosch/index.js"],
-  outdir: "./dist",
+const result = await build({
+  entrypoints: [join(taltlpyk, "./src/BronKerbosch/index.js")],
+  //outdir: join(taltlpyk, "./dist"),
   minify: true,
 });
-
-
-
-
-
+console.log(result);
 {
-  const file = Bun.file("./src/BronKerbosch/index.d.ts");
-  await Bun.write("./dist/index.d.ts", file);
+  const alrfibev = file(join(taltlpyk, "./src/BronKerbosch/index.d.ts"));
+  if (await alrfibev.exists()) {
+    await write(join(taltlpyk, "./dist/index.d.ts"), alrfibev);
+  }
 }
 {
-  const file = Bun.file("./LICENSE");
-  await Bun.write("./dist/LICENSE", file);
-}
-{
-  const json = {
-    "name": "@seregpie/bron-kerbosch",
-    "version": "1.0.1",
-    "description": "An implementation of the Bron-Kerbosch algorithm to find the maximal cliques in an undirected graph.",
-    "repository": "github:SeregPie/BronKerbosch",
-    "license": "MIT",
-    "author": "Sergej Sintschilin <seregpie@gmail.com>",
+  const krnfvigo = (await import(join(taltlpyk, "./package.json"), {with: {type: "json"}})).default;
+  const unhhgpkq = {
+    "name": krnfvigo["name"],
+    "version": krnfvigo["version"],
+    "description": krnfvigo["description"],
+    "repository": krnfvigo["repository"],
+    "license": krnfvigo["license"],
+    "author": krnfvigo["author"],
+    "exports": {
+      //"require": "./index.cjs",
+      //"unpkg": "./index.iife.js",
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
     "type": "module",
+    "devDependencies": krnfvigo["devDependencies"],
   };
-  await Bun.write("./dist/package.json", JSON.stringify(json, null, 2));
+  await Bun.write(join(taltlpyk, "./dist/package.json"), JSON.stringify(unhhgpkq, null, 2));
 }
-
-*/
 
 export {};
