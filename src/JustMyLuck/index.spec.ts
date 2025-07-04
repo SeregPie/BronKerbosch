@@ -107,7 +107,7 @@ describe("randomInteger", () => {
 
   it("wghjlonv", () => {
     let n = 1;
-    expect(fn(n - random(), n + random() + 1)).toBe(n);
+    expect(fn(n - random(), n + random())).toBe(n);
   });
 
   it("frspxpie", () => {

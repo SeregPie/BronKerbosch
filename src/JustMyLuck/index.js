@@ -3,16 +3,13 @@
 
 
 // todo: rename
-export const ahkmdyhx = (fn) => {
-  // todo
+export function ahkmdyhx(fn) {
   let r = fn();
-  if (typeof r === "number") {
-    if (0 <= r && r < 1) {
-      return r;
-    }
+  if (typeof r !== "number" || r < 0 || r >= 1) {
+    throw new Error(); // todo: message
   }
-  throw new Error(); // todo: message
-};
+  return r;
+}
 
 export const useMersenneTwister = (seed) => {
   {
@@ -45,111 +42,127 @@ export const useMersenneTwister = (seed) => {
   };
 };
 
-// todo: needed? rename?
-export const chance = (random, p) => {
-  {
-    p = Number(p);
-  }
-  if (p > 0) {
-    if (p < 1) {
-      return random() < p;
-    }
-    return true;
-  }
-  return false;
-};
-
-export const randomBoolean = (random) => {
+export function randomBoolean(random) {
   return ahkmdyhx(random) < 1 / 2;
-};
+}
 
-export const randomBooleanWeighted = (random, w) => {
+export function randomBooleanWeighted(random, w) {
   {
     w = Number(w);
   }
-  // todo
+  if (Number.isNaN(w)) {
+    w = 0;
+  }
   if (w > 0) {
     if (w < Number.MAX_SAFE_INTEGER) {
-      let r = ahkmdyhx(random);
-      return r < w / (w + 1);
+      return ahkmdyhx(random) < w / (w + 1);
     }
     return !0;
   }
   if (w < 0) {
     if (w > Number.MIN_SAFE_INTEGER) {
-      let r = ahkmdyhx(random);
-      return r < 1 / (1 - w);
+      return ahkmdyhx(random) < 1 / (1 - w);
     }
     return !1;
   }
   return randomBoolean(random);
-};
+}
 
-export const randomFloat = (random, min, max) => {
+/*
+
++1 => 1/2
++2 => 2/3
++3 => 3/4
+
++1/2 => 1/3
++1/3 => 1/4
++1/4 => 1/5
+
+
+-1 => 1/2
+-2 => 1/3
+-3 => 1/4
+
+-1/2 => 2/3
+-1/3 => 3/4
+-1/4 => 4/5
+
+
+*/
+
+export function randomFloat(random, min, max, maxInclusive = false) {
+  {
+    min = Number(min);
+    max = Number(max);
+  }
+  if (Number.isNaN(min) || Number.isNaN(max)) {
+    return Number.NaN;
+  }
+  // todo
   {
     min = Math.max(min, Number.MIN_SAFE_INTEGER);
     max = Math.min(max, Number.MAX_SAFE_INTEGER);
   }
-  if (Number.isNaN(min) || Number.isNaN(max)) {
-    return Number.NaN;
-  }
   if (min >= max) {
     throw new RangeError(); // todo: message
   }
-  let r = ahkmdyhx(random);
-  let n = min + ((max - min) * r);
-  if (n < min) {
+  let delta = max - min;
+  let n = ahkmdyhx(random) * delta + min;
+  if (n >= max) {
     return min;
-  }
-  if (n > max) {
-    return max;
   }
   return n;
+}
 
-};
-
-export const randomInteger = (random, min, max) => {
-  // todo: handle Infinity and NaN
+export function randomInteger(random, min, max, maxInclusive = false) {
   {
-    min = Math.ceil(min);
-    max = Math.floor(max);
+    min = Number(min);
+    max = Number(max);
   }
   if (Number.isNaN(min) || Number.isNaN(max)) {
     return Number.NaN;
   }
-  if (max - min === 1) {
-    return min;
+  // todo
+  {
+    min = Math.ceil(min);
+    max = Math.ceil(max);
+  }
+  {
+    min = Math.max(min, Number.MIN_SAFE_INTEGER);
+    max = Math.min(max, Number.MAX_SAFE_INTEGER);
   }
   if (min >= max) {
     throw new RangeError(); // todo: message
   }
-  // todo
-  let r = ahkmdyhx(random);
-  let n = min + ((max - min) * r);
-  return Math.floor(n);
-};
+  let delta = max - min;
+  if (delta === 1) {
+    return min;
+  }
+  let n = ahkmdyhx(random) * delta + min;
+  if (n >= max) {
+    return min;
+  }
+  {
+    n = Math.floor(n);
+  }
+  return n;
+}
 
-export const sample = (random, source) => {
+export function sample(random, source) {
   {
     source = Array.isArray(source) ? source : Array.from(source);
   }
   let n = source.length;
-  if (n > 1) {
-    let r = ahkmdyhx(random);
-    let i = Math.trunc(r * n);
-    // todo
-    if (i < n) {
-      return source[i];
-    }
-    return source[i];
+  if (n === 0) {
+    throw new RangeError(); // todo: message
   }
-  if (n > 0) {
+  if (n === 1) {
     return source[0];
   }
-  throw new RangeError(); // todo: message
-};
+  return source[randomInteger(random, 0, n)];
+}
 
-export const sampleWeighted = (random, source) => {
+export function sampleWeighted(random, source) {
   {
     source = Array.isArray(source) ? source : Array.from(source);
   }
@@ -165,24 +178,21 @@ export const sampleWeighted = (random, source) => {
   let rwfkoumu = []; // -Infinity
   source.forEach(([v, w]) => {
     if (w > 0) {
-      if (w < Number.MAX_SAFE_INTEGER) {
-        piubpiah.push([v, w]);
-      } else {
-        fkmuymhx.push(v);
+      if (w < Number.POSITIVE_INFINITY) {
+        return piubpiah.push([v, w]);
       }
-    } else if (w < 0) {
-      if (w > Number.MIN_SAFE_INTEGER) {
-        idpvdilo.push([v, w]);
-      } else {
-        rwfkoumu.push(v);
-      }
-    } else {
-      kdqdfoca.push(v);
+      return fkmuymhx.push(v);
     }
+    if (w < 0) {
+      if (w > Number.NEGATIVE_INFINITY) {
+        return idpvdilo.push([v, w]);
+      }
+      return rwfkoumu.push(v);
+    }
+    return kdqdfoca.push(v);
   });
-  let mkjkafrt = (source) => sample(random, source);
   if (fkmuymhx.length) {
-    return mkjkafrt(fkmuymhx);
+    return sample(random, fkmuymhx);
   }
   if (piubpiah.length) {
     // todo
@@ -212,54 +222,52 @@ export const sampleWeighted = (random, source) => {
     return vs[i > 0 ? i : 0];
   }
   if (kdqdfoca.length) {
-    return mkjkafrt(kdqdfoca);
+    return sample(random, kdqdfoca);
   }
   if (idpvdilo.length) {
     // todo
   }
   if (rwfkoumu.length) {
-    return mkjkafrt(rwfkoumu);
+    return sample(random, rwfkoumu);
   }
   throw new RangeError(); // todo: message
-};
+}
 
 export const sampleCombination = (random, source, k) => {
   {
     source = Array.isArray(source) ? source : Array.from(source);
-    k = Math.trunc(k);
-    // todo: handle NonFinite
+    // todo
+    k = Math.min(Math.max(Math.trunc(k), 0), Number.MAX_SAFE_INTEGER);
+  }
+  if (Number.isNaN(k)) {
+    k = 0;
   }
   let n = source.length;
-  if (k > 1) {
-    if (n > k) {
-      let result = [];
-      let i = 0;
-      while (k > 0 && n > 0) {
-        if (ahkmdyhx(random) < k / n) {
-          result.push(source[i]);
-          k--;
-        }
-        i++;
-        n--;
+  if (n === 0 || k === 0) {
+    return [];
+  }
+  if (n === 1) {
+    return [source[0]];
+  }
+  if (k === 1) {
+    return [sample(random, source)];
+  }
+  if (k >= n) {
+    return [...source];
+  }
+  {
+    let result = [];
+    let i = 0;
+    while (k > 0 && n > 0) {
+      if (ahkmdyhx(random) < k / n) {
+        result.push(source[i]);
+        k--;
       }
-      return result;
+      i++;
+      n--;
     }
-    return Array.from(source); // todo
+    return result;
   }
-  if (k > 0) {
-    // todo?
-    if (n > 0) {
-      return [sample(random, source)];
-    }
-    if (n > 1) {
-      let i = Math.trunc(ahkmdyhx(random) * n);
-      return [source[i]];
-    }
-    if (n > 0) {
-      return [source[0]];
-    }
-  }
-  return [];
 };
 
 export const sampleCombinationWeighted = (random, source, k) => {
@@ -284,20 +292,42 @@ export const sampleCombinationWeighted = (random, source, k) => {
     vs.push(v);
     if (w > 0) {
       if (w < Number.POSITIVE_INFINITY) {
-        piubpiah.push([i, w]);
-      } else {
-        fkmuymhx.push(i);
+        return piubpiah.push([i, w]);
       }
-    } else if (w < 0) {
-      if (w > Number.NEGATIVE_INFINITY) {
-        idpvdilo.push([i, w]);
-      } else {
-        rwfkoumu.push(i);
-      }
-    } else {
-      kdqdfoca.push(i);
+      return fkmuymhx.push(i);
     }
+    if (w < 0) {
+      if (w > Number.NEGATIVE_INFINITY) {
+        return idpvdilo.push([i, w]);
+      }
+      return rwfkoumu.push(i);
+    }
+    return kdqdfoca.push(i);
   });
+  if (fkmuymhx.length && k > 0) {
+    let result = sampleCombination(random, fkmuymhx, k);
+    is.push(...result);
+    k -= result.length;
+  }
+  while (piubpiah.length && k > 0) {
+    let i = sampleWeighted(random, piubpiah);
+    piubpiah.remove(i);
+    is.push(i);
+  }
+  if (kdqdfoca.length && k > 0) {
+    let result = sampleCombination(random, kdqdfoca, k);
+    is.push(...result);
+    k -= result.length;
+  }
+  if (idpvdilo.length && k > 0) {
+    // todo
+  }
+  if (rwfkoumu.length && k > 0) {
+    let result = sampleCombination(random, rwfkoumu, k);
+    is.push(...result);
+    k -= result.length;
+  }
+  /*
   let xtsmygzy = (source) => {
     if (k > 0 && source.length) {
       sampleCombination(random, source, k).forEach((i) => {
@@ -324,76 +354,126 @@ export const sampleCombinationWeighted = (random, source, k) => {
   xtsmygzy(kdqdfoca);
   // todo
   xtsmygzy(rwfkoumu);
+  */
   return vs.filter((_, i) => is.includes(i));
 };
 
-export const samplePermutation = (random, source, k) => {
-  return shuffleInPlace(random, sampleCombination(random, source, k));
-};
+export function samplePermutation(random, source, k) {
+  // todo: ok?
+  return shuffle(random, sampleCombination(random, source, k));
+}
 
-export const samplePermutationWeighted = (random, source, k) => {
-  return shuffleInPlace(random, sampleCombinationWeighted(random, source, k));
-};
+export function samplePermutationWeighted(random, source, k) {
+  // todo: ok?
+  return shuffle(random, sampleCombinationWeighted(random, source, k));
+}
 
-export const sampleMultiCombination = (random, source, k) => {
+export function sampleMultiCombination(random, source, k) {
   {
     source = Array.isArray(source) ? source : Array.from(source);
-    k = Math.trunc(k);
-    // todo: handle NonFinite
+    // todo
+    k = Math.min(Math.max(Math.trunc(k), 0), Number.MAX_SAFE_INTEGER);
+  }
+  if (Number.isNaN(k)) {
+    k = 0;
   }
   let n = source.length;
-  if (k > 1) {
-    if (n > 1) {
-      let result = [];
-      let i = 0;
-      while (k > 0 && n > 0) {
-        if (ahkmdyhx(random) < k / (k + n - 1)) {
-          // todo: large numbers
-          result.push(source[i]);
-          k--;
-        } else {
-          i++;
-          n--;
-        }
-      }
-      return result;
-    }
-    if (n > 0) {
-      return Array.from({length: k}).fill(source[0]); // todo
-    }
+  if (n === 0 || k === 0) {
+    return [];
   }
-  if (k > 0) {
-    // todo?
-    if (n > 0) {
-      return [sample(random, source)];
+  if (n === 1) {
+    return (new Array(k)).fill(source[0]);
+  }
+  if (k === 1) {
+    return [sample(random, source)];
+  }
+  {
+    let result = [];
+    let i = 0;
+    while (k > 0 && n > 0) {
+      // todo: large numbers
+      if (ahkmdyhx(random) < k / (k + n - 1)) {
+        result.push(source[i]);
+        k--;
+      } else {
+        i++;
+        n--;
+      }
     }
-    if (n > 1) {
-      let i = Math.trunc(ahkmdyhx(random) * n);
-      return [source[i]];
+    return result;
+  }
+}
+
+export function sampleMultiCombinationWeighted(random, source, k) {
+  {
+    random = ahkmdyhx(random);
+    source = Array.isArray(source) ? source : Array.from(source);
+    k = Math.trunc(k);
+  }
+  // todo: rename
+  let fkmuymhx = []; // +Infinity
+  // todo: rename
+  let piubpiah = []; // > 0
+  // todo: rename
+  let kdqdfoca = []; // = 0
+  // todo: rename
+  let idpvdilo = []; // < 0
+  // todo: rename
+  let rwfkoumu = []; // -Infinity
+  let is = [];
+  let vs = [];
+  source.forEach(([v, w]) => {
+    vs.push(v);
+    if (w > 0) {
+      if (w < Number.POSITIVE_INFINITY) {
+        return piubpiah.push([v, w]);
+      }
+      return fkmuymhx.push(v);
     }
-    if (n > 0) {
-      return [source[0]];
+    if (w < 0) {
+      if (w > Number.NEGATIVE_INFINITY) {
+        return idpvdilo.push([v, w]);
+      }
+      return rwfkoumu.push(v);
     }
-    throw new RangeError(); // todo
+    return kdqdfoca.push(v);
+  });
+  if (fkmuymhx.length) {
+    return sampleMultiCombination(random, fkmuymhx, k);
+  }
+  if (piubpiah.length) {
+    return Array.from({length: k}, () => sampleWeighted(piubpiah, source));
+  }
+  if (kdqdfoca.length) {
+    return sampleMultiCombination(random, kdqdfoca, k);
+  }
+  if (idpvdilo.length) {
+    return Array.from({length: k}, () => sampleWeighted(idpvdilo, source));
+  }
+  if (rwfkoumu.length) {
+    return sampleMultiCombination(random, rwfkoumu, k);
   }
   return [];
-};
+}
+
+export function sampleMultiPermutation(random, source, k) {
+  // todo: ok?
+  return shuffle(random, sampleMultiCombination(random, source, k));
+}
+
+export function sampleMultiPermutationWeighted(random, source, k) {
+  // todo: ok?
+  return shuffle(random, sampleMultiCombinationWeighted(random, source, k));
+}
 
 export const shuffle = (random, source) => {
-  // todo
-  return shuffleInPlace(random, Array.from(source));
-};
-
-export const shuffleInPlace = (random, source) => {
-  // todo
-  {
-    source = ((v) => Array.isArray(v) ? v : Array.from(v))(source);
-  }
-  let n = source.length;
+  let result = Array.from(source);
+  let n = result.length;
   while (n > 1) {
+    // todo
     let i = randomInteger(random, 0, n);
     n--;
-    [source[n], source[i]] = [source[i], source[n]];
+    [result[n], result[i]] = [result[i], result[n]];
   }
-  return source;
+  return result;
 };

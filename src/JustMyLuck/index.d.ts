@@ -95,8 +95,3 @@ export function shuffle<const T>(
   random: Random,
   source: Iterable<T>,
 ): Array<T>;
-
-export function shuffleInPlace<const T>(
-  random: Random,
-  source: Iterable<T>,
-): Array<T>;
