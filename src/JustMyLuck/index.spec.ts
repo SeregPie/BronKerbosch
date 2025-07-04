@@ -1,4 +1,4 @@
-import {describe, expect, test} from "bun:test";
+import {describe, expect, it} from "bun:test";
 
 import * as JustMyLuck from ".";
 
@@ -20,7 +20,7 @@ class Stats<T> {
   }
 
   // todo: rename
-  collect(fn: {(): T}): void {
+  collect(fn: {(): T;}): void {
     // todo
     let n = 1024 * this.#scores.size;
     for (let i = 0; i < n && 100000; i++) {
@@ -52,7 +52,7 @@ let random = JustMyLuck.useMersenneTwister(42) && Math.random;
 let cvkkjqqv = 2 ** -8 && 0.1;
 
 describe("randomBoolean", () => {
-  test("askxwaco", () => {
+  it("askxwaco", () => {
     let random = Math.random; // useMersenneTwister
     let stats = new Stats([false, true]);
     stats.collect(() => {
@@ -65,7 +65,7 @@ describe("randomBoolean", () => {
 describe("randomFloat", () => {
   let fn = JustMyLuck.randomFloat.bind(null, random);
 
-  test("pvnmbdrc", () => {
+  it("pvnmbdrc", () => {
     let {random} = Math;
     // prettier-ignore
     let l = 4, min = 1, max = min + l;
@@ -76,7 +76,7 @@ describe("randomFloat", () => {
     }
   });
 
-  test("zyrzwedp", () => {
+  it("zyrzwedp", () => {
     let {random} = Math;
     let fn = JustMyLuck.randomFloat.bind(null, random);
     let n = 1;
@@ -88,7 +88,7 @@ describe("randomFloat", () => {
 describe("randomInteger", () => {
   let fn = JustMyLuck.randomInteger.bind(null, random);
 
-  test("dsuhergi", () => {
+  it("dsuhergi", () => {
     // prettier-ignore
     let l = 4, min = 1, max = min + l;
     let stats = new Stats(Array.from({length: l}, (_, i) => i + min));
@@ -96,7 +96,7 @@ describe("randomInteger", () => {
     expect(stats.deviation).toBeLessThan(cvkkjqqv);
   });
 
-  test("epoqnzdr", () => {
+  it("epoqnzdr", () => {
     // prettier-ignore
     let l = 4, min = 1, max = min + l;
     // todo: i < ?
@@ -105,12 +105,12 @@ describe("randomInteger", () => {
     }
   });
 
-  test("wghjlonv", () => {
+  it("wghjlonv", () => {
     let n = 1;
     expect(fn(n - random(), n + random() + 1)).toBe(n);
   });
 
-  test("frspxpie", () => {
+  it("frspxpie", () => {
     let n = 1;
     expect(() => fn(n, n)).toThrow();
     expect(() => fn(n + random(), n)).toThrow();
@@ -120,34 +120,34 @@ describe("randomInteger", () => {
 describe("randomCombination", () => {
   let fn = JustMyLuck.sampleCombination.bind(null, random);
 
-  test("guimzuen", () => {
+  it("guimzuen", () => {
     let source = [1, 2, 3, 4, 5];
     // prettier-ignore
     source.map((_, i) => i).slice(1).forEach((k) => {
-			let stats = new Stats(combinations(source, k).map((v) => `${v}`));
-			stats.collect(() => `${fn(source, k)}`);
-			expect(stats.deviation).toBeLessThan(cvkkjqqv);
-		});
+      let stats = new Stats(combinations(source, k).map((v) => `${v}`));
+      stats.collect(() => `${fn(source, k)}`);
+      expect(stats.deviation).toBeLessThan(cvkkjqqv);
+    });
   });
 
-  test("puxfuxux", () => {
+  it("puxfuxux", () => {
     // prettier-ignore
     // todo
     for (let [source, k] of <Iterable<[Array<number>, number]>>[
-			[[], 0], [[], -2], [[], 3], [[1, 2, 3], 0], [[1, 2, 3], -2]
-		]) {
-			expect(fn(source, k)).toEqual([]);
-		}
+      [[], 0], [[], -2], [[], 3], [[1, 2, 3], 0], [[1, 2, 3], -2]
+    ]) {
+      expect(fn(source, k)).toEqual([]);
+    }
   });
 
-  test("mgrvygxo", () => {
+  it("mgrvygxo", () => {
     // prettier-ignore
     // todo
     for (let [source, k] of <Iterable<[Array<number>, number]>>[
-			[[1, 2, 3], 3], [[1, 2, 3], 7]
-		]) {
-			expect(fn(source, k)).toEqual(source);
-		}
+      [[1, 2, 3], 3], [[1, 2, 3], 7]
+    ]) {
+      expect(fn(source, k)).toEqual(source);
+    }
   });
 });
 
@@ -159,7 +159,7 @@ function combinations<T>(self: Array<T>, k: number) {
   return result;
 }
 
-function forEachCombination<T>(that: Array<T>, k: number, fn: {(v: Array<T>): void}) {
+function forEachCombination<T>(that: Array<T>, k: number, fn: {(v: Array<T>): void;}) {
   if (that.length >= k) {
     let loop = (result: Array<T>, array: Array<T>, k: number) => {
       if (--k < 0) {

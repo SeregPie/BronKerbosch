@@ -1,76 +1,102 @@
-export type Random = {
+import shuffle1 from "./frhuunun/shuffle";
+
+export {shuffle1};
+
+// todo: rename
+export interface Random {
   (): number;
-};
+}
 
-export const useMersenneTwister: {
-  (seed: number): Random;
-};
+export function useMersenneTwister(
+  seed: number,
+): Random;
 
-export const chance: {
-  (random: Random, p: number): boolean;
-};
+export function chance(
+  random: Random,
+  p: number,
+): boolean;
 
-export const randomBoolean: {
-  (random: Random): boolean;
-};
+export function randomBoolean(
+  random: Random,
+): boolean;
 
-export const randomBooleanWeighted: {
-  (random: Random, w: number): boolean;
-};
+export function randomBooleanWeighted(
+  random: Random,
+  w: number,
+): boolean;
 
-export const randomFloat: {
-  (random: Random, min: number, max: number): number;
-};
+export function randomFloat(
+  random: Random,
+  min: number,
+  max: number,
+): number;
 
-export const randomInteger: {
-  (random: Random, min: number, max: number): number;
-};
+export function randomInteger(
+  random: Random,
+  min: number,
+  max: number,
+): number;
 
-// todo: rename
-export const sample: {
-  <T>(random: Random, source: Iterable<T>): T;
-};
+export function sample<const T>(
+  random: Random,
+  source: Iterable<T>,
+): T;
 
-// todo: rename
-export const sampleWeighted: {
-  <T>(random: Random, source: Iterable<Readonly<[T, number]>>): T;
-};
+export function sampleWeighted<const T>(
+  random: Random,
+  source: Iterable<Readonly<[T, number]>>,
+): T;
 
-export const sampleCombination: {
-  <T>(random: Random, source: Iterable<T>, k: number): Array<T>;
-};
+export function sampleCombination<const T>(random: Random, source: Iterable<T>, k: number): Array<T>;
 
-export const sampleCombinationWeighted: {
-  <T>(random: Random, source: Iterable<Readonly<[T, number]>>, k: number): Array<T>;
-};
+export function sampleCombinationWeighted<const T>(
+  random: Random,
+  source: Iterable<Readonly<[T, number]>>,
+  k: number,
+): Array<T>;
 
-export const samplePermutation: {
-  <T>(random: Random, source: Iterable<T>, k: number): Array<T>;
-};
+export function samplePermutation<const T>(
+  random: Random,
+  source: Iterable<T>,
+  k: number,
+): Array<T>;
 
-export const samplePermutationWeighted: {
-  <T>(random: Random, source: Iterable<Readonly<[T, number]>>, k: number): Array<T>;
-};
+export function samplePermutationWeighted<const T>(
+  random: Random,
+  source: Iterable<Readonly<[T, number]>>,
+  k: number,
+): Array<T>;
 
-export const sampleMultiCombination: {
-  <T>(random: Random, source: Iterable<T>, k: number): Array<T>;
-};
+export function sampleMultiCombination<const T>(
+  random: Random,
+  source: Iterable<T>,
+  k: number,
+): Array<T>;
 
-export const sampleMultiCombinationWeighted: {
-  <T>(random: Random, source: Iterable<Readonly<[T, number]>>, k: number): Array<T>;
-};
+export function sampleMultiCombinationWeighted<const T>(
+  random: Random,
+  source: Iterable<Readonly<[T, number]>>,
+  k: number,
+): Array<T>;
 
-export const sampleMultiPermutation: {
-  <T>(random: Random, source: Iterable<T>, k: number): Array<T>;
-};
+export function sampleMultiPermutation<const T>(
+  random: Random,
+  source: Iterable<T>,
+  k: number,
+): Array<T>;
 
-export const sampleMultiPermutationWeighted: {
-  <T>(random: Random, source: Iterable<Readonly<[T, number]>>, k: number): Array<T>;
-};
+export function sampleMultiPermutationWeighted<const T>(
+  random: Random,
+  source: Iterable<Readonly<[T, number]>>,
+  k: number,
+): Array<T>;
 
-export const shuffle: {
-  <T>(random: Random, source: Iterable<T>): Array<T>;
-};
+export function shuffle<const T>(
+  random: Random,
+  source: Iterable<T>,
+): Array<T>;
 
-// todo
-export const shuffleInPlace: typeof shuffle;
+export function shuffleInPlace<const T>(
+  random: Random,
+  source: Iterable<T>,
+): Array<T>;

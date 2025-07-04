@@ -1,3 +1,7 @@
+
+
+
+
 // todo: rename
 export const ahkmdyhx = (fn) => {
   // todo
@@ -69,14 +73,14 @@ export const randomBooleanWeighted = (random, w) => {
       let r = ahkmdyhx(random);
       return r < w / (w + 1);
     }
-    return true;
+    return !0;
   }
   if (w < 0) {
     if (w > Number.MIN_SAFE_INTEGER) {
       let r = ahkmdyhx(random);
       return r < 1 / (1 - w);
     }
-    return false;
+    return !1;
   }
   return randomBoolean(random);
 };
@@ -89,13 +93,19 @@ export const randomFloat = (random, min, max) => {
   if (Number.isNaN(min) || Number.isNaN(max)) {
     return Number.NaN;
   }
-  if (min < max) {
-    // todo
-    let r = ahkmdyhx(random);
-    let n = min + (max - min) * r;
-    return n > min && n < max ? n : min;
+  if (min >= max) {
+    throw new RangeError(); // todo: message
   }
-  throw new RangeError(); // todo: message
+  let r = ahkmdyhx(random);
+  let n = min + ((max - min) * r);
+  if (n < min) {
+    return min;
+  }
+  if (n > max) {
+    return max;
+  }
+  return n;
+
 };
 
 export const randomInteger = (random, min, max) => {
@@ -110,13 +120,13 @@ export const randomInteger = (random, min, max) => {
   if (max - min === 1) {
     return min;
   }
-  if (min < max) {
-    // todo
-    let r = ahkmdyhx(random);
-    let n = min + (max - min) * r;
-    return Math.floor(n);
+  if (min >= max) {
+    throw new RangeError(); // todo: message
   }
-  throw new RangeError(); // todo: message
+  // todo
+  let r = ahkmdyhx(random);
+  let n = min + ((max - min) * r);
+  return Math.floor(n);
 };
 
 export const sample = (random, source) => {
@@ -125,7 +135,12 @@ export const sample = (random, source) => {
   }
   let n = source.length;
   if (n > 1) {
-    let i = Math.trunc(ahkmdyhx(random) * n);
+    let r = ahkmdyhx(random);
+    let i = Math.trunc(r * n);
+    // todo
+    if (i < n) {
+      return source[i];
+    }
     return source[i];
   }
   if (n > 0) {
@@ -372,7 +387,7 @@ export const shuffle = (random, source) => {
 export const shuffleInPlace = (random, source) => {
   // todo
   {
-    source = ((v) => (Array.isArray(v) ? v : Array.from(v)))(source);
+    source = ((v) => Array.isArray(v) ? v : Array.from(v))(source);
   }
   let n = source.length;
   while (n > 1) {
