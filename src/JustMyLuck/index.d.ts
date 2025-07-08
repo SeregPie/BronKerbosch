@@ -9,7 +9,11 @@ export interface Random {
 
 export function useMersenneTwister(
   seed: number,
-): Random;
+): {
+  random: Random;
+};
+
+
 
 export function chance(
   random: Random,

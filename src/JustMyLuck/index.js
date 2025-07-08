@@ -2,10 +2,10 @@
 
 
 
-// todo: rename
-export function ahkmdyhx(fn) {
+// todo: rename: guard
+export function ensureRandomUnitInterval(fn) {
   let r = fn();
-  if (typeof r !== "number" || r < 0 || r >= 1) {
+  if (!(Number.isFinite(r) && r >= 0 && r < 1)) {
     throw new Error(); // todo: message
   }
   return r;
@@ -43,25 +43,23 @@ export const useMersenneTwister = (seed) => {
 };
 
 export function randomBoolean(random) {
-  return ahkmdyhx(random) < 1 / 2;
+  return ensureRandomUnitInterval(random) < 1 / 2;
 }
 
 export function randomBooleanWeighted(random, w) {
-  {
-    w = Number(w);
-  }
-  if (Number.isNaN(w)) {
-    w = 0;
+  // todo
+  if (false) {
+    throw new TypeError(); // todo: message
   }
   if (w > 0) {
     if (w < Number.MAX_SAFE_INTEGER) {
-      return ahkmdyhx(random) < w / (w + 1);
+      return ensureRandomUnitInterval(random) < w / (w + 1);
     }
     return !0;
   }
   if (w < 0) {
     if (w > Number.MIN_SAFE_INTEGER) {
-      return ahkmdyhx(random) < 1 / (1 - w);
+      return ensureRandomUnitInterval(random) < 1 / (1 - w);
     }
     return !1;
   }
@@ -91,23 +89,16 @@ export function randomBooleanWeighted(random, w) {
 */
 
 export function randomFloat(random, min, max, maxInclusive = false) {
-  {
-    min = Number(min);
-    max = Number(max);
-  }
-  if (Number.isNaN(min) || Number.isNaN(max)) {
-    return Number.NaN;
+  // todo
+  if (!(Number.isFinite(min) && Number.isFinite(max))) {
+    throw new TypeError(); // todo: message
   }
   // todo
-  {
-    min = Math.max(min, Number.MIN_SAFE_INTEGER);
-    max = Math.min(max, Number.MAX_SAFE_INTEGER);
-  }
-  if (min >= max) {
+  if (!(min < max)) {
     throw new RangeError(); // todo: message
   }
   let delta = max - min;
-  let n = ahkmdyhx(random) * delta + min;
+  let n = ensureRandomUnitInterval(random) * delta + min;
   if (n >= max) {
     return min;
   }
@@ -115,30 +106,21 @@ export function randomFloat(random, min, max, maxInclusive = false) {
 }
 
 export function randomInteger(random, min, max, maxInclusive = false) {
-  {
-    min = Number(min);
-    max = Number(max);
+  if (!(Number.isFinite(min) && Number.isFinite(max))) {
+    throw new TypeError(); // todo: message
   }
-  if (Number.isNaN(min) || Number.isNaN(max)) {
-    return Number.NaN;
-  }
-  // todo
   {
     min = Math.ceil(min);
     max = Math.ceil(max);
   }
-  {
-    min = Math.max(min, Number.MIN_SAFE_INTEGER);
-    max = Math.min(max, Number.MAX_SAFE_INTEGER);
-  }
-  if (min >= max) {
+  if (!(min < max)) {
     throw new RangeError(); // todo: message
   }
   let delta = max - min;
   if (delta === 1) {
     return min;
   }
-  let n = ahkmdyhx(random) * delta + min;
+  let n = ensureRandomUnitInterval(random) * delta + min;
   if (n >= max) {
     return min;
   }
@@ -177,6 +159,7 @@ export function sampleWeighted(random, source) {
   // todo: rename
   let rwfkoumu = []; // -Infinity
   source.forEach(([v, w]) => {
+    // todo with w
     if (w > 0) {
       if (w < Number.POSITIVE_INFINITY) {
         return piubpiah.push([v, w]);
@@ -239,27 +222,28 @@ export const sampleCombination = (random, source, k) => {
     // todo
     k = Math.min(Math.max(Math.trunc(k), 0), Number.MAX_SAFE_INTEGER);
   }
+  // todo
   if (Number.isNaN(k)) {
     k = 0;
   }
-  let n = source.length;
-  if (n === 0 || k === 0) {
+  if (k === 0) {
     return [];
   }
-  if (n === 1) {
-    return [source[0]];
+  let n = source.length;
+  if (k > n) {
+    throw new RangeError(); // todo: message
+  }
+  if (k === n) {
+    return [...source];
   }
   if (k === 1) {
     return [sample(random, source)];
-  }
-  if (k >= n) {
-    return [...source];
   }
   {
     let result = [];
     let i = 0;
     while (k > 0 && n > 0) {
-      if (ahkmdyhx(random) < k / n) {
+      if (ensureRandomUnitInterval(random) < k / n) {
         result.push(source[i]);
         k--;
       }
@@ -272,9 +256,8 @@ export const sampleCombination = (random, source, k) => {
 
 export const sampleCombinationWeighted = (random, source, k) => {
   {
-    random = ahkmdyhx(random);
     source = Array.isArray(source) ? source : Array.from(source);
-    k = Math.trunc(k);
+    k = Math.trunc(k); // todo
   }
   // todo: rename
   let fkmuymhx = []; // +Infinity
@@ -359,12 +342,10 @@ export const sampleCombinationWeighted = (random, source, k) => {
 };
 
 export function samplePermutation(random, source, k) {
-  // todo: ok?
   return shuffle(random, sampleCombination(random, source, k));
 }
 
 export function samplePermutationWeighted(random, source, k) {
-  // todo: ok?
   return shuffle(random, sampleCombinationWeighted(random, source, k));
 }
 
@@ -374,12 +355,16 @@ export function sampleMultiCombination(random, source, k) {
     // todo
     k = Math.min(Math.max(Math.trunc(k), 0), Number.MAX_SAFE_INTEGER);
   }
+  // todo
   if (Number.isNaN(k)) {
     k = 0;
   }
-  let n = source.length;
-  if (n === 0 || k === 0) {
+  if (k === 0) {
     return [];
+  }
+  let n = source.length;
+  if (n === 0) {
+    throw new RangeError(); // todo: message
   }
   if (n === 1) {
     return (new Array(k)).fill(source[0]);
@@ -392,7 +377,7 @@ export function sampleMultiCombination(random, source, k) {
     let i = 0;
     while (k > 0 && n > 0) {
       // todo: large numbers
-      if (ahkmdyhx(random) < k / (k + n - 1)) {
+      if (ensureRandomUnitInterval(random) < k / (k + n - 1)) {
         result.push(source[i]);
         k--;
       } else {
@@ -406,7 +391,7 @@ export function sampleMultiCombination(random, source, k) {
 
 export function sampleMultiCombinationWeighted(random, source, k) {
   {
-    random = ahkmdyhx(random);
+    random = ensureRandomUnitInterval(random);
     source = Array.isArray(source) ? source : Array.from(source);
     k = Math.trunc(k);
   }
@@ -457,23 +442,20 @@ export function sampleMultiCombinationWeighted(random, source, k) {
 }
 
 export function sampleMultiPermutation(random, source, k) {
-  // todo: ok?
   return shuffle(random, sampleMultiCombination(random, source, k));
 }
 
 export function sampleMultiPermutationWeighted(random, source, k) {
-  // todo: ok?
   return shuffle(random, sampleMultiCombinationWeighted(random, source, k));
 }
 
-export const shuffle = (random, source) => {
+export function shuffle(random, source) {
   let result = Array.from(source);
-  let n = result.length;
-  while (n > 1) {
-    // todo
-    let i = randomInteger(random, 0, n);
-    n--;
-    [result[n], result[i]] = [result[i], result[n]];
+  let a = result.length;
+  while (a > 1) {
+    let b = randomInteger(random, 0, a);
+    a--;
+    [result[a], result[b]] = [result[b], result[a]];
   }
   return result;
-};
+}
