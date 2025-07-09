@@ -344,10 +344,12 @@ export const sampleCombinationWeighted = (random, source, k) => {
 };
 
 export function samplePermutation(random, source, k) {
+  // todo: mock random
   return shuffle(random, sampleCombination(random, source, k));
 }
 
 export function samplePermutationWeighted(random, source, k) {
+  // todo: mock random
   return shuffle(random, sampleCombinationWeighted(random, source, k));
 }
 
@@ -444,20 +446,26 @@ export function sampleMultiCombinationWeighted(random, source, k) {
 }
 
 export function sampleMultiPermutation(random, source, k) {
+  // todo: mock random
   return shuffle(random, sampleMultiCombination(random, source, k));
 }
 
 export function sampleMultiPermutationWeighted(random, source, k) {
+  // todo: mock random
   return shuffle(random, sampleMultiCombinationWeighted(random, source, k));
 }
 
-export function shuffle(random, source) {
-  let result = Array.from(source);
-  let a = result.length;
+export function shuffle(random, target) {
+  if (!Array.isArray(target)) {
+    throw new TypeError(); // todo: message
+  }
+  // todo: rename a
+  let a = target.length;
   while (a > 1) {
+    // todo: rename b
     let b = randomInteger(random, 0, a);
     a--;
-    [result[a], result[b]] = [result[b], result[a]];
+    [target[a], target[b]] = [target[b], target[a]];
   }
-  return result;
+  return target;
 }

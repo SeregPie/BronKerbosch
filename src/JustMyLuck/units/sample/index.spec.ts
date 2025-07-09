@@ -4,16 +4,18 @@ import sample from ".";
 
 describe("sample", () => {
   it("...", async () => {
-    const [a, b, c] = [{}, {}, {}];
     const {random} = Math;
-    const result = sample(random, [a, b, c]);
-    expect(result).toBeOneOf([a, b, c]);
+    const items = [...Array(3)].map(() => ({})); // todo
+    const result = sample(random, items);
+    expect(result).toBeOneOf(items);
   });
 
   it("...", async () => {
-    const [a, b, c] = [{}, {}, {}];
     const random = mock(() => 0);
-    sample(random, [a, b, c]);
+    {
+      const items = [...Array(3)].map(() => ({})); // todo
+      sample(random, items);
+    }
     expect(random).toBeCalledTimes(1);
   });
 
@@ -22,10 +24,10 @@ describe("sample", () => {
   });
 
   it("...", async () => {
+    const item = {};
     const random = mock(() => 0);
-    const [a] = [{}];
-    const result = sample(random, [a]);
-    expect(result).toBe(a);
+    const result = sample(random, [item]);
+    expect(result).toBe(item);
     expect(random).not.toBeCalled();
   });
 

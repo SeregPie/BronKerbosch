@@ -4,17 +4,21 @@ import sampleCombination from ".";
 
 describe("sample", () => {
   it("...", async () => {
-    const [a, b, c] = [{}, {}, {}];
+    const items = [...Array(3)].map(() => ({})); // todo
+    const k = 2; // todo
     const {random} = Math;
-    const result = sampleCombination(random, [a, b, c], 2);
-    expect(result).toBeOneOf([[a, b], [a, c], [b, c]]);
+    const result = sampleCombination(random, items, k);
+    expect(result).toBeArrayOfSize(k);
+    expect(combinations(items, k).some((v) => v.every((v, i) => v === result[i]))).toBeTrue();
+    expect(result).toBeOneOf(combinations(items, k));
   });
 
   it("...", async () => {
-    const [a, b, c] = [{}, {}, {}];
+    const items = [...Array(3)].map(() => ({})); // todo
+    const k = 2; // todo
     const random = mock(() => 0);
-    sampleCombination(random, [a, b, c], 2);
-    expect(random.mock.calls).toBeLessThanOrEqual(3);
+    sampleCombination(random, items, k);
+    expect(random.mock.calls).toBeLessThanOrEqual(items.length); // todo
   });
 
   it.todo("should be evenly distributed", async () => {
@@ -22,10 +26,10 @@ describe("sample", () => {
   });
 
   it("...", async () => {
+    const items = [...Array(3)].map(() => ({})); // todo
     const random = mock(() => 0);
-    const source = [2, 1, 0]; // todo
-    const result = sampleCombination(random, source, source.length);
-    expect(result).toEqual(source);
+    const result = sampleCombination(random, items, items.length);
+    expect(items.every((v, i) => v === result[i])).toBeTrue();
     expect(random).not.toBeCalled();
   });
 
