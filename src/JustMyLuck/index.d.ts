@@ -1,24 +1,10 @@
-import shuffle1 from "./frhuunun/shuffle";
+export type Random = () => number;
 
-export {shuffle1};
+export class MersenneTwister {
+  constructor(seed: number);
 
-// todo: rename
-export interface Random {
-  (): number;
-}
-
-export function useMersenneTwister(
-  seed: number,
-): {
   random: Random;
-};
-
-
-
-export function chance(
-  random: Random,
-  p: number,
-): boolean;
+}
 
 export function randomBoolean(
   random: Random,
@@ -95,7 +81,7 @@ export function sampleMultiPermutationWeighted<const T>(
   k: number,
 ): Array<T>;
 
-export function shuffle<const T>(
+export function shuffle<const TargetT extends Array<any>>(
   random: Random,
-  source: Iterable<T>,
-): Array<T>;
+  target: TargetT,
+): TargetT;

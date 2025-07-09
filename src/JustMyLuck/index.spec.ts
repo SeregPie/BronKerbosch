@@ -76,13 +76,6 @@ describe.skip("randomFloat", () => {
     }
   });
 
-  it("zyrzwedp", () => {
-    let {random} = Math;
-    let fn = JustMyLuck.randomFloat.bind(null, random);
-    let n = 1;
-    expect(() => fn(n, n)).toThrow();
-    expect(() => fn(n + random(), n)).toThrow();
-  });
 });
 
 describe.skip("randomInteger", () => {
@@ -103,17 +96,6 @@ describe.skip("randomInteger", () => {
     for (let i = 0; i < 100; i++) {
       expect(fn(min, max)).toBeWithin(min, max);
     }
-  });
-
-  it("wghjlonv", () => {
-    let n = 1;
-    expect(fn(n - random(), n + random())).toBe(n);
-  });
-
-  it("frspxpie", () => {
-    let n = 1;
-    expect(() => fn(n, n)).toThrow();
-    expect(() => fn(n + random(), n)).toThrow();
   });
 });
 

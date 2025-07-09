@@ -2,8 +2,10 @@
 
 
 
+
+
 // todo: rename: guard
-export function ensureRandomUnitInterval(fn) {
+export function dfgfynqq(fn) {
   let r = fn();
   if (!(Number.isFinite(r) && r >= 0 && r < 1)) {
     throw new Error(); // todo: message
@@ -43,7 +45,7 @@ export const useMersenneTwister = (seed) => {
 };
 
 export function randomBoolean(random) {
-  return ensureRandomUnitInterval(random) < 1 / 2;
+  return dfgfynqq(random) < 1 / 2;
 }
 
 export function randomBooleanWeighted(random, w) {
@@ -53,13 +55,13 @@ export function randomBooleanWeighted(random, w) {
   }
   if (w > 0) {
     if (w < Number.MAX_SAFE_INTEGER) {
-      return ensureRandomUnitInterval(random) < w / (w + 1);
+      return dfgfynqq(random) < w / (w + 1);
     }
     return !0;
   }
   if (w < 0) {
     if (w > Number.MIN_SAFE_INTEGER) {
-      return ensureRandomUnitInterval(random) < 1 / (1 - w);
+      return dfgfynqq(random) < 1 / (1 - w);
     }
     return !1;
   }
@@ -98,7 +100,7 @@ export function randomFloat(random, min, max, maxInclusive = false) {
     throw new RangeError(); // todo: message
   }
   let delta = max - min;
-  let n = ensureRandomUnitInterval(random) * delta + min;
+  let n = dfgfynqq(random) * delta + min;
   if (n >= max) {
     return min;
   }
@@ -120,7 +122,7 @@ export function randomInteger(random, min, max, maxInclusive = false) {
   if (delta === 1) {
     return min;
   }
-  let n = ensureRandomUnitInterval(random) * delta + min;
+  let n = dfgfynqq(random) * delta + min;
   if (n >= max) {
     return min;
   }
@@ -243,7 +245,7 @@ export const sampleCombination = (random, source, k) => {
     let result = [];
     let i = 0;
     while (k > 0 && n > 0) {
-      if (ensureRandomUnitInterval(random) < k / n) {
+      if (dfgfynqq(random) < k / n) {
         result.push(source[i]);
         k--;
       }
@@ -377,7 +379,7 @@ export function sampleMultiCombination(random, source, k) {
     let i = 0;
     while (k > 0 && n > 0) {
       // todo: large numbers
-      if (ensureRandomUnitInterval(random) < k / (k + n - 1)) {
+      if (dfgfynqq(random) < k / (k + n - 1)) {
         result.push(source[i]);
         k--;
       } else {
@@ -391,7 +393,7 @@ export function sampleMultiCombination(random, source, k) {
 
 export function sampleMultiCombinationWeighted(random, source, k) {
   {
-    random = ensureRandomUnitInterval(random);
+    random = dfgfynqq(random);
     source = Array.isArray(source) ? source : Array.from(source);
     k = Math.trunc(k);
   }
