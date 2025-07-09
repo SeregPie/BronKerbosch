@@ -3,16 +3,22 @@ import {describe, expect, it, mock} from "bun:test";
 import randomFloat from ".";
 
 describe("randomFloat", () => {
-  it.todo("should be evenly distributed", async () => {
-    // todo: stats
+  it("...", async () => {
+    const [min, max] = [0, 42]; // todo
+    const {random} = Math;
+    const result = randomFloat(random, min, max);
+    expect(result).toBeWithin(min, max);
   });
 
   it("...", async () => {
-    const random = mock(Math.random);
-    // todo
-    randomFloat(random, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
+    const [min, max] = [0, 42]; // todo
+    const random = mock(() => 0);
+    randomFloat(random, min, max);
+    expect(random).toBeCalledTimes(1);
+  });
 
-    expect(random).toHaveBeenCalledTimes(1);
+  it.todo("should be evenly distributed", async () => {
+    // todo: stats
   });
 
   // todo: descritpion

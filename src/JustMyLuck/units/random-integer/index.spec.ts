@@ -3,16 +3,23 @@ import {describe, expect, it, mock} from "bun:test";
 import randomInteger from ".";
 
 describe("randomInteger", () => {
-  it.todo("should be evenly distributed", async () => {
-    // todo: stats
+  it("...", async () => {
+    const [min, max] = [0, 42]; // todo
+    const {random} = Math;
+    const result = randomInteger(random, min, max);
+    expect(result).toBeInteger();
+    expect(result).toBeWithin(min, max);
   });
 
-  it("should use random once in a common scenario", async () => {
-    const random = mock(Math.random);
-    // todo
-    randomInteger(random, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
+  it("...", async () => {
+    const [min, max] = [0, 42]; // todo
+    const random = mock(() => 0);
+    randomInteger(random, min, max);
+    expect(random).toBeCalledTimes(1);
+  });
 
-    expect(random).toHaveBeenCalledTimes(1);
+  it.todo("should be evenly distributed", async () => {
+    // todo: stats
   });
 
   // todo: descritpion
@@ -27,9 +34,8 @@ describe("randomInteger", () => {
     }
   })()])("should skip random if only one possible outcome", async (n, min, max) => {
     const random = mock(() => 0);
-    expect(
-      randomInteger(random, min, max)
-    ).toBe(n);
+    const result = randomInteger(random, min, max);
+    expect(result).toBe(n);
     expect(random).not.toBeCalled();
   });
 
@@ -41,9 +47,8 @@ describe("randomInteger", () => {
     });
   })())("should throw if outer of bounds", async (min, max) => {
     const random = mock(() => 0);
-    expect(() => {
-      randomInteger(random, min, max);
-    }).toThrow(RangeError);
+    const fn = () => randomInteger(random, min, max);
+    expect(fn).toThrow(RangeError);
     expect(random).not.toBeCalled();
   });
 

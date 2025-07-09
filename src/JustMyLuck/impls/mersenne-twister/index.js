@@ -99,6 +99,8 @@ export default class Drromlom {
     return x / 0x80000001;
   }
 
+  // https://gitlab.com/rockerest/fast-mersenne-twister/-/blob/master/mersenne.js?ref_type=heads
+  // https://github.com/pigulla/mersennetwister/blob/master/src/MersenneTwister.js
   random = this.#random.bind(this);
   randomExclusive = this.#randomExclusive.bind(this);
   random53 = this.#random53.bind(this);
