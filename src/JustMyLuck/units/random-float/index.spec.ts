@@ -26,37 +26,29 @@ describe("randomFloat", () => {
   it("...", async () => {
     const random = mock(() => 0);
     const n = +42.0; // todo
-    const min = n;
-    const max = n;
-    const fn = () => randomFloat(random, min, max);
-    expect(fn).toThrow(RangeError);
+    const run = () => randomFloat(random, n, n);
+    expect(run).toThrow(RangeError);
     expect(random).not.toBeCalled();
   });
 
   it("...", async () => {
     const random = mock(() => 0);
     const n = +42.0; // todo
-    const min = n + 0.3; // todo
-    const max = n;
-    const fn = () => randomFloat(random, min, max);
-    expect(fn).toThrow(RangeError);
+    const run = () => randomFloat(random, n + 0.3, n); // todo
+    expect(run).toThrow(RangeError);
     expect(random).not.toBeCalled();
   });
 
   it("...", async () => {
     const {random} = Math;
-    const min = 0;
-    const max = +Number.MIN_VALUE;
-    const result = randomFloat(random, min, max);
-    expect(result).toBe(min);
+    const result = randomFloat(random, 0, Number.MIN_VALUE);
+    expect(result).toBe(0);
   });
 
   it("...", async () => {
     const {random} = Math;
-    const min = -Number.MAX_VALUE;
-    const max = +Number.MAX_VALUE;
-    const result = randomFloat(random, min, max);
-    expect(result).toBeWithin(min, max);
+    const result = randomFloat(random, -Number.MAX_VALUE, +Number.MAX_VALUE);
+    expect(result).toBeFinite();
   });
 
   it("...", async () => {
