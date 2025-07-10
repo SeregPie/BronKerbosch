@@ -10,7 +10,7 @@ describe("randomInteger", () => {
     const result = randomInteger(random, min, max);
     expect(result).toBeInteger();
     expect(result).toBeWithin(min, max);
-  });
+  }, {repeats: 32});
 
   it("...", async () => {
     const random = mock(() => 0);
@@ -18,7 +18,7 @@ describe("randomInteger", () => {
     const max = +42; // todo
     randomInteger(random, min, max);
     expect(random).toBeCalledTimes(1);
-  });
+  }, {repeats: 32});
 
   it.todo("should be evenly distributed", async () => {
 

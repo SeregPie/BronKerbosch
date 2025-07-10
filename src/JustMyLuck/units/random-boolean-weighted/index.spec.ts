@@ -8,14 +8,14 @@ describe("randomBooleanWeighted", () => {
     const w = 0; // todo: [-2, -1, -1/3, 0, +1/3 +1, +2]
     const result = randomBooleanWeighted(random, w);
     expect(result).toBeBoolean();
-  });
+  }, {repeats: 32});
 
   it("...", async () => {
     const random = mock(() => 0);
     const w = 0; // todo: [-2, -1, -1/3, 0, +1/3 +1, +2]
     randomBooleanWeighted(random, w);
     expect(random).toBeCalledTimes(1);
-  });
+  }, {repeats: 32});
 
   it.todo("should be evenly distributed", async () => {
     // todo: stats
@@ -23,9 +23,9 @@ describe("randomBooleanWeighted", () => {
 
   it("...", async () => {
     const random = mock(() => 0);
-    const w = Number.NEGATIVE_INFINITY;
+    const w = Number.POSITIVE_INFINITY;
     const result = randomBooleanWeighted(random, w);
-    expect(result).toBe(!1);
+    expect(result).toBe(!0);
     expect(random).not.toBeCalled();
   });
 

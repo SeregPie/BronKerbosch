@@ -8,13 +8,13 @@ describe("randomBoolean", () => {
     const {random} = Math;
     const result = randomBoolean(random);
     expect(result).toBeBoolean();
-  });
+  }, {repeats: 32});
 
   it("...", async () => {
     const random = mock(() => 0);
     randomBoolean(random);
     expect(random).toBeCalledTimes(1);
-  });
+  }, {repeats: 32});
 
   it.todo("should be evenly distributed", async () => {
 

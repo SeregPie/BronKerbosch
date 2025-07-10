@@ -9,7 +9,7 @@ describe("randomFloat", () => {
     const max = +42.0; // todo
     const result = randomFloat(random, min, max);
     expect(result).toBeWithin(min, max);
-  });
+  }, {repeats: 32});
 
   it("...", async () => {
     const random = mock(() => 0);
@@ -17,7 +17,7 @@ describe("randomFloat", () => {
     const max = +42.0; // todo
     randomFloat(random, min, max);
     expect(random).toBeCalledTimes(1);
-  });
+  }, {repeats: 32});
 
   it.todo("should be evenly distributed", async () => {
 

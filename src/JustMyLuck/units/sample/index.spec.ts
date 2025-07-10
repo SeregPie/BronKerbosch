@@ -8,24 +8,22 @@ describe("sample", () => {
     const items = [...Array(3)].map(() => ({})); // todo
     const result = sample(random, items);
     expect(result).toBeOneOf(items);
-  });
+  }, {repeats: 32});
 
   it("...", async () => {
     const random = mock(() => 0);
-    {
-      const items = [...Array(3)].map(() => ({})); // todo
-      sample(random, items);
-    }
+    const items = [...Array(3)].map(() => ({})); // todo
+    sample(random, items);
     expect(random).toBeCalledTimes(1);
-  });
+  }, {repeats: 32});
 
   it.todo("should be evenly distributed", async () => {
     // todo: stats
   });
 
   it("...", async () => {
-    const item = {};
     const random = mock(() => 0);
+    const item = {};
     const result = sample(random, [item]);
     expect(result).toBe(item);
     expect(random).not.toBeCalled();
@@ -33,8 +31,8 @@ describe("sample", () => {
 
   it("...", async () => {
     const random = mock(() => 0);
-    const fn = () => sample(random, []);
-    expect(fn).toThrow(RangeError);
+    const run = () => sample(random, []);
+    expect(run).toThrow(RangeError);
     expect(random).not.toBeCalled();
   });
 });

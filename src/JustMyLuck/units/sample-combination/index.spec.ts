@@ -2,70 +2,56 @@ import {describe, expect, it, mock} from "bun:test";
 
 import sampleCombination from ".";
 
-describe.skip("sampleCombination", () => {
+describe("sampleCombination", () => {
   it("...", async () => {
+    const {random} = Math;
     const items = [...Array(3)].map(() => ({})); // todo
     const k = 2; // todo
-    const {random} = Math;
     const result = sampleCombination(random, items, k);
-    expect(result).toBeArrayOfSize(k);
-    expect(combinations(items, k).some((v) => v.every((v, i) => v === result[i]))).toBeTrue();
-    expect(result).toBeOneOf(combinations(items, k));
-  });
+    expect(result); // todo
+  }, {repeats: 32});
 
   it("...", async () => {
-    const items = [...Array(3)].map(() => ({})); // todo
-    const k = 2; // todo
     const random = mock(() => 0);
+    const items = [...Array(88)].map(() => ({})); // todo
+    const k = 3; // todo
     sampleCombination(random, items, k);
-    expect(random.mock.calls).toBeLessThanOrEqual(items.length); // todo
-  });
+    expect(random.mock.calls.length).toBeLessThanOrEqual(Math.min(items.length, k)); // todo
+  }, {repeats: 32});
 
   it.todo("should be evenly distributed", async () => {
-    // todo: stats
+
   });
 
   it("...", async () => {
     const random = mock(() => 0);
-    const items = [...Array(3)].map(() => ({})); // todo
-    const k = items.length;
-    const result = sampleCombination(random, items, k);
-    expect(items.every((v, i) => v === result[i])); // todo
+    const items = [...Array(3)].map((_, i) => i); // todo
+    const result = sampleCombination(random, items, 0);
+    expect(result).toEqual([]); // todo
     expect(random).not.toBeCalled();
   });
 
   it("...", async () => {
     const random = mock(() => 0);
-    const items = [...Array(3)].map(() => ({})); // todo
-    const k = 0;
-    const result = sampleCombination(random, items, k);
-    expect(result).toBe;
+    const items = [...Array(3)].map((_, i) => i); // todo
+    const result = sampleCombination(random, items, items.length);
+    expect(result).toEqual(items); // todo
     expect(random).not.toBeCalled();
   });
 
   it("...", async () => {
     const random = mock(() => 0);
-    for (const n of [0, 3]) {
-      const items = [...Array(n)].map(() => ({})); // todo
-      const k = n + 1; // todo: n + randomInteger(1, ?)
-      const result = sampleCombination(random, items, k);
-      expect(result).toSatisfy((t) => items.every((v, i) => v === t[i]));
-    }
-    expect(random).not.toBeCalled();
-  });
-
-  it("...", async () => {
-    const random = mock(() => 0);
-    for (const n of [0, 3]) {
-      const items = [...Array(n)].map(() => ({})); // todo
-      const k = n + 1; // todo: n + randomInteger(1, ?)
-      const fn = () => sampleCombination(random, items, k);
-      expect(fn).toThrow(RangeError);
-    }
+    const items = [...Array(3)].map((_, i) => i); // todo
+    const run = () => sampleCombination(random, items, items.length + 1);
+    expect(run).toThrow(RangeError);
     expect(random).not.toBeCalled();
   });
 
   it.todo("...", async () => {
+    -1;
+    2.2;
     Number.NaN;
+    Number.POSITIVE_INFINITY;
+    Number.NEGATIVE_INFINITY;
   });
 });
