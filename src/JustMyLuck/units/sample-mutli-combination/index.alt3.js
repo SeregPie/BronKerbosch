@@ -15,10 +15,10 @@ export default (random, source, k) => {
     throw new RangeError(); // todo: message
   })();
   let tL = target.length;
+  let sL = source.length;
   if (tL === 0) {
     return target;
   }
-  let sL = source.length;
   if (sL === 0) {
     throw new RangeError(); // todo: message
   }
@@ -30,19 +30,17 @@ export default (random, source, k) => {
     target[0] = sample(random, source);
     return target;
   }
-  {
-    let tI = 0;
-    let sI = 0;
-    while (tL > 0 && sL > 0) {
-      // todo: large numbers
-      if (dfgfynqq(random) < tL / (tL + sL - 1)) {
-        target[tI] = source[sI];
-        tI++;
-        tL--;
-      } else {
-        sI++;
-        sL--;
-      }
+  let tI = 0;
+  let sI = 0;
+  while (tL > 0 && sL > 0) {
+    // todo: large numbers
+    if (dfgfynqq(random) < tL / (tL + sL - 1)) {
+      target[tI] = source[sI];
+      tI++;
+      tL--;
+    } else {
+      sI++;
+      sL--;
     }
   }
   return target;

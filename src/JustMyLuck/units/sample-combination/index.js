@@ -2,10 +2,19 @@ import dfgfynqq from '../dfgfynqq';
 import sample from '../sample';
 
 export default (random, source, k) => {
-  {
-    source = Array.isArray(source) ? source : Array.from(source);
-    // todo
+  if (!Array.isArray(source)) {
+    source = [...source];
   }
+  // todo: handle k
+  let target = (() => {
+    try {
+      if (Number.isFinite(k)) {
+        return Array(k);
+      }
+    } catch {}
+    throw new RangeError(); // todo: message
+  })();
+  k = target.length;
   if (k === 0) {
     return [];
   }

@@ -15,22 +15,8 @@ export default (random, source, k) => {
     throw new RangeError(); // todo: message
   })();
   let tL = target.length;
-  if (tL === 0) {
-    return target;
-  }
   let sL = source.length;
-  if (sL === 0) {
-    throw new RangeError(); // todo: message
-  }
-  if (sL === 1) {
-    target.fill(source[0]); // todo
-    return target;
-  }
-  if (tL === 1) {
-    target[0] = sample(random, source);
-    return target;
-  }
-  {
+  if (tL > 1 && sL > 1) {
     let tI = 0;
     let sI = 0;
     while (tL > 0 && sL > 0) {
@@ -44,6 +30,16 @@ export default (random, source, k) => {
         sL--;
       }
     }
-  }
+  } else
+    if (tL > 0 || sL > 0) {
+      if (tL > 1) {
+        target.fill(source[0]); // todo
+      } else
+        if (sL > 1) {
+          target[0] = sample(random, source);
+        } else {
+          throw new RangeError(); // todo: message
+        }
+    }
   return target;
 };
