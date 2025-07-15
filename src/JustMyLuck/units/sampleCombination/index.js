@@ -5,27 +5,30 @@ export default (random, source, k) => {
   if (!Array.isArray(source)) {
     source = [...source];
   }
-  // todo: handle k
+  // todo
   let target = (() => {
-    try {
-      if (Number.isFinite(k)) {
+    if (Number.isFinite(k)) {
+      try {
         return Array(k);
-      }
-    } catch {}
+      } catch {}
+    }
     throw new RangeError(); // todo: message
   })();
   if (k === 0) {
-    return [];
+    return target;
   }
   let l = source.length;
   if (k > l) {
     throw new RangeError(); // todo: message
   }
   if (k === l) {
-    return [...source];
+    // todo
+    target = [...source];
+    return target;
   }
   if (k === 1) {
-    return [sample(random, source)];
+    target[0] = sample(random, source);
+    return target;
   }
   {
     let i = 0;

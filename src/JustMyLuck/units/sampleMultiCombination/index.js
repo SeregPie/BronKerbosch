@@ -5,7 +5,7 @@ export default (random, source, k) => {
   if (!Array.isArray(source)) {
     source = [...source];
   }
-  // todo: handle k
+  // todo
   let target = (() => {
     if (Number.isFinite(k)) {
       try {
@@ -22,7 +22,7 @@ export default (random, source, k) => {
     throw new RangeError(); // todo: message
   }
   if (l === 1) {
-    target.fill(source[0]); // todo
+    target.fill(source[0]);
     return target;
   }
   if (k === 1) {

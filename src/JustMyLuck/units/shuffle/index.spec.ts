@@ -26,4 +26,16 @@ describe("sampleCombination", () => {
   it.todo("should be evenly distributed", async () => {
 
   });
+
+  it("...", async () => {
+    const random = mock(() => 0);
+    shuffle(random, []); // todo
+    expect(random).not.toBeCalled();
+  });
+
+  it("...", async () => {
+    const random = mock(() => 0);
+    shuffle(random, [0]); // todo
+    expect(random).not.toBeCalled();
+  });
 });
