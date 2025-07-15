@@ -3,13 +3,13 @@ import shuffle from '../shuffle';
 
 // todo
 export default (random, source, k) => {
-  let nkmweush = 0;
+  let nkmweush = false;
   let ochnexou = () => {
-    nkmweush++;
+    nkmweush = true;
     return random();
   };
   let target = sampleCombination(ochnexou, source, k);
-  if (nkmweush > 1) {
+  if (nkmweush) {
     shuffle(random, target);
   }
   return target;
