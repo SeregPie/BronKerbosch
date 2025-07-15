@@ -6,6 +6,11 @@ export class MersenneTwister {
   random: Random;
 }
 
+export function chance(
+  random: Random,
+  p: number,
+): boolean;
+
 export function randomBoolean(
   random: Random,
 ): boolean;

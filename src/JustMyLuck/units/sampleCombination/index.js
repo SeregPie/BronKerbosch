@@ -1,4 +1,4 @@
-import dfgfynqq from '../dfgfynqq';
+import chance from '../chance';
 import sample from '../sample';
 
 export default (random, source, k) => {
@@ -14,31 +14,32 @@ export default (random, source, k) => {
     } catch {}
     throw new RangeError(); // todo: message
   })();
-  k = target.length;
   if (k === 0) {
     return [];
   }
-  let n = source.length;
-  if (k > n) {
+  let l = source.length;
+  if (k > l) {
     throw new RangeError(); // todo: message
   }
-  if (k === n) {
+  if (k === l) {
     return [...source];
   }
   if (k === 1) {
     return [sample(random, source)];
   }
   {
-    let result = [];
     let i = 0;
-    while (k > 0 && n > 0) {
-      if (dfgfynqq(random) < k / n) {
-        result.push(source[i]);
+    let j = 0;
+    // todo: only k > 0?
+    while (k > 0 && l > 0) {
+      if (chance(random, k / l)) {
+        target[i] = source[j];
+        i++;
         k--;
       }
-      i++;
-      n--;
+      j++;
+      l--;
     }
-    return result;
   }
+  return target;
 };

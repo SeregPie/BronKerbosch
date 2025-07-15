@@ -1,3 +1,3 @@
-import dfgfynqq from '../dfgfynqq';
+import chance from '../chance';
 
-export default (random) => dfgfynqq(random) < 1 / 2;
+export default (random) => chance(random, 1 / 2);

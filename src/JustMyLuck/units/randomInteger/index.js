@@ -10,17 +10,19 @@ export default (random, min, max) => {
   if (!(min < max)) {
     throw new RangeError(); // todo: message
   }
+  // todo: rename
   let delta = max - min;
   if (delta === 1) {
     return min;
   }
-  let n = dfgfynqq(random) * delta + min;
+  // todo: rename
+  let n = dfgfynqq(random) * delta;
   // todo: format
-  if (n >= max) {
+  if (n >= delta) {
     return min;
   }
   {
     n = Math.floor(n);
   }
-  return n;
+  return min + n;
 };

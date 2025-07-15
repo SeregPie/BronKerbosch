@@ -1,4 +1,4 @@
-import dfgfynqq from '../dfgfynqq';
+import chance from '../chance';
 import sample from '../sample';
 
 export default (random, source, k) => {
@@ -7,21 +7,21 @@ export default (random, source, k) => {
   }
   // todo: handle k
   let target = (() => {
-    try {
-      if (Number.isFinite(k)) {
+    if (Number.isFinite(k)) {
+      try {
         return Array(k);
-      }
-    } catch {}
+      } catch {}
+    }
     throw new RangeError(); // todo: message
   })();
   if (k === 0) {
     return target;
   }
-  let n = source.length;
-  if (n === 0) {
+  let l = source.length;
+  if (l === 0) {
     throw new RangeError(); // todo: message
   }
-  if (n === 1) {
+  if (l === 1) {
     target.fill(source[0]); // todo
     return target;
   }
@@ -32,15 +32,16 @@ export default (random, source, k) => {
   {
     let i = 0;
     let j = 0;
-    while (k > 0 && n > 0) {
+    // todo: only k > 0?
+    while (k > 0 && l > 0) {
       // todo: large numbers
-      if (dfgfynqq(random) < k / (k + n - 1)) {
+      if (chance(random, k / (k + l - 1))) {
         target[i] = source[j];
         i++;
         k--;
       } else {
         j++;
-        n--;
+        l--;
       }
     }
   }
