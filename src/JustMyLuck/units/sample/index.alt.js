@@ -1,4 +1,4 @@
-import randomInteger from '../random-integer';
+import randomInteger from '../randomInteger';
 
 export default (random, source) => {
   if (!Array.isArray(source)) {

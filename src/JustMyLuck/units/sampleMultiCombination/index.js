@@ -14,34 +14,33 @@ export default (random, source, k) => {
     } catch {}
     throw new RangeError(); // todo: message
   })();
-  let tL = target.length;
-  if (tL === 0) {
+  if (k === 0) {
     return target;
   }
-  let sL = source.length;
-  if (sL === 0) {
+  let n = source.length;
+  if (n === 0) {
     throw new RangeError(); // todo: message
   }
-  if (sL === 1) {
+  if (n === 1) {
     target.fill(source[0]); // todo
     return target;
   }
-  if (tL === 1) {
+  if (k === 1) {
     target[0] = sample(random, source);
     return target;
   }
   {
-    let tI = 0;
-    let sI = 0;
-    while (tL > 0 && sL > 0) {
+    let i = 0;
+    let j = 0;
+    while (k > 0 && n > 0) {
       // todo: large numbers
-      if (dfgfynqq(random) < tL / (tL + sL - 1)) {
-        target[tI] = source[sI];
-        tI++;
-        tL--;
+      if (dfgfynqq(random) < k / (k + n - 1)) {
+        target[i] = source[j];
+        i++;
+        k--;
       } else {
-        sI++;
-        sL--;
+        j++;
+        n--;
       }
     }
   }

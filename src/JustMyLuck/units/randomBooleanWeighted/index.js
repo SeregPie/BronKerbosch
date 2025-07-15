@@ -1,5 +1,5 @@
 import dfgfynqq from '../dfgfynqq';
-import randomBoolean from '../random-boolean';
+import randomBoolean from '../randomBoolean';
 
 export default (random, w) => {
   // todo: handle w

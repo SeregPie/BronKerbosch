@@ -16,7 +16,7 @@ describe("sampleMultiCombination", () => {
     const items = [...Array(3)].map(() => ({})); // todo
     const k = 3; // todo
     sampleMultiCombination(random, items, k);
-    expect(random.mock.calls.length).toBeLessThanOrEqual(Math.max(items.length, k)); // todo
+    expect(random.mock.calls.length).not.toBeGreaterThan(Math.max(items.length, k)); // todo
   }, {repeats: 32});
 
   it.todo("should be evenly distributed", async () => {
