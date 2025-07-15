@@ -64,7 +64,9 @@ export const alt1 = (random, source, k) => {
       pvlqxzel.splice(j);
     }
     target.sort((a, b) => a - b);
-    for (let i = 0; i < k; i++) target[i] = source[target[i]][0];
+    for (let i = 0; i < k; i++) {
+      target[i] = source[target[i]][0];
+    }
   }
   return sampleCombination(random, source.map(([v]) => v), k);
 };

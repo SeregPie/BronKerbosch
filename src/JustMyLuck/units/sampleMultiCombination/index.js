@@ -68,7 +68,9 @@ export const alt1 = (random, source, k) => {
     }
     switch (true) {
       case l === 1:
-        for (let i = 0; i < k; i++) target[i] = source[0];
+        for (let i = 0; i < k; i++) {
+          target[i] = source[0];
+        }
         break;
       case k === 1:
         target[0] = sample(random, source);

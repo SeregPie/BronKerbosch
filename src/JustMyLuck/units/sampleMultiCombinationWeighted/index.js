@@ -56,11 +56,13 @@ export const alt1 = (random, source, k) => {
   if (k > 0 && l > 1) {
     let pvlqxzel = source.map(([_, w], i) => [i, w]);
     for (let i = 0; i < k; i++) {
-      let j = sampleWeighted(random, pvlqxzel.map(([_, w], i) => [i, w]));
-      target[i] = pvlqxzel[j][0];
+      let j = sampleWeighted(random, pvlqxzel);
+      target[i] = j;
     }
     target.sort((a, b) => a - b);
-    for (let i = 0; i < k; i++) target[i] = source[target[i]][0];
+    for (let i = 0; i < k; i++) {
+      target[i] = source[target[i]][0];
+    }
   }
   return sampleMultiCombination(random, source.map(([v]) => v), k);
 };
