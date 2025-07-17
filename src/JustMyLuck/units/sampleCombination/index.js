@@ -14,39 +14,6 @@ export default (random, source, k) => {
     }
     throw new RangeError(); // todo: message
   })();
-  if (k === 0) {
-    return target;
-  }
-  let l = source.length;
-  if (k > l) {
-    throw new RangeError(); // todo: message
-  }
-  if (l === k) {
-    for (let i = 0; i < k; i++) target[i] = source[i];
-    return target;
-  }
-  if (k === 1) {
-    target[0] = sample(random, source);
-    return target;
-  }
-  {
-    let i = 0;
-    let j = 0;
-    // todo: only k > 0?
-    while (k > 0 && l > 0) {
-      if (chance(random, k / l)) {
-        target[i] = source[j];
-        i++;
-        k--;
-      }
-      j++;
-      l--;
-    }
-  }
-  return target;
-};
-
-export const alt1 = (random, source, k) => {
   if (k > 0) {
     let l = source.length;
     if (k > l) {
@@ -61,11 +28,9 @@ export const alt1 = (random, source, k) => {
       case k === 1:
         target[0] = sample(random, source);
         break;
-      default: {
-        let i = 0;
-        let j = 0;
+      default:
         // todo: only k > 0?
-        while (k > 0 && l > 0) {
+        for (let i = 0, j = 0; k > 0 && l > 0;) {
           if (chance(random, k / l)) {
             target[i] = source[j];
             i++;
@@ -74,7 +39,6 @@ export const alt1 = (random, source, k) => {
           j++;
           l--;
         }
-      }
     }
   }
   return target;

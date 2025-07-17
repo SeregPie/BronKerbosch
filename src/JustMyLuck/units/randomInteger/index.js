@@ -1,37 +1,53 @@
-import dfgfynqq from '../dfgfynqq';
+import randomFloat from '../randomFloat';
 
 export default (random, min, max) => {
-  // todo: handle min and max
-  if (typeof min !== "number" || Number.isNaN(min)) {
-    return Number.NaN;
-  }
-  if (typeof max !== "number" || Number.isNaN(max)) {
-    return Number.NaN;
-  }
   {
-    min = Math.max(min, -Number.MAX_VALUE);
-    max = Math.min(max, +Number.MAX_VALUE);
+    // todo: handle min and max
   }
   {
     min = Math.ceil(min);
     max = Math.ceil(max);
   }
-  if (min >= max) {
+  // todo: needed?
+  // todo: min >= max
+  if (max >= min) {
     throw new RangeError(); // todo: message
   }
-  // todo: handle Number.MAX_VALUE + Number.MAX_VALUE
-  // todo: rename
-  let delta = max - min;
-  if (delta === 1) {
+  // todo: min === max - 1
+  if (max - min === 1) {
     return min;
   }
   // todo: rename
-  let n = dfgfynqq(random) * delta;
-  if (n >= delta) {
-    return min;
-  }
+  let aaliqmru = randomFloat(random, min, max);
   {
-    n = Math.floor(n);
+    aaliqmru = Math.floor(aaliqmru);
   }
-  return min + n;
+  return aaliqmru;
+};
+
+export const alt1 = (random, min, max) => {
+  {
+    min = Math.ceil(min);
+    max = Math.ceil(max);
+  }
+  if (!(min < max)) {
+    throw new RangeError(); // todo: message
+  }
+  if (!(max - min > 1)) {
+    return min;
+  }
+  // todo: rename
+  let aaliqmru = randomFloat(random, min, max);
+  {
+    aaliqmru = Math.floor(aaliqmru);
+  }
+  return aaliqmru;
+};
+
+
+export const alt2 = (random, min, max) => {
+  if (!(max - min > 1)) {
+    return min;
+  }
+  return Math.floor(randomFloat(random, Math.ceil(min), Math.ceil(max)));
 };
