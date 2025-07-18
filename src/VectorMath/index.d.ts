@@ -1,7 +1,7 @@
 declare namespace VectorMath {
   // todo: rename
   type pbhwbnit = {
-    <D, V = Vector<D>>(a: Readonly<V>, b: Readonly<V>): V;
+    <const D extends number>(a: Readonly<Vector<D>>, b: Readonly<Vector<D>>): Vector<D>;
   };
 
   export const add: pbhwbnit;
@@ -115,10 +115,31 @@ declare namespace VectorMath {
 
 export default VectorMath;
 
-export type Vector<D> = D extends number ? (Array<number> & {length: D}) | [never] : never;
+export type Vector<D> = D extends number ? Cluster<number, D> : never;
 
 export type Vector2 = Vector<2>;
 
 export type Vector3 = Vector<3>;
 
 export type Vector4 = Vector<4>;
+
+
+type Cluster<T extends number, D extends number>
+  =
+  D extends 1
+  ? readonly [T]
+  : D extends 2
+  ? readonly [T, T]
+  : D extends 3
+  ? readonly [T, T, T]
+  : D extends 4
+  ? readonly [T, T, T, T]
+  : D extends 5
+  ? readonly [T, T, T, T, T]
+  : D extends 6
+  ? readonly [T, T, T, T, T, T]
+  : D extends 7
+  ? readonly [T, T, T, T, T, T, T]
+  : D extends 8
+  ? readonly [T, T, T, T, T, T, T, T]
+  : (readonly T[] & {readonly length: D;});
