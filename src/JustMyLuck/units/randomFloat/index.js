@@ -17,9 +17,6 @@ export default (random, min, max) => {
   }
   // todo: rename
   let n = min + r * (max - min);
-  if (n < 1) {
-
-  }
   if (n >= max) {
     return min;
   }

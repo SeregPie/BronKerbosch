@@ -10,7 +10,7 @@ export default (random, min, max) => {
   }
   // todo: needed?
   // todo: min >= max
-  if (max >= min) {
+  if (max <= min) {
     throw new RangeError(); // todo: message
   }
   // todo: min === max - 1
